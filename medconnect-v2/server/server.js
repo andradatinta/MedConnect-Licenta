@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const corsOptions = {
   origin: "*",
   credentials: true, //access-control-allow-credentials:true
@@ -7,12 +8,10 @@ const corsOptions = {
 };
 
 const app = express();
+app.use(express.static(path.join(__dirname, "client/build")));
 const eventRoutes = require("./routes/events");
 
-// const users = require("./users"); // aici ar trebui sa am user routes abis si sa mi fac request urile catre api pe diferite rute in functie
-// // de cum le apelez din front cu fetch/axios
-
-app.use(cors(corsOptions)); // Use this after the variable declaration
+app.use(cors(corsOptions));
 
 app.use("/api/event", eventRoutes);
 
