@@ -3,7 +3,7 @@ import { Grid, TextField, Container } from "@mui/material";
 import { WideButton } from "../LandingPageContent/LandingPageContent.styles";
 import { useForm, Controller } from "react-hook-form";
 
-function SignUpFormDoctor() {
+function SignUpFormCMR() {
   const {
     control,
     handleSubmit,
@@ -94,45 +94,6 @@ function SignUpFormDoctor() {
               )}
             />
           </Grid>
-          {/* Fourth Row */}
-          <Grid item xs={12}>
-            <Controller
-              name="specialization"
-              control={control}
-              defaultValue=""
-              rules={{ required: "Specialization is required" }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Specializare"
-                  variant="outlined"
-                  fullWidth
-                  error={!!errors.specialization}
-                  helperText={errors.specialization?.message}
-                />
-              )}
-            />
-          </Grid>
-          {/* Fifth Row */}
-          <Grid item xs={12}>
-            <Controller
-              name="cuim"
-              control={control}
-              defaultValue=""
-              rules={{ required: "CUIM is required" }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="CUIM (Codul Unic de Identificare al Medicului)"
-                  variant="outlined"
-                  fullWidth
-                  error={!!errors.cuim}
-                  helperText={errors.cuim?.message}
-                />
-              )}
-            />
-          </Grid>
-          {/* Submit Button */}
           <Grid
             item
             xs={12}
@@ -156,4 +117,4 @@ function SignUpFormDoctor() {
   );
 }
 
-export default SignUpFormDoctor;
+export default SignUpFormCMR;

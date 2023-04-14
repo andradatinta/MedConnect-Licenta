@@ -41,7 +41,7 @@ function CMRMemberLandingPage() {
             Creează-ți acum un cont pentru a valida punctajele medicilor
             eficient!
           </Typography>
-          <WideButton sx={{ marginTop: "2rem" }}>
+          <WideButton href="/signupcmr" sx={{ marginTop: "2rem" }}>
             <Typography variant="p">Înregistrează-te ca membru CMR</Typography>
           </WideButton>
         </Box>

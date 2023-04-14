@@ -78,6 +78,22 @@ export const WideButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+export const GridWideButton = styled(Button)(({ theme }) => ({
+  boxShadow: "5px 5px 15px #00000029",
+  textAlign: "center",
+  backgroundColor: "#6F00FF",
+  color: "#ffffff",
+  width: "100%",
+  maxWidth: "65%",
+  fontSize: "16px",
+  padding: "10px 0",
+  letterSpacing: "0.63px",
+  "&:hover": {
+    backgroundColor: "#8C33FF",
+    cursor: "pointer",
+  },
+}));
+
 export const FooterLinkButton = styled(Button)(({ theme }) => ({
   backgroundColor: "transparent",
   color: "#ffffff",

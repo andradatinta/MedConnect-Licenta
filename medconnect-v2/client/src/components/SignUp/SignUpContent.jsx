@@ -1,8 +1,9 @@
 import { Container, Grid, Box, Typography } from "@mui/material";
 import React from "react";
 import SignUpFormDoctor from "./SignUpFormDoctor";
+import SignUpFormCMR from "./SignUpFormCMR";
 
-function SignUpDoctorContent() {
+function SignUpContent({ isDoctor }) {
   return (
     <>
       <Container
@@ -24,16 +25,7 @@ function SignUpDoctorContent() {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            flexDirection="column"
           >
-            <Typography
-              variant="h1"
-              mb="2rem"
-              fontWeight="500"
-              fontSize="2.5rem"
-            >
-              Înregistrare medic
-            </Typography>
             <Box
               sx={{
                 width: "100%",
@@ -56,8 +48,30 @@ function SignUpDoctorContent() {
             display="flex"
             justifyContent="center"
             alignItems="center"
+            flexDirection="column"
           >
-            <SignUpFormDoctor />
+            {isDoctor ? (
+              <Typography
+                variant="h1"
+                mb="2rem"
+                fontWeight="500"
+                fontSize="2.5rem"
+                textAlign="center"
+              >
+                Înregistrare medic
+              </Typography>
+            ) : (
+              <Typography
+                variant="h1"
+                mb="2rem"
+                fontWeight="500"
+                fontSize="2.5rem"
+                textAlign="center"
+              >
+                Înregistrare membru CMR
+              </Typography>
+            )}
+            {isDoctor ? <SignUpFormDoctor /> : <SignUpFormCMR />}
           </Grid>
         </Grid>
       </Container>
@@ -65,4 +79,4 @@ function SignUpDoctorContent() {
   );
 }
 
-export default SignUpDoctorContent;
+export default SignUpContent;

@@ -1,12 +1,12 @@
 import React from "react";
 import NavBar from "../components/NavBar/NavBar";
-import SignUpDoctorContent from "../components/SignUp/SignUpDoctorContent";
+import SignUpContent from "../components/SignUp/SignUpContent";
 
 function SignUpDoctor() {
   return (
     <>
       <NavBar />
-      <SignUpDoctorContent />
+      <SignUpContent isDoctor={true} />
     </>
   );
 }
