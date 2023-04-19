@@ -5,11 +5,9 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import {
-  NavBarButton,
-  NavigationAccount,
-  NavigationLinks,
-} from "./NavBar.styles";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as MuiLink } from "@mui/material";
+import { NavigationAccount, NavigationLinks } from "./NavBar.styles";
 
 function NavBar() {
   return (
@@ -20,7 +18,8 @@ function NavBar() {
             edge="start"
             color="inherit"
             aria-label="logo"
-            href="http://localhost:3000/test"
+            component={RouterLink}
+            to="/"
           >
             <img
               src="/graphics/medconnect-logo-blue-cropped.svg"
@@ -30,24 +29,27 @@ function NavBar() {
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <NavigationLinks>
-            <NavBarButton color="inherit">
+            <MuiLink component={RouterLink} to="/">
               <Typography variant="p">Despre Noi</Typography>
-            </NavBarButton>
-            <NavBarButton color="inherit">
+            </MuiLink>
+            <MuiLink component={RouterLink} to="/">
               <Typography variant="p">Membru CMR</Typography>
-            </NavBarButton>
-            <NavBarButton color="inherit">
+            </MuiLink>
+            <MuiLink component={RouterLink} to="/calendar">
               <Typography variant="p">Calendar</Typography>
-            </NavBarButton>
+            </MuiLink>
           </NavigationLinks>
           <NavigationAccount>
-            <NavBarButton color="inherit" sx={{ ml: 2 }}>
-              <Typography variant="p">Login</Typography>
-            </NavBarButton>
+            <MuiLink component={RouterLink} to="/login" sx={{ ml: 2 }}>
+              <Typography variant="p" color="primary">
+                Login
+              </Typography>
+            </MuiLink>
             <Button
               variant="contained"
               color="secondary"
-              href="http://localhost:3000/signup"
+              component={RouterLink}
+              to="/signup"
             >
               <Typography variant="p">Înregistrează-te</Typography>
             </Button>

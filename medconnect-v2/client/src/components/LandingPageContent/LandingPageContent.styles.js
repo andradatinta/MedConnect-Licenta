@@ -5,15 +5,13 @@ import { Container, Button } from "@mui/material";
 
 export const MainContainer = styled(Box)(({ theme }) => ({
   height: "calc(100vh - 128px)",
-  width: "100%",
   display: "flex",
-  flexWrap: "wrap",
-  // backgroundColor: "grey",
+  justifyContent: "center",
   alignItems: "center",
-  justifyContent: "space-between",
-  paddingLeft: "10rem",
-  paddingRight: "10rem",
   boxSizing: "border-box",
+  width: "100%",
+  paddingLeft: "5rem",
+  paddingRight: "5rem",
 }));
 
 export const CMRLandingContainer = styled(Box)(({ theme }) => ({
@@ -84,7 +82,6 @@ export const GridWideButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#6F00FF",
   color: "#ffffff",
   width: "100%",
-  maxWidth: "65%",
   fontSize: "16px",
   padding: "10px 0",
   letterSpacing: "0.63px",

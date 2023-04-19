@@ -9,7 +9,7 @@ import { AboutUsCardsContainer } from "./LandingPageContent.styles";
 function AboutUsCard({ iconUrl, title, description, breakLineTitle = null }) {
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, width: "300px", height: "330px" }}>
         <CardContent>
           <AboutUsCardsContainer>
             <Container

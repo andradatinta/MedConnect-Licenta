@@ -1,22 +1,13 @@
-import { Container, Grid, Box, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 import SignUpFormDoctor from "./SignUpFormDoctor";
 import SignUpFormCMR from "./SignUpFormCMR";
+import { FormHeading, FullViewportContainer, ImageBox } from "./SignUp.styles";
 
 function SignUpContent({ isDoctor }) {
   return (
     <>
-      <Container
-        maxWidth="lg"
-        sx={{
-          height: "calc(100vh - 64px)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          boxSizing: "border-box",
-          width: "100%",
-        }}
-      >
+      <FullViewportContainer maxWidth="lg">
         <Grid container spacing={2}>
           <Grid
             item
@@ -26,20 +17,13 @@ function SignUpContent({ isDoctor }) {
             justifyContent="center"
             alignItems="center"
           >
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <ImageBox>
               <img
                 src="/graphics/signup-doctor.svg"
                 alt="Your illustration"
                 style={{ width: "80%", height: "auto" }}
               />
-            </Box>
+            </ImageBox>
           </Grid>
           <Grid
             item
@@ -51,30 +35,14 @@ function SignUpContent({ isDoctor }) {
             flexDirection="column"
           >
             {isDoctor ? (
-              <Typography
-                variant="h1"
-                mb="2rem"
-                fontWeight="500"
-                fontSize="2.5rem"
-                textAlign="center"
-              >
-                Înregistrare medic
-              </Typography>
+              <FormHeading variant="h1">Înregistrare medic</FormHeading>
             ) : (
-              <Typography
-                variant="h1"
-                mb="2rem"
-                fontWeight="500"
-                fontSize="2.5rem"
-                textAlign="center"
-              >
-                Înregistrare membru CMR
-              </Typography>
+              <FormHeading variant="h1">Înregistrare membru CMR</FormHeading>
             )}
             {isDoctor ? <SignUpFormDoctor /> : <SignUpFormCMR />}
           </Grid>
         </Grid>
-      </Container>
+      </FullViewportContainer>
     </>
   );
 }

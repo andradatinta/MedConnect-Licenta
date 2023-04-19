@@ -1,22 +1,17 @@
 import React from "react";
-import { Container, Grid, Box, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import LoginForm from "./LoginForm";
+import {
+  FormHeading,
+  FullViewportContainer,
+  ImageBox,
+} from "../SignUp/SignUp.styles";
 
 function LoginContent() {
   return (
     <>
       <>
-        <Container
-          maxWidth="lg"
-          sx={{
-            height: "calc(100vh - 64px)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            boxSizing: "border-box",
-            width: "100%",
-          }}
-        >
+        <FullViewportContainer maxWidth="lg">
           <Grid container spacing={2}>
             <Grid
               item
@@ -27,15 +22,7 @@ function LoginContent() {
               alignItems="center"
               flexDirection="column"
             >
-              <Typography
-                variant="h1"
-                mb="2rem"
-                fontWeight="500"
-                fontSize="2.5rem"
-                textAlign="center"
-              >
-                Login
-              </Typography>
+              <FormHeading variant="h1">Login</FormHeading>
               <LoginForm />
             </Grid>
             <Grid
@@ -46,23 +33,16 @@ function LoginContent() {
               justifyContent="center"
               alignItems="center"
             >
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <ImageBox>
                 <img
                   src="/graphics/login.svg"
                   alt="Your illustration"
                   style={{ width: "80%", height: "auto" }}
                 />
-              </Box>
+              </ImageBox>
             </Grid>
           </Grid>
-        </Container>
+        </FullViewportContainer>
       </>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
-import NavBar from "../NavBar/NavBar";
-import SignUpContent from "./SignUpContent";
+import NavBar from "../components/NavBar/NavBar";
+import SignUpContent from "../components/SignUp/SignUpContent";
 
 function SignUpCMR() {
   return (

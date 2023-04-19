@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, TextField, Container } from "@mui/material";
-import { WideButton } from "../LandingPageContent/LandingPageContent.styles";
+import { GridWideButton } from "../LandingPageContent/LandingPageContent.styles";
 import { useForm, Controller } from "react-hook-form";
 
 function SignUpFormDoctor() {
@@ -140,15 +140,14 @@ function SignUpFormDoctor() {
             justifyContent="center"
             alignItems="center"
           >
-            <WideButton
+            <GridWideButton
               type="submit"
               variant="contained"
               color="primary"
-              sx={{ padding: "1rem 12.5rem", marginTop: "1rem" }}
-              fullWidth
+              sx={{ marginTop: "1rem", maxWidth: "100%" }}
             >
               Creează cont
-            </WideButton>
+            </GridWideButton>
           </Grid>
         </Grid>
       </form>

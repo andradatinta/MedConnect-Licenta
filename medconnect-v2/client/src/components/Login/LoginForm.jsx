@@ -11,7 +11,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
-// import { useState } from "react";
 
 function LoginForm() {
   const {
@@ -114,7 +113,7 @@ function LoginForm() {
               type="submit"
               variant="contained"
               color="primary"
-              sx={{ marginTop: "1rem" }}
+              sx={{ marginTop: "1rem", maxWidth: "65%" }}
               // fullWidth
             >
               Intră în cont
