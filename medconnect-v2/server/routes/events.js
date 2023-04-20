@@ -1,4 +1,5 @@
 const express = require("express");
+const asyncHandler = require("express-async-handler");
 
 const eventsController = require("../controllers/events");
 

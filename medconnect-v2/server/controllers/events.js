@@ -1,4 +1,4 @@
-exports.getEvents = (req, res, next) => {
+exports.getEvents = (req, res) => {
   const events = [
     {
       title: "Event 1",
@@ -10,5 +10,5 @@ exports.getEvents = (req, res, next) => {
     },
   ];
 
-  res.json(events);
+  res.status(200).json(events);
 };
