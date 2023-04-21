@@ -11,6 +11,9 @@ import { useForm, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const {
@@ -19,10 +22,20 @@ function LoginForm() {
     formState: { errors },
   } = useForm();
 
+  const { login, error } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [apiError, setApiError] = useState("");
+
   const [keepMeAuthenticated, setKeepMeAuthenticated] = useState(false);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const errorMessage = await login(data);
+    if (!errorMessage) {
+      navigate("/calendar");
+    } else {
+      setApiError(errorMessage);
+      console.log(error);
+    }
   };
   return (
     <Container maxWidth="sm">
@@ -36,6 +49,13 @@ function LoginForm() {
             alignItems: "center",
           }}
         >
+          {/* Display API error message */}
+          {console.log(apiError)}
+          {apiError && (
+            <Grid item xs={12}>
+              <p style={{ color: "red", textAlign: "center" }}>{apiError}</p>
+            </Grid>
+          )}
           <Grid item alignItems="center" xs={8}>
             <Controller
               name="email"

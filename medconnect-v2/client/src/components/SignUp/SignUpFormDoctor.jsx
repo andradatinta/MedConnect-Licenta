@@ -1,7 +1,9 @@
-import React from "react";
+import { React, useContext, useState } from "react";
 import { Grid, TextField, Container } from "@mui/material";
 import { GridWideButton } from "../LandingPageContent/LandingPageContent.styles";
 import { useForm, Controller } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function SignUpFormDoctor() {
   const {
@@ -10,13 +12,32 @@ function SignUpFormDoctor() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const { register } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [apiError, setApiError] = useState("");
+
+  const onSubmit = async (data) => {
+    // register(data, "/doctor");
+
+    const errorMessage = await register(data, "/doctor");
+    if (!errorMessage) {
+      navigate("/calendar");
+    } else {
+      setApiError(errorMessage);
+    }
   };
+
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
+          {/* Display API error message */}
+          {console.log(apiError)}
+          {apiError && (
+            <Grid item xs={12}>
+              <p style={{ color: "red", textAlign: "center" }}>{apiError}</p>
+            </Grid>
+          )}
           {/* First Row */}
           <Grid item xs={12} md={6}>
             <Controller

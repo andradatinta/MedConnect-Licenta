@@ -7,6 +7,7 @@ import SignUpDoctor from "./pages/SignUpDoctor";
 import SignUpCMR from "./pages/SignUpCMR";
 import Login from "./components/Login/Login";
 import Calendar from "./pages/Calendar";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
 
     // <User />
   );

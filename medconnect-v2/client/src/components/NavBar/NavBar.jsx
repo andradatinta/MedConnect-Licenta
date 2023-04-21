@@ -8,8 +8,12 @@ import { Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { Link as MuiLink } from "@mui/material";
 import { NavigationAccount, NavigationLinks } from "./NavBar.styles";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
 
 function NavBar() {
+  const { user, logout } = useContext(AuthContext);
+
   return (
     <>
       <AppBar position="sticky" sx={{ backgroundColor: "#ffffff" }}>
@@ -40,19 +44,44 @@ function NavBar() {
             </MuiLink>
           </NavigationLinks>
           <NavigationAccount>
-            <MuiLink component={RouterLink} to="/login" sx={{ ml: 2 }}>
-              <Typography variant="p" color="primary">
-                Login
-              </Typography>
-            </MuiLink>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={RouterLink}
-              to="/signup"
-            >
-              <Typography variant="p">Înregistrează-te</Typography>
-            </Button>
+            {!user ? (
+              <>
+                <MuiLink component={RouterLink} to="/login" sx={{ ml: 2 }}>
+                  <Typography variant="p" color="primary">
+                    Login
+                  </Typography>
+                </MuiLink>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  component={RouterLink}
+                  to="/signup"
+                >
+                  <Typography variant="p">Înregistrează-te</Typography>
+                </Button>
+              </>
+            ) : (
+              <>
+                <MuiLink
+                  component={RouterLink}
+                  to="/"
+                  onClick={logout}
+                  sx={{ ml: 2 }}
+                >
+                  <Typography variant="p" color="primary">
+                    Logout
+                  </Typography>
+                </MuiLink>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  component={RouterLink}
+                  to="/calendar"
+                >
+                  <Typography variant="p">Contul meu</Typography>
+                </Button>
+              </>
+            )}
           </NavigationAccount>
         </Toolbar>
       </AppBar>

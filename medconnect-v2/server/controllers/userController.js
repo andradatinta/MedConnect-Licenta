@@ -10,8 +10,9 @@ const generateToken = (id) => {
   });
 };
 exports.registerUserDoctor = asyncHandler(async (req, res) => {
-  const { firstName, lastName, email, password, type, specialization, cuim } =
+  const { firstName, lastName, email, password, specialization, cuim } =
     req.body;
+  const type = "doctor";
   if (
     !firstName ||
     !lastName ||
