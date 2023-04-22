@@ -7,13 +7,16 @@ import {
   Button,
 } from "@mui/material";
 import React from "react";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import { GridWideButton } from "../LandingPageContent/LandingPageContent.styles";
 
 function CalendarEventCard() {
   return (
     <>
       <Card>
         <CardContent>
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Box
@@ -38,15 +41,38 @@ function CalendarEventCard() {
                     flexDirection: "column",
                     textAlign: "center",
                     justifyContent: "center",
+                    // backgroundColor: "yellow",
                   }}
                 >
-                  <Typography variant="p">Wassup</Typography>
-                  <Typography variant="p">Wassup</Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CalendarMonthOutlinedIcon sx={{ marginRight: "0.3rem" }} />
+                    <Typography variant="p">
+                      {new Date().toLocaleDateString("en-GB")}
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <StarBorderOutlinedIcon sx={{ marginRight: "0.3rem" }} />
+                    <Typography variant="p">12 EMC</Typography>
+                  </Box>
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={12}>
-              <Typography>Wassup conference</Typography>
+            <Grid item xs={12} textAlign="center">
+              <Typography variant="h5">
+                Actualități în farmacologie și farmacoterapie
+              </Typography>
             </Grid>
             <Grid
               item
@@ -54,9 +80,14 @@ function CalendarEventCard() {
               display="flex"
               justifyContent="center"
               alignItems="center"
+              gap="1rem"
             >
-              <Button sx={{ backgroundColor: "blue" }}>Wassup </Button>
-              <Button sx={{ backgroundColor: "blue" }}>Wassup </Button>
+              <Button variant="outlined" size="small" sx={{ maxWidth: "30%" }}>
+                Detalii
+              </Button>
+              <Button variant="contained" size="small" sx={{ maxWidth: "30%" }}>
+                Înscrie-te
+              </Button>
             </Grid>
           </Grid>
         </CardContent>

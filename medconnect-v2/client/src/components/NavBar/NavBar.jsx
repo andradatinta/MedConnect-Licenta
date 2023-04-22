@@ -10,6 +10,7 @@ import { Link as MuiLink } from "@mui/material";
 import { NavigationAccount, NavigationLinks } from "./NavBar.styles";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
@@ -72,14 +73,10 @@ function NavBar() {
                     Logout
                   </Typography>
                 </MuiLink>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  component={RouterLink}
-                  to="/calendar"
-                >
+                <MuiLink component={RouterLink} to="/">
+                  <AccountCircleOutlinedIcon sx={{ marginRight: "0.3rem" }} />
                   <Typography variant="p">Contul meu</Typography>
-                </Button>
+                </MuiLink>
               </>
             )}
           </NavigationAccount>
