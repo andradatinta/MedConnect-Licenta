@@ -33,6 +33,9 @@ const theme = createTheme({
       color: "#034694",
       fontWeight: "500",
     },
+    h6: {
+      color: "#034694",
+    },
     p: {
       fontSize: "1rem",
       // color: "#034694",

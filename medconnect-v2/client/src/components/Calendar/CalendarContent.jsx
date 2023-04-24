@@ -1,27 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Card, CardContent, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import { FullViewportContainer } from "../SignUp/SignUp.styles";
 // import { CalendarSelectToggleButton } from "./CalendarContent.styles";
 import CalendarEventButtons from "./CalendarEventButtons";
 import CalendarEvents from "./CalendarEvents";
+import FilterMenu2 from "./FilterMenu2";
 
 function CalendarContent() {
-  const FilterMenu = (
-    <Card
-      sx={{
-        borderRadius: "1rem",
-        padding: "1rem",
-        height: "calc(100vh - 128px)",
-        width: "100%",
-      }}
-    >
-      <CardContent>
-        <Typography variant="h6">Filter Options</Typography>
-        {/* Add your filter options here */}
-      </CardContent>
-    </Card>
-  );
-
   // const [isSelected, setIsSelected] = useState(false);
   const [selectedButton, setSelectedButton] = useState(null);
   const handleEventTypeClick = (buttonId) => {
@@ -41,7 +26,7 @@ function CalendarContent() {
       >
         <Grid container spacing={2} backgroundColor="green">
           <Grid item xs={12} md={2}>
-            {FilterMenu}
+            <FilterMenu2 />
           </Grid>
 
           {/* Right side main content */}

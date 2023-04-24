@@ -1,6 +1,6 @@
 // CalendarContent.styles.js
 import { styled } from "@mui/system";
-import { Button } from "@mui/material";
+import { Button, FormControlLabel, Typography } from "@mui/material";
 
 export const CalendarSelectToggleButton = styled(({ isSelected, ...other }) => (
   <Button {...other} />
@@ -19,3 +19,29 @@ export const CalendarSelectToggleButton = styled(({ isSelected, ...other }) => (
     backgroundColor: isSelected ? "#034694" : "#F8F9FA",
   },
 }));
+
+export const FilterControlLabelTypography = styled(Typography)({
+  fontSize: "0.8rem ",
+  color: "#212529",
+  // whiteSpace: "nowrap",
+  "@media (max-width: 600px)": {
+    fontSize: "0.45rem !important",
+  },
+  "@media (max-width: 480px)": {
+    fontSize: "0.4rem !important",
+  },
+  textOverflow: "ellipsis",
+  // overflow: "hidden",
+});
+
+export const FilterControlLabel = (props) => (
+  <FormControlLabel
+    {...props}
+    sx={{
+      marginBottom: "3px",
+    }}
+    label={
+      <FilterControlLabelTypography>{props.label}</FilterControlLabelTypography>
+    }
+  />
+);
