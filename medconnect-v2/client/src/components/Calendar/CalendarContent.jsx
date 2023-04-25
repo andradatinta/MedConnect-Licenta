@@ -8,7 +8,7 @@ import FilterMenu2 from "./FilterMenu2";
 
 function CalendarContent() {
   // const [isSelected, setIsSelected] = useState(false);
-  const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButton, setSelectedButton] = useState("localBtn");
   const handleEventTypeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
@@ -24,7 +24,7 @@ function CalendarContent() {
         maxWidth="100%"
         // sx={{ backgroundColor: "blueviolet", padding: "0 1rem" }}
       >
-        <Grid container spacing={2} backgroundColor="green">
+        <Grid container spacing={2}>
           <Grid item xs={12} md={2}>
             <FilterMenu2 />
           </Grid>

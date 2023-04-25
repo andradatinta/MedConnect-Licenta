@@ -3,12 +3,15 @@ import Box from "@mui/material/Box";
 import { Container, Typography } from "@mui/material";
 // import { Card, CardContent } from "@mui/material";
 export const FullViewportContainer = styled(Container)(({ theme }) => ({
-  height: "calc(100vh - 64px)",
+  minHeight: "calc(100vh - 64px)",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   boxSizing: "border-box",
   width: "100%",
+  "@media (max-width: 768px)": {
+    minHeight: "calc(100vh - 64px)",
+  },
 }));
 
 export const ImageBox = styled(Box)(({ theme }) => ({

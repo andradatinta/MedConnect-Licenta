@@ -18,11 +18,12 @@ function CalendarEventCard() {
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                 <Box
                   sx={{
                     width: "50%",
                     height: "auto",
+                    flex: 1,
                   }}
                 >
                   <img
@@ -38,21 +39,27 @@ function CalendarEventCard() {
                 <Box
                   sx={{
                     display: "flex",
+                    flex: 1,
                     flexDirection: "column",
                     textAlign: "center",
-                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    gap: "0.4rem",
                     // backgroundColor: "yellow",
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "center",
+                      // justifyContent: "center",
+
                       alignItems: "center",
                     }}
                   >
-                    <CalendarMonthOutlinedIcon sx={{ marginRight: "0.3rem" }} />
-                    <Typography variant="p">
+                    <CalendarMonthOutlinedIcon
+                      color="secondary"
+                      sx={{ marginRight: "0.3rem" }}
+                    />
+                    <Typography variant="p" color="primary">
                       {new Date().toLocaleDateString("en-GB")}
                     </Typography>
                   </Box>
@@ -63,8 +70,13 @@ function CalendarEventCard() {
                       alignItems: "center",
                     }}
                   >
-                    <StarBorderOutlinedIcon sx={{ marginRight: "0.3rem" }} />
-                    <Typography variant="p">12 EMC</Typography>
+                    <StarBorderOutlinedIcon
+                      color="secondary"
+                      sx={{ marginRight: "0.3rem" }}
+                    />
+                    <Typography variant="p" color="primary">
+                      12 EMC
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
