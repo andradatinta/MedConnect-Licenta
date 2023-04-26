@@ -66,7 +66,52 @@ exports.registerUserDoctor = asyncHandler(async (req, res) => {
 });
 
 exports.registerUserCMR = asyncHandler(async (req, res) => {
-  res.json({ message: "Register CMR" });
+  const { firstName, lastName, email, password } = req.body;
+  const type = "cmr_member";
+  if (!firstName || !lastName || !email || !password || !type) {
+    res.status(400);
+    throw new Error("Please add all fields");
+  }
+
+  if (!email.endsWith("@cmr.ro")) {
+    res.status(400);
+    throw new Error("Invalid email domain for a CMR member account");
+  }
+
+  // check if the user exists
+
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  // hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  // create user
+  const newUser = await User.create({
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+    type,
+  });
+  if (newUser) {
+    res.status(201).json({
+      _id: newUser.id,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      email: newUser.email,
+      type: newUser.type,
+      token: generateToken(newUser._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
+  // res.json({ message: "Register CMR" });
 });
 
 exports.loginUser = asyncHandler(async (req, res) => {
@@ -80,6 +125,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       type: user.type,
+      // s ar putea sa pun aici specialization?: ca pot si sa nu existe
       specialization: user.specialization,
       cuim: user.cuim,
       token: generateToken(user._id),

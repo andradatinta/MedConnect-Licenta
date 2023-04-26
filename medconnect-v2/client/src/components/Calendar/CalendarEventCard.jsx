@@ -9,7 +9,6 @@ import {
 import React from "react";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
-import { GridWideButton } from "../LandingPageContent/LandingPageContent.styles";
 
 function CalendarEventCard() {
   return (
