@@ -9,11 +9,22 @@ import { Link as RouterLink } from "react-router-dom";
 import { Link as MuiLink } from "@mui/material";
 import { NavigationAccount, NavigationLinks } from "./NavBar.styles";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+// import { useLocation } from "react-router-dom";
 
 function NavBar() {
-  const { user, logout } = useContext(AuthContext);
+  const { loggedIn, logout } = useContext(AuthContext);
+  // force navbar to rerender
+  // const location = useLocation();
+
+  useEffect(() => {
+    // A no-op effect that depends on the location
+    // const testLogged = loggedIn;
+    // console.log("testlogged este: ", testLogged);
+    // console.log("loggedIn este: ", loggedIn);
+    console.log("NavBar loggedIn state changed:", loggedIn);
+  }, [loggedIn]);
 
   return (
     <>
@@ -45,7 +56,7 @@ function NavBar() {
             </MuiLink>
           </NavigationLinks>
           <NavigationAccount>
-            {!user ? (
+            {!loggedIn ? (
               <>
                 <MuiLink component={RouterLink} to="/login" sx={{ ml: 2 }}>
                   <Typography variant="p" color="primary">
@@ -73,7 +84,7 @@ function NavBar() {
                     Logout
                   </Typography>
                 </MuiLink>
-                <MuiLink component={RouterLink} to="/">
+                <MuiLink component={RouterLink} to="/doctor">
                   <AccountCircleOutlinedIcon sx={{ marginRight: "0.3rem" }} />
                   <Typography variant="p">Contul meu</Typography>
                 </MuiLink>

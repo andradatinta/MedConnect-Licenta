@@ -7,7 +7,10 @@ const api = axios.create({
 const AuthContext = createContext();
 
 const initialState = {
-  user: null,
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null,
+  loggedIn: localStorage.getItem("user") !== null, // false
   loading: false,
   error: null,
 };
@@ -19,12 +22,12 @@ const authReducer = (state, action) => {
       return { ...state, loading: true };
     case "REGISTER_SUCCESS":
     case "LOGIN_SUCCESS":
-      return { ...state, loading: false, user: action.payload };
+      return { ...state, loading: false, user: action.payload, loggedIn: true };
     case "REGISTER_FAILURE":
     case "LOGIN_FAILURE":
       return { ...state, loading: false, error: action.payload };
     case "LOGOUT":
-      return initialState;
+      return { ...initialState, loggedIn: false };
     default:
       return state;
   }
@@ -32,16 +35,17 @@ const authReducer = (state, action) => {
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  // const [loggedIn, setLoggedIn] = useState(!!state.user);
+  // const loggedIn = useMemo(() => !!state.user, [state.user]);
+
+  // useEffect(() => {
+  //   console.log("AuthProvider state.user changed:", state.user);
+  //   setLoggedIn(!!state.user);
+  // }, [state.user]);
 
   const register = async (data, endpoint) => {
     try {
       dispatch({ type: "REGISTER_START" });
-
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
 
       const response = await api.post(`/api/users/signup${endpoint}`, data);
 
@@ -95,6 +99,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = () => {
     // Clear the user from local storage
+    console.log("Logout function called");
     localStorage.removeItem("user");
 
     console.log("User after logout:", localStorage.getItem("user"));
@@ -112,6 +117,7 @@ const AuthProvider = ({ children }) => {
         register,
         login,
         logout,
+        loggedIn: state.loggedIn,
       }}
     >
       {children}

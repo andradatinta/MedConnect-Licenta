@@ -79,7 +79,12 @@ function SignUpFormCMR() {
               name="email"
               control={control}
               defaultValue=""
-              rules={{ required: "First name is required" }}
+              rules={{
+                required: "First name is required",
+                validate: (value) =>
+                  value.endsWith("@cmr.ro") ||
+                  "Invalid email domain for a CMR member account",
+              }}
               render={({ field }) => (
                 <TextField
                   {...field}

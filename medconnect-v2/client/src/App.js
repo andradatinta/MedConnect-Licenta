@@ -8,6 +8,8 @@ import SignUpCMR from "./pages/SignUpCMR";
 import Login from "./components/Login/Login";
 import Calendar from "./pages/Calendar";
 import { AuthProvider } from "./contexts/AuthContext";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import ProgressContent from "./components/DoctorDashboard/ProgressContent";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -16,6 +18,17 @@ const router = createBrowserRouter([
   { path: "/signupcmr", element: <SignUpCMR /> },
   { path: "/login", element: <Login /> },
   { path: "/calendar", element: <Calendar /> },
+  {
+    path: "doctor",
+    element: <DoctorDashboard />,
+    children: [
+      {
+        index: true,
+        element: <ProgressContent />,
+      },
+      { path: "documents", element: <Home /> },
+    ],
+  },
 ]);
 
 function App() {
