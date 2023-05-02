@@ -1,8 +1,28 @@
 import React from "react";
+import axios from "axios";
 import { Grid, Button, Typography } from "@mui/material";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 function DashboardDownloadCard() {
+  const handleDownloadClick = async () => {
+    try {
+      const response = await axios.get("/graphics/Tema_4.pdf", {
+        responseType: "blob",
+      });
+      const url = URL.createObjectURL(response.data);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "aviz-test.pdf";
+      link.click();
+
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 100);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
   return (
     <>
       <Grid container flexDirection="column" alignItems="center" gap="1rem">
@@ -18,6 +38,7 @@ function DashboardDownloadCard() {
           <Button
             color="secondary"
             variant="contained"
+            onClick={handleDownloadClick}
             sx={{ maxWidth: "100%" }}
           >
             Descarcă

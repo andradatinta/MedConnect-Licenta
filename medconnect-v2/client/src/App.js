@@ -10,6 +10,7 @@ import Calendar from "./pages/Calendar";
 import { AuthProvider } from "./contexts/AuthContext";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import ProgressContent from "./components/DoctorDashboard/ProgressContent";
+import DoctorDocumentsContent from "./components/DoctorDashboard/DoctorDocumentsContent";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         index: true,
         element: <ProgressContent />,
       },
-      { path: "documents", element: <Home /> },
+      { path: "documents", element: <DoctorDocumentsContent /> },
     ],
   },
 ]);
