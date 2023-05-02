@@ -186,6 +186,36 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          background: "#F8F9FA 0% 0% no-repeat padding-box",
+          opacity: 1,
+          borderRadius: "30px",
+        },
+      },
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          "&::-webkit-scrollbar": {
+            width: "10px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#f1f1f1",
+            marginTop: "1rem",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#888",
+            borderRadius: "30px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#555",
+          },
+          padding: "2rem 4rem",
+        },
+      },
+    },
     // MuiToggleButton: {
     //   styleOverrides: {
     //     sizeMedium: {

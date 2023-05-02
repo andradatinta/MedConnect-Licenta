@@ -1,6 +1,11 @@
 // CalendarContent.styles.js
 import { styled } from "@mui/system";
-import { Button, FormControlLabel, Typography } from "@mui/material";
+import {
+  Button,
+  DialogContent,
+  FormControlLabel,
+  Typography,
+} from "@mui/material";
 
 export const CalendarSelectToggleButton = styled(({ isSelected, ...other }) => (
   <Button {...other} />
@@ -45,3 +50,8 @@ export const FilterControlLabel = (props) => (
     }
   />
 );
+
+export const DetailsDialogContent = styled(DialogContent)({
+  display: "flex",
+  alignItems: "center",
+});

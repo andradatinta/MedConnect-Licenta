@@ -6,11 +6,29 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import React from "react";
+import { React, useState } from "react";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import EventDetailsModal from "./EventDetailsModal";
+import JoinEventModal from "./JoinEventModal";
 
 function CalendarEventCard() {
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isJoinEventOpen, setIsJoinEventOpen] = useState(false);
+  const handleDetailsOpen = () => {
+    setIsDetailsOpen(true);
+  };
+
+  const handleDetailsClose = () => {
+    setIsDetailsOpen(false);
+  };
+  const handleJoinEventOpen = () => {
+    setIsJoinEventOpen(true);
+  };
+
+  const handleJoinEventClose = () => {
+    setIsJoinEventOpen(false);
+  };
   return (
     <>
       <Card>
@@ -93,16 +111,38 @@ function CalendarEventCard() {
               alignItems="center"
               gap="1rem"
             >
-              <Button variant="outlined" size="small" sx={{ maxWidth: "30%" }}>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={handleDetailsOpen}
+                sx={{ maxWidth: "30%" }}
+              >
                 Detalii
               </Button>
-              <Button variant="contained" size="small" sx={{ maxWidth: "30%" }}>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={handleJoinEventOpen}
+                sx={{ maxWidth: "30%" }}
+              >
                 Înscrie-te
               </Button>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
+      {isDetailsOpen && (
+        <EventDetailsModal
+          isDetailsOpen={isDetailsOpen}
+          handleClose={handleDetailsClose}
+        />
+      )}
+      {isJoinEventOpen && (
+        <JoinEventModal
+          isJoinEventOpen={isJoinEventOpen}
+          handleClose={handleJoinEventClose}
+        />
+      )}
     </>
   );
 }
