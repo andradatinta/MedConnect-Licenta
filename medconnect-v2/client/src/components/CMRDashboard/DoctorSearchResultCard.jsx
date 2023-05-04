@@ -3,7 +3,7 @@ import { Card, Grid, CardContent, Box, Typography } from "@mui/material";
 import MedicalInformationOutlinedIcon from "@mui/icons-material/MedicalInformationOutlined";
 import { DocumentsWideButton } from "../DoctorDashboard/DoctorDashboard.styles";
 
-function DoctorSearchResultCard() {
+function DoctorSearchResultCard({ lastName, firstName, specialization, cuim }) {
   return (
     <>
       <Card sx={{ backgroundColor: "#FFFFFFCC", borderRadius: "10px" }}>
@@ -28,18 +28,18 @@ function DoctorSearchResultCard() {
                   color="secondary"
                 />
                 <Typography variant="p" color="primary" fontWeight="500">
-                  Numele Medicului
+                  {firstName + " " + lastName}
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="p" color="primary" fontWeight="500">
-                Specializarea
+                {specialization}
               </Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="p" color="#21252987">
-                1234567890ABCDE
+                {cuim}
               </Typography>
             </Grid>
 

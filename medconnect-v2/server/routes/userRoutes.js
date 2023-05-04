@@ -9,5 +9,6 @@ router.post("/signup/doctor", userController.registerUserDoctor);
 router.post("/signup/cmr", userController.registerUserCMR);
 router.post("/login", userController.loginUser);
 router.get("/loggedUser", routeProtect, userController.getLoggedInUser);
+router.get("/searchedUsers", userController.getSearchedForUsers);
 
 module.exports = router;
