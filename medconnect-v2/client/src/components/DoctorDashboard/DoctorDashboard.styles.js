@@ -38,3 +38,21 @@ export const ProgressSelectToggleButton = styled(({ isSelected, ...other }) => (
     backgroundColor: isSelected ? "#034694" : "#F8F9FA",
   },
 }));
+
+export const DocumentsWideButton = styled(Button)(({ theme }) => ({
+  boxShadow: "5px 5px 15px #00000029",
+  textAlign: "center",
+  backgroundColor: "#6F00FF",
+  color: "#ffffff",
+  width: "100%",
+  fontSize: "1rem",
+  padding: "0.3rem 0",
+  letterSpacing: "0.63px",
+  "&:hover": {
+    backgroundColor: "#8C33FF",
+    cursor: "pointer",
+  },
+  "@media (max-width: 600px)": {
+    fontSize: "0.8rem", // Decrease the font size for smaller screens
+  },
+}));

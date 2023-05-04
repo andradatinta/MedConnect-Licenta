@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { DashboardMenuButton } from "./DoctorDashboard.styles";
-import PieChartRoundedIcon from "@mui/icons-material/PieChartRounded";
 import DonutLargeOutlinedIcon from "@mui/icons-material/DonutLargeOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";

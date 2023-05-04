@@ -11,6 +11,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import ProgressContent from "./components/DoctorDashboard/ProgressContent";
 import DoctorDocumentsContent from "./components/DoctorDashboard/DoctorDocumentsContent";
+import CMRDashboard from "./pages/CMRDashboard";
+import DoctorsContent from "./components/CMRDashboard/DoctorsContent";
+import CMRSettings from "./components/CMRDashboard/CMRSettings";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -28,6 +31,17 @@ const router = createBrowserRouter([
         element: <ProgressContent />,
       },
       { path: "documents", element: <DoctorDocumentsContent /> },
+    ],
+  },
+  {
+    path: "cmr",
+    element: <CMRDashboard />,
+    children: [
+      {
+        index: true,
+        element: <DoctorsContent />,
+      },
+      { path: "settings", element: <CMRSettings /> },
     ],
   },
 ]);

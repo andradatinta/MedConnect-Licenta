@@ -4,6 +4,7 @@ import DashboardMenuButtons from "./DashboardMenuButtons";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import CMRDashboardMenuButtons from "../CMRDashboard/CMRDashboardMenuButtons";
 
 function DashboardNavigationMenu() {
   const [selectedButton, setSelectedButton] = useState("");
@@ -24,6 +25,12 @@ function DashboardNavigationMenu() {
         setSelectedButton("upcomingEvents");
         break;
       case "/doctor/settings":
+        setSelectedButton("settings");
+        break;
+      case "/cmr":
+        setSelectedButton("doctors");
+        break;
+      case "/cmr/settings":
         setSelectedButton("settings");
         break;
       default:
@@ -87,7 +94,11 @@ function DashboardNavigationMenu() {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <DashboardMenuButtons selectedButton={selectedButton} />
+            {user.type === "doctor" ? (
+              <DashboardMenuButtons selectedButton={selectedButton} />
+            ) : (
+              <CMRDashboardMenuButtons selectedButton={selectedButton} />
+            )}
           </Grid>
         </CardContent>
       </Card>

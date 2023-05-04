@@ -14,7 +14,10 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 // import { useLocation } from "react-router-dom";
 
 function NavBar() {
-  const { loggedIn, logout } = useContext(AuthContext);
+  const { loggedIn, logout, user } = useContext(AuthContext);
+
+  const accountTypeRoute = user.type === "doctor" ? "/doctor" : "/cmr";
+
   // force navbar to rerender
   // const location = useLocation();
 
@@ -84,7 +87,7 @@ function NavBar() {
                     Logout
                   </Typography>
                 </MuiLink>
-                <MuiLink component={RouterLink} to="/doctor">
+                <MuiLink component={RouterLink} to={accountTypeRoute}>
                   <AccountCircleOutlinedIcon sx={{ marginRight: "0.3rem" }} />
                   <Typography variant="p">Contul meu</Typography>
                 </MuiLink>
