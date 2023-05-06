@@ -1,12 +1,19 @@
 const mongoose = require("mongoose");
+const { specializations } = require("../util/constants");
 
 const eventSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  date: { type: Date, required: true },
-  details: { type: String, required: true },
-  contact: { type: String, required: true },
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  location: { type: String, required: true },
+  dateTime: { type: Date, required: true },
+  contactEmail: { type: String, required: true },
+  specialization: {
+    type: String,
+    required: true,
+    enum: specializations,
+  },
+  imageUrl: { type: String, required: false },
   credits: { type: Number, required: true },
-  attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 module.exports = mongoose.model("Event", eventSchema);

@@ -7,7 +7,14 @@ import {
   Typography,
 } from "@mui/material";
 
-function EventDetailsModal({ isDetailsOpen, handleClose }) {
+function EventDetailsModal({
+  isDetailsOpen,
+  handleClose,
+  description,
+  dateTime,
+  location,
+  contactEmail,
+}) {
   return (
     <>
       <Dialog
@@ -34,7 +41,7 @@ function EventDetailsModal({ isDetailsOpen, handleClose }) {
             marginBottom="1rem"
             sx={{ marginBottom: "1rem" }}
           >
-            Lorem ipsum dolor sit amet
+            {location}
           </Typography>
           <Typography
             variant="h4"
@@ -48,7 +55,8 @@ function EventDetailsModal({ isDetailsOpen, handleClose }) {
             Data
           </Typography>
           <Typography color="primary" sx={{ marginBottom: "1rem" }}>
-            xx/xx/xxxx
+            {/* xx/xx/xxxx */}
+            {new Date(dateTime).toLocaleString()}
           </Typography>
           <Typography
             variant="h4"
@@ -62,7 +70,7 @@ function EventDetailsModal({ isDetailsOpen, handleClose }) {
             Detalii
           </Typography>
           <Typography color="primary" sx={{ marginBottom: "1rem" }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
             min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
@@ -86,7 +94,8 @@ function EventDetailsModal({ isDetailsOpen, handleClose }) {
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
             min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min.
+            min. */}
+            {description}
           </Typography>
           <Typography
             variant="h4"
@@ -100,7 +109,7 @@ function EventDetailsModal({ isDetailsOpen, handleClose }) {
             Contact
           </Typography>
           <Typography color="primary" sx={{ marginBottom: "1rem" }}>
-            Lorem ipsum dolor sit amet
+            {contactEmail}
           </Typography>
         </DialogContent>
         <DialogActions>

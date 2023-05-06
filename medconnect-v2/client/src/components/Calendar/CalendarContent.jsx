@@ -5,13 +5,42 @@ import { FullViewportContainer } from "../SignUp/SignUp.styles";
 import CalendarEventButtons from "./CalendarEventButtons";
 import CalendarEvents from "./CalendarEvents";
 import FilterMenu2 from "./FilterMenu2";
+import { API_URL } from "../../utils/constants";
+import axios from "axios";
+
+function useGetCalendarEvents() {
+  const [calendarEvents, setCalendarEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchCalendarEvents = async () => {
+      try {
+        const url = `${API_URL}/events/getCalendar`;
+        const response = await axios.get(url);
+        setCalendarEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching calendar events:", error);
+      }
+    };
+    fetchCalendarEvents();
+
+    //   if (searchQuery) {
+    //     fetchSearchedUsers();
+    //   } else {
+    //     setSearchedUsers([]);
+    //   }
+  }, []);
+
+  return calendarEvents;
+}
 
 function CalendarContent() {
   // const [isSelected, setIsSelected] = useState(false);
   const [selectedButton, setSelectedButton] = useState("localBtn");
+  const calendarEvents = useGetCalendarEvents();
   const handleEventTypeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
+  // useGetCalendarEvents();
 
   useEffect(() => {
     // If you need to run side effects based on selectedButton state
@@ -20,6 +49,7 @@ function CalendarContent() {
   }, [selectedButton]);
   return (
     <>
+      {console.log(calendarEvents)}
       <FullViewportContainer
         maxWidth="100%"
         // sx={{ backgroundColor: "blueviolet", padding: "0 1rem" }}
@@ -48,7 +78,10 @@ function CalendarContent() {
                   selectedButton={selectedButton}
                   handleEventTypeClick={handleEventTypeClick}
                 />
-                <CalendarEvents />
+                {calendarEvents.length > 0 ? (
+                  <CalendarEvents allCalendarEvents={calendarEvents} />
+                ) : null}
+                {/* <CalendarEvents /> */}
               </Box>
             </Box>
           </Grid>

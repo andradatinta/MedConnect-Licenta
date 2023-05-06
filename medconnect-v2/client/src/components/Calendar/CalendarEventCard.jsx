@@ -12,7 +12,16 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import EventDetailsModal from "./EventDetailsModal";
 import JoinEventModal from "./JoinEventModal";
 
-function CalendarEventCard({ showSignUpButton }) {
+function CalendarEventCard({
+  showSignUpButton,
+  eventName,
+  dateTime,
+  description,
+  location,
+  credits,
+  contactEmail,
+  specialization,
+}) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isJoinEventOpen, setIsJoinEventOpen] = useState(false);
   const handleDetailsOpen = () => {
@@ -32,7 +41,7 @@ function CalendarEventCard({ showSignUpButton }) {
   return (
     <>
       <Card>
-        <CardContent>
+        <CardContent sx={{ minHeight: "11.7rem" }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
@@ -77,7 +86,7 @@ function CalendarEventCard({ showSignUpButton }) {
                       sx={{ marginRight: "0.3rem" }}
                     />
                     <Typography variant="p" color="primary">
-                      {new Date().toLocaleDateString("en-GB")}
+                      {new Date(dateTime).toLocaleDateString("en-GB")}
                     </Typography>
                   </Box>
 
@@ -92,16 +101,20 @@ function CalendarEventCard({ showSignUpButton }) {
                       sx={{ marginRight: "0.3rem" }}
                     />
                     <Typography variant="p" color="primary">
-                      12 EMC
+                      {`${credits} EMC`}
                     </Typography>
                   </Box>
                 </Box>
               </Box>
             </Grid>
             <Grid item xs={12} textAlign="center">
-              <Typography variant="h5">
-                Actualități în farmacologie și farmacoterapie
-              </Typography>
+              {eventName.length > 30 ? (
+                <Typography variant="h5">{eventName}</Typography>
+              ) : (
+                <Typography variant="h5" marginBottom="1.1rem">
+                  {eventName}
+                </Typography>
+              )}
             </Grid>
             <Grid
               item
@@ -137,6 +150,10 @@ function CalendarEventCard({ showSignUpButton }) {
         <EventDetailsModal
           isDetailsOpen={isDetailsOpen}
           handleClose={handleDetailsClose}
+          description={description}
+          dateTime={dateTime}
+          location={location}
+          contactEmail={contactEmail}
         />
       )}
       {isJoinEventOpen && (

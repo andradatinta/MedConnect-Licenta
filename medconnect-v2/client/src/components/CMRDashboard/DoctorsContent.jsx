@@ -44,7 +44,7 @@ function DoctorsContent() {
     setSearchAttempted(true);
   };
 
-  useGetSearchedUsers();
+  // useGetSearchedUsers();
   return (
     <>
       <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>

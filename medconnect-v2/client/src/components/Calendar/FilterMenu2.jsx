@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { Refresh as RefreshIcon } from "@mui/icons-material";
 import { FilterControlLabel } from "./CalendarContent.styles";
+import { specializations } from "../../utils/constants";
 function FilterMenu2() {
   return (
     <>
@@ -52,38 +53,13 @@ function FilterMenu2() {
                 width: "100%",
               }}
             >
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
-              <FilterControlLabel
-                control={<Checkbox size="small" />}
-                label="Alergologie și imunologie clinică"
-              />
+              {specializations.map((specialization) => (
+                <FilterControlLabel
+                  key={specialization}
+                  control={<Checkbox size="small" />}
+                  label={specialization}
+                />
+              ))}
             </FormGroup>
           </Box>
           <Box sx={{ height: "50%", marginBottom: "0.8rem" }}>
