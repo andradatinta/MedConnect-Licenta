@@ -156,7 +156,11 @@ exports.getSearchedForUsers = asyncHandler(async (req, res) => {
   const search = req.query.search || "";
 
   const searchedUsers = await User.find({
-    lastName: { $regex: search, $options: "i" },
+    $or: [
+      { firstName: { $regex: search, $options: "i" } },
+      { lastName: { $regex: search, $options: "i" } },
+    ],
+    type: "doctor",
   });
   res.status(200).json(searchedUsers);
 });

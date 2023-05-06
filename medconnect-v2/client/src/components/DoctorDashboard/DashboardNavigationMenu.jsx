@@ -21,7 +21,7 @@ function DashboardNavigationMenu() {
       case "/doctor/documents":
         setSelectedButton("documents");
         break;
-      case "/doctor/upcomingEvents":
+      case "/doctor/upcoming":
         setSelectedButton("upcomingEvents");
         break;
       case "/doctor/settings":

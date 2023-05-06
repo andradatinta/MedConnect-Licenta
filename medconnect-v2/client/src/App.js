@@ -14,6 +14,7 @@ import DoctorDocumentsContent from "./components/DoctorDashboard/DoctorDocuments
 import CMRDashboard from "./pages/CMRDashboard";
 import DoctorsContent from "./components/CMRDashboard/DoctorsContent";
 import CMRSettings from "./components/CMRDashboard/CMRSettings";
+import UpcomingEventsContent from "./components/DoctorDashboard/UpcomingEventsContent";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
         element: <ProgressContent />,
       },
       { path: "documents", element: <DoctorDocumentsContent /> },
+      { path: "upcoming", element: <UpcomingEventsContent /> },
     ],
   },
   {

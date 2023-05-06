@@ -44,7 +44,9 @@ function DoctorSearchResultCard({ lastName, firstName, specialization, cuim }) {
             </Grid>
 
             <Grid item xs={3}>
-              <DocumentsWideButton sx={{ maxWidth: "70%", minWidth: "70%" }}>
+              <DocumentsWideButton
+                sx={{ maxWidth: "fit-content", minWidth: "75%" }}
+              >
                 Vezi documente
               </DocumentsWideButton>
             </Grid>

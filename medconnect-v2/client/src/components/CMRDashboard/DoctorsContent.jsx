@@ -4,10 +4,10 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import DoctorSearchResultCard from "./DoctorSearchResultCard";
 import axios from "axios";
 import { API_URL } from "../../utils/constants";
 import DoctorSearchResultContainer from "./DoctorSearchResultContainer";
+import NoDoctorSearchResult from "./NoDoctorSearchResult";
 
 function useGetSearchedUsers(searchQuery) {
   const [searchedUsers, setSearchedUsers] = useState([]);
@@ -34,13 +34,14 @@ function useGetSearchedUsers(searchQuery) {
 }
 
 function DoctorsContent() {
-  // const base_url = API_URL;
   const [searchText, setSearchText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchAttempted, setSearchAttempted] = useState(false);
   const searchedUsers = useGetSearchedUsers(searchQuery);
 
   const handleSearch = () => {
     setSearchQuery(searchText);
+    setSearchAttempted(true);
   };
 
   useGetSearchedUsers();
@@ -91,17 +92,13 @@ function DoctorsContent() {
             />
           </Grid>
           <Grid item xs={12} md={12}>
-            {/* {searchedUsers.map((doctor) => (
-              <DoctorSearchResultCard
-                key={doctor._id}
-                lastName={doctor.lastName}
-                firstName={doctor.firstName}
-                specialization={doctor.specialization}
-                cuim={doctor.cuim}
-                // de adaugat documentele lui
+            {searchedUsers.length > 0 ? (
+              <DoctorSearchResultContainer
+                searchedUsersResult={searchedUsers}
               />
-            ))} */}
-            <DoctorSearchResultContainer searchedUsersResult={searchedUsers} />
+            ) : searchAttempted ? (
+              <NoDoctorSearchResult />
+            ) : null}
           </Grid>
         </Grid>
       </Box>

@@ -12,7 +12,7 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import EventDetailsModal from "./EventDetailsModal";
 import JoinEventModal from "./JoinEventModal";
 
-function CalendarEventCard() {
+function CalendarEventCard({ showSignUpButton }) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isJoinEventOpen, setIsJoinEventOpen] = useState(false);
   const handleDetailsOpen = () => {
@@ -119,14 +119,16 @@ function CalendarEventCard() {
               >
                 Detalii
               </Button>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={handleJoinEventOpen}
-                sx={{ maxWidth: "30%" }}
-              >
-                Înscrie-te
-              </Button>
+              {!showSignUpButton ? (
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={handleJoinEventOpen}
+                  sx={{ maxWidth: "30%" }}
+                >
+                  Înscrie-te
+                </Button>
+              ) : null}
             </Grid>
           </Grid>
         </CardContent>
