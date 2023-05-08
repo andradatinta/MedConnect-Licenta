@@ -164,3 +164,12 @@ exports.getSearchedForUsers = asyncHandler(async (req, res) => {
   });
   res.status(200).json(searchedUsers);
 });
+
+exports.getUserDetails = asyncHandler(async (req, res) => {
+  const doctorData = await User.findById(req.params.userId);
+  if (doctorData) {
+    res.status(200).json(doctorData);
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
+});

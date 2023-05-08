@@ -3,7 +3,14 @@ import { Card, Grid, CardContent, Box, Typography } from "@mui/material";
 import MedicalInformationOutlinedIcon from "@mui/icons-material/MedicalInformationOutlined";
 import { DocumentsWideButton } from "../DoctorDashboard/DoctorDashboard.styles";
 
-function DoctorSearchResultCard({ lastName, firstName, specialization, cuim }) {
+function DoctorSearchResultCard({
+  lastName,
+  firstName,
+  specialization,
+  cuim,
+  onClickSeeDocuments,
+  doctorId,
+}) {
   return (
     <>
       <Card sx={{ backgroundColor: "#FFFFFFCC", borderRadius: "10px" }}>
@@ -46,6 +53,7 @@ function DoctorSearchResultCard({ lastName, firstName, specialization, cuim }) {
             <Grid item xs={3}>
               <DocumentsWideButton
                 sx={{ maxWidth: "fit-content", minWidth: "75%" }}
+                onClick={() => onClickSeeDocuments(doctorId)}
               >
                 Vezi documente
               </DocumentsWideButton>

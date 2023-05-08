@@ -8,8 +8,9 @@ import axios from "axios";
 import { API_URL } from "../../utils/constants";
 import DoctorSearchResultContainer from "./DoctorSearchResultContainer";
 import NoDoctorSearchResult from "./NoDoctorSearchResult";
+import SelectedDoctorDocuments from "./SelectedDoctorDocuments";
 
-function useGetSearchedUsers(searchQuery) {
+export function useGetSearchedUsers(searchQuery) {
   const [searchedUsers, setSearchedUsers] = useState([]);
 
   useEffect(() => {
@@ -33,15 +34,45 @@ function useGetSearchedUsers(searchQuery) {
   return searchedUsers;
 }
 
+export function useGetSelectedUserData(selectedDoctorId) {
+  const [selectedDoctorData, setSelectedDoctorData] = useState(null);
+
+  useEffect(() => {
+    const fetchSelectedDoctorData = async () => {
+      try {
+        const url = `${API_URL}/users/${selectedDoctorId}`;
+        const response = await axios.get(url);
+        setSelectedDoctorData(response.data);
+      } catch (error) {
+        console.error("Error fetching selected doctor data:", error);
+      }
+    };
+
+    if (selectedDoctorId) {
+      fetchSelectedDoctorData();
+    } else {
+      setSelectedDoctorData(null);
+    }
+  }, [selectedDoctorId]);
+
+  return selectedDoctorData;
+}
+
 function DoctorsContent() {
   const [searchText, setSearchText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchAttempted, setSearchAttempted] = useState(false);
+  const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const searchedUsers = useGetSearchedUsers(searchQuery);
+  const selectedDoctorData = useGetSelectedUserData(selectedDoctorId);
+  const handleSeeDocumentsClick = (doctorId) => {
+    setSelectedDoctorId(doctorId);
+  };
 
   const handleSearch = () => {
     setSearchQuery(searchText);
     setSearchAttempted(true);
+    setSelectedDoctorId(null);
   };
 
   // useGetSearchedUsers();
@@ -56,9 +87,15 @@ function DoctorsContent() {
             gap: "1.25rem",
           }}
         >
-          <Typography variant="h3" fontWeight="500">
-            Medici înregistrați
-          </Typography>
+          {selectedDoctorData ? (
+            <Typography variant="h3" fontWeight="500">
+              {selectedDoctorData.firstName + " " + selectedDoctorData.lastName}
+            </Typography>
+          ) : (
+            <Typography variant="h3" fontWeight="500">
+              Medici înregistrați
+            </Typography>
+          )}
         </Box>
         <Grid
           container
@@ -91,15 +128,20 @@ function DoctorsContent() {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={12}>
-            {searchedUsers.length > 0 ? (
-              <DoctorSearchResultContainer
-                searchedUsersResult={searchedUsers}
-              />
-            ) : searchAttempted ? (
-              <NoDoctorSearchResult />
-            ) : null}
-          </Grid>
+          {selectedDoctorId ? (
+            <SelectedDoctorDocuments selectedDoctorData={selectedDoctorData} />
+          ) : (
+            <Grid item xs={12} md={12}>
+              {searchedUsers.length > 0 ? (
+                <DoctorSearchResultContainer
+                  searchedUsersResult={searchedUsers}
+                  onClickSeeDocuments={handleSeeDocumentsClick}
+                />
+              ) : searchAttempted ? (
+                <NoDoctorSearchResult />
+              ) : null}
+            </Grid>
+          )}
         </Grid>
       </Box>
     </>

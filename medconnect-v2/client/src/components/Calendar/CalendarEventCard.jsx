@@ -38,6 +38,11 @@ function CalendarEventCard({
   const handleJoinEventClose = () => {
     setIsJoinEventOpen(false);
   };
+  const handleOpenJoinEventModal = () => {
+    handleDetailsClose(); // Close EventDetailsModal
+    handleJoinEventOpen(); // Open JoinEventModal
+  };
+
   return (
     <>
       <Card>
@@ -150,6 +155,7 @@ function CalendarEventCard({
         <EventDetailsModal
           isDetailsOpen={isDetailsOpen}
           handleClose={handleDetailsClose}
+          handleOpenJoinEventModal={handleOpenJoinEventModal}
           description={description}
           dateTime={dateTime}
           location={location}

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import { FullViewportContainer } from "../SignUp/SignUp.styles";
-// import { CalendarSelectToggleButton } from "./CalendarContent.styles";
 import CalendarEventButtons from "./CalendarEventButtons";
 import CalendarEvents from "./CalendarEvents";
 import FilterMenu2 from "./FilterMenu2";
 import { API_URL } from "../../utils/constants";
 import axios from "axios";
+import { AuthContext } from "../../contexts/AuthContext";
 
-function useGetCalendarEvents() {
+export function useGetCalendarEvents() {
   const [calendarEvents, setCalendarEvents] = useState([]);
 
   useEffect(() => {
@@ -22,12 +22,6 @@ function useGetCalendarEvents() {
       }
     };
     fetchCalendarEvents();
-
-    //   if (searchQuery) {
-    //     fetchSearchedUsers();
-    //   } else {
-    //     setSearchedUsers([]);
-    //   }
   }, []);
 
   return calendarEvents;
@@ -37,6 +31,8 @@ function CalendarContent() {
   // const [isSelected, setIsSelected] = useState(false);
   const [selectedButton, setSelectedButton] = useState("localBtn");
   const calendarEvents = useGetCalendarEvents();
+  const { user } = useContext(AuthContext);
+  const isDoctor = user && user.type === "doctor";
   const handleEventTypeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
@@ -79,7 +75,10 @@ function CalendarContent() {
                   handleEventTypeClick={handleEventTypeClick}
                 />
                 {calendarEvents.length > 0 ? (
-                  <CalendarEvents allCalendarEvents={calendarEvents} />
+                  <CalendarEvents
+                    allCalendarEvents={calendarEvents}
+                    showSignUpButton={!isDoctor}
+                  />
                 ) : null}
                 {/* <CalendarEvents /> */}
               </Box>

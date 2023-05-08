@@ -2,7 +2,7 @@ import React from "react";
 import CalendarEventCard from "./CalendarEventCard";
 import { Grid } from "@mui/material";
 
-function CalendarEvents({ allCalendarEvents }) {
+function CalendarEvents({ allCalendarEvents, showSignUpButton }) {
   return (
     <>
       <Grid container spacing={2} columnGap="2.5rem" marginTop="1rem">
@@ -17,6 +17,7 @@ function CalendarEvents({ allCalendarEvents }) {
           >
             <CalendarEventCard
               // de vazut cu imageUrl
+              showSignUpButton={showSignUpButton}
               key={event._id}
               eventName={event.name}
               dateTime={event.dateTime}

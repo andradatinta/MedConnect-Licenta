@@ -10,5 +10,6 @@ router.post("/signup/cmr", userController.registerUserCMR);
 router.post("/login", userController.loginUser);
 router.get("/loggedUser", routeProtect, userController.getLoggedInUser);
 router.get("/searchedUsers", userController.getSearchedForUsers);
+router.get("/:userId", userController.getUserDetails);
 
 module.exports = router;

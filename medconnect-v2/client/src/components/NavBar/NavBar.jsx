@@ -11,13 +11,12 @@ import { NavigationAccount, NavigationLinks } from "./NavBar.styles";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext, useEffect } from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-// import { useLocation } from "react-router-dom";
 
 function NavBar() {
   const { loggedIn, logout, user } = useContext(AuthContext);
-
-  const accountTypeRoute = user.type === "doctor" ? "/doctor" : "/cmr";
-
+  // const accountTypeRoute = user.type === "doctor" ? "/doctor" : "/cmr";
+  const accountTypeRoute =
+    user && user.type ? (user.type === "doctor" ? "/doctor" : "/cmr") : "/";
   // force navbar to rerender
   // const location = useLocation();
 
@@ -76,22 +75,24 @@ function NavBar() {
                 </Button>
               </>
             ) : (
-              <>
-                <MuiLink
-                  component={RouterLink}
-                  to="/"
-                  onClick={logout}
-                  sx={{ ml: 2 }}
-                >
-                  <Typography variant="p" color="primary">
-                    Logout
-                  </Typography>
-                </MuiLink>
-                <MuiLink component={RouterLink} to={accountTypeRoute}>
-                  <AccountCircleOutlinedIcon sx={{ marginRight: "0.3rem" }} />
-                  <Typography variant="p">Contul meu</Typography>
-                </MuiLink>
-              </>
+              user && (
+                <>
+                  <MuiLink
+                    component={RouterLink}
+                    to="/"
+                    onClick={logout}
+                    sx={{ ml: 2 }}
+                  >
+                    <Typography variant="p" color="primary">
+                      Logout
+                    </Typography>
+                  </MuiLink>
+                  <MuiLink component={RouterLink} to={accountTypeRoute}>
+                    <AccountCircleOutlinedIcon sx={{ marginRight: "0.3rem" }} />
+                    <Typography variant="p">Contul meu</Typography>
+                  </MuiLink>
+                </>
+              )
             )}
           </NavigationAccount>
         </Toolbar>

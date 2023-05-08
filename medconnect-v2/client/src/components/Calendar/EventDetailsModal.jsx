@@ -14,7 +14,12 @@ function EventDetailsModal({
   dateTime,
   location,
   contactEmail,
+  handleOpenJoinEventModal,
 }) {
+  // const handleJoinButtonClick = () => {
+  //   handleClose();
+  //   handleJoinEventClose(true);
+  // };
   return (
     <>
       <Dialog
@@ -70,7 +75,7 @@ function EventDetailsModal({
             Detalii
           </Typography>
           <Typography color="primary" sx={{ marginBottom: "1rem" }}>
-            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
             min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
@@ -94,8 +99,8 @@ function EventDetailsModal({
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
             min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. */}
-            {description}
+            min.
+            {/* {description} */}
           </Typography>
           <Typography
             variant="h4"
@@ -113,7 +118,7 @@ function EventDetailsModal({
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={handleOpenJoinEventModal} color="secondary">
             Înscrie-te
           </Button>
           <Button onClick={handleClose} color="primary">

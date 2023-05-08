@@ -30,14 +30,14 @@ function ProgressContent() {
           container
           spacing={2}
           sx={{
-            backgroundColor: "blue",
+            // backgroundColor: "blue",
             marginTop: "1rem",
           }}
         >
           <Grid item xs={12} md={12}>
             {/* {aici e ceva ciudatel rau cu spacing ul si column gap ul asta - aveam columngap 11 inainte} */}
             <Grid container spacing={1}>
-              <Grid item xs={12} md={3} sx={{ backgroundColor: "pink" }}>
+              <Grid item xs={12} md={3}>
                 <Card sx={{ backgroundColor: "#F8F9FA", height: "100%" }}>
                   <CardContent>
                     <Grid
@@ -69,12 +69,7 @@ function ProgressContent() {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                md={8}
-                sx={{ backgroundColor: "purple", marginLeft: "3rem" }}
-              >
+              <Grid item xs={12} md={8} sx={{ marginLeft: "3rem" }}>
                 <Card sx={{ backgroundColor: "#F8F9FA", height: "100%" }}>
                   <CardContent>
                     <Grid container flexDirection="column">
