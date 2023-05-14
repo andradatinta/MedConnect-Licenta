@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { specializations } = require("../util/constants");
+const { specializations, eventSortType } = require("../util/constants");
 
 const eventSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -8,9 +8,14 @@ const eventSchema = new mongoose.Schema({
   dateTime: { type: Date, required: true },
   contactEmail: { type: String, required: true },
   specialization: {
-    type: String,
+    type: [String],
     required: true,
     enum: specializations,
+  },
+  sortType: {
+    type: String,
+    enum: eventSortType,
+    required: true,
   },
   imageUrl: { type: String, required: false },
   credits: { type: Number, required: true },

@@ -152,8 +152,23 @@ exports.getLoggedInUser = asyncHandler(async (req, res) => {
   // res.json({ message: "Get current user's data" });
 });
 
+// exports.getSearchedForUsers = asyncHandler(async (req, res) => {
+//   const search = req.query.search || "";
+
+//   const searchedUsers = await User.find({
+//     $or: [
+//       { firstName: { $regex: search, $options: "i" } },
+//       { lastName: { $regex: search, $options: "i" } },
+//     ],
+//     type: "doctor",
+//   });
+//   res.status(200).json(searchedUsers);
+// });
+
 exports.getSearchedForUsers = asyncHandler(async (req, res) => {
   const search = req.query.search || "";
+  const page = parseInt(req.query.page) - 1 || 0;
+  const limit = parseInt(req.query.limit) || 5;
 
   const searchedUsers = await User.find({
     $or: [
@@ -161,8 +176,20 @@ exports.getSearchedForUsers = asyncHandler(async (req, res) => {
       { lastName: { $regex: search, $options: "i" } },
     ],
     type: "doctor",
+  })
+    .skip(page * limit)
+    .limit(limit);
+
+  const totalSearchedUsers = await User.countDocuments({
+    $or: [
+      { firstName: { $regex: search, $options: "i" } },
+      { lastName: { $regex: search, $options: "i" } },
+    ],
+    type: "doctor",
   });
-  res.status(200).json(searchedUsers);
+
+  const response = { searchedUsers, limit, page: page + 1, totalSearchedUsers };
+  res.status(200).json(response);
 });
 
 exports.getUserDetails = asyncHandler(async (req, res) => {

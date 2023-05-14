@@ -34,8 +34,9 @@ module.exports = {
     "Chirurgie pediatrică",
     "Chirurgie plastică",
     "Obstetrică-ginecologie",
-    "Oftalmogie",
+    "Oftalmologie",
     "Ortopedie",
     "Urologie",
   ],
+  eventSortType: ["local", "national", "international"],
 };

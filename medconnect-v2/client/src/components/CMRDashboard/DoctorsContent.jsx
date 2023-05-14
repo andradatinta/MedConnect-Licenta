@@ -10,14 +10,15 @@ import DoctorSearchResultContainer from "./DoctorSearchResultContainer";
 import NoDoctorSearchResult from "./NoDoctorSearchResult";
 import SelectedDoctorDocuments from "./SelectedDoctorDocuments";
 
-export function useGetSearchedUsers(searchQuery) {
+export function useGetSearchedUsers(searchQuery, page) {
   const [searchedUsers, setSearchedUsers] = useState([]);
 
   useEffect(() => {
     const fetchSearchedUsers = async () => {
       try {
-        const url = `${API_URL}/users/searchedUsers?search=${searchQuery}`;
+        const url = `${API_URL}/users/searchedUsers?search=${searchQuery}&page=${page}`;
         const response = await axios.get(url);
+        console.log("Server response:", response.data);
         setSearchedUsers(response.data);
       } catch (error) {
         console.error("Error fetching searched doctors:", error);
@@ -29,7 +30,7 @@ export function useGetSearchedUsers(searchQuery) {
     } else {
       setSearchedUsers([]);
     }
-  }, [searchQuery]);
+  }, [searchQuery, page]);
 
   return searchedUsers;
 }
@@ -63,7 +64,8 @@ function DoctorsContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
-  const searchedUsers = useGetSearchedUsers(searchQuery);
+  const [page, setPage] = useState(1);
+  const searchedUsers = useGetSearchedUsers(searchQuery, page);
   const selectedDoctorData = useGetSelectedUserData(selectedDoctorId);
   const handleSeeDocumentsClick = (doctorId) => {
     setSelectedDoctorId(doctorId);
@@ -105,12 +107,11 @@ function DoctorsContent() {
             marginTop: "1rem",
           }}
         >
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12} md={12} marginBottom="0.5rem">
             <TextField
               label="Caută un medic..."
               fullWidth={true}
               value={searchText}
-              // placeholder="Caută un medic..."
               onChange={(e) => setSearchText(e.target.value)}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
@@ -132,10 +133,20 @@ function DoctorsContent() {
             <SelectedDoctorDocuments selectedDoctorData={selectedDoctorData} />
           ) : (
             <Grid item xs={12} md={12}>
-              {searchedUsers.length > 0 ? (
+              {searchedUsers &&
+              searchedUsers.searchedUsers &&
+              searchedUsers.searchedUsers.length > 0 ? (
                 <DoctorSearchResultContainer
-                  searchedUsersResult={searchedUsers}
+                  searchedUsersResult={searchedUsers.searchedUsers}
                   onClickSeeDocuments={handleSeeDocumentsClick}
+                  page={page}
+                  limit={searchedUsers.limit ? searchedUsers.limit : 0}
+                  totalSearchedUsers={
+                    searchedUsers.totalSearchedUsers
+                      ? searchedUsers.totalSearchedUsers
+                      : 0
+                  }
+                  setPage={(page) => setPage(page)}
                 />
               ) : searchAttempted ? (
                 <NoDoctorSearchResult />

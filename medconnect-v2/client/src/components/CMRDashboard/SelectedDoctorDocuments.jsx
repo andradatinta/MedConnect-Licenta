@@ -1,6 +1,7 @@
 import { React } from "react";
 import { Typography, Grid, Card, CardContent, Box } from "@mui/material";
 import CMRUploadedFileCard from "./CMRUploadedFileCard";
+// import PaginationContainer from "./PaginationContainer";
 
 function SelectedDoctorDocuments({ selectedDoctorData }) {
   return (
@@ -88,6 +89,7 @@ function SelectedDoctorDocuments({ selectedDoctorData }) {
                 justifySelf="flex-end"
               >
                 <Typography variant="p">Paginare</Typography>
+                {/* <PaginationContainer /> */}
               </Grid>
             </Grid>
           </CardContent>

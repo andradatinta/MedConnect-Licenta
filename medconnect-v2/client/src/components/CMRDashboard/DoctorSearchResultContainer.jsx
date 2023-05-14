@@ -1,10 +1,15 @@
 import React from "react";
 import DoctorSearchResultCard from "./DoctorSearchResultCard";
 import { Box } from "@mui/material";
+import PaginationContainer from "./PaginationContainer";
 
 function DoctorSearchResultContainer({
   searchedUsersResult,
   onClickSeeDocuments,
+  page,
+  totalSearchedUsers,
+  setPage,
+  limit,
 }) {
   return (
     <>
@@ -21,6 +26,17 @@ function DoctorSearchResultContainer({
             // de adaugat documentele lui
           />
         ))}
+        {console.log("DoctorSearchResultContainer pagination props:", {
+          page,
+          limit,
+          totalSearchedUsers,
+        })}
+        <PaginationContainer
+          page={page}
+          totalSearchedUsers={totalSearchedUsers}
+          setPage={setPage}
+          limit={limit}
+        />
       </Box>
     </>
   );
