@@ -2,11 +2,11 @@ import { React } from "react";
 import { Box, Typography } from "@mui/material";
 import UpcomingEvents from "./UpcomingEvents";
 import { useLocation } from "react-router-dom";
-import { useGetCalendarEvents } from "../Calendar/CalendarContent";
+import { useGetCalendarData } from "../Calendar/CalendarContent";
 function UpcomingEventsContent() {
   const location = useLocation();
   // const showSignUpButton = location.pathname === "/doctor/upcoming";
-  const calendarEvents = useGetCalendarEvents();
+  const calendarData = useGetCalendarData();
 
   const showSignUpButton = location.pathname === "/doctor/upcoming";
 
@@ -25,10 +25,10 @@ function UpcomingEventsContent() {
             Evenimente viitoare
           </Typography>
         </Box>
-        {calendarEvents.length > 0 ? (
+        {calendarData.events.length > 0 ? (
           <UpcomingEvents
             showSignUpButton={showSignUpButton}
-            allCalendarEvents={calendarEvents}
+            allCalendarEvents={calendarData.events}
           />
         ) : null}
       </Box>

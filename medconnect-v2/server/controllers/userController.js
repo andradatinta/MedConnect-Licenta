@@ -152,19 +152,6 @@ exports.getLoggedInUser = asyncHandler(async (req, res) => {
   // res.json({ message: "Get current user's data" });
 });
 
-// exports.getSearchedForUsers = asyncHandler(async (req, res) => {
-//   const search = req.query.search || "";
-
-//   const searchedUsers = await User.find({
-//     $or: [
-//       { firstName: { $regex: search, $options: "i" } },
-//       { lastName: { $regex: search, $options: "i" } },
-//     ],
-//     type: "doctor",
-//   });
-//   res.status(200).json(searchedUsers);
-// });
-
 exports.getSearchedForUsers = asyncHandler(async (req, res) => {
   const search = req.query.search || "";
   const page = parseInt(req.query.page) - 1 || 0;

@@ -7,30 +7,52 @@ import FilterMenu2 from "./FilterMenu2";
 import { API_URL } from "../../utils/constants";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
+import PaginationContainer from "../CMRDashboard/PaginationContainer";
 
-export function useGetCalendarEvents() {
-  const [calendarEvents, setCalendarEvents] = useState([]);
+// export function useGetCalendarEvents() {
+//   const [calendarEvents, setCalendarEvents] = useState([]);
+
+//   useEffect(() => {
+//     const fetchCalendarEvents = async () => {
+//       try {
+//         const url = `${API_URL}/events/getCalendar`;
+//         const response = await axios.get(url);
+//         setCalendarEvents(response.data);
+//       } catch (error) {
+//         console.error("Error fetching calendar events:", error);
+//       }
+//     };
+//     fetchCalendarEvents();
+//   }, []);
+
+//   return calendarEvents;
+// }
+
+export function useGetCalendarData(page) {
+  const [calendarData, setCalendarData] = useState([]);
 
   useEffect(() => {
-    const fetchCalendarEvents = async () => {
+    const fetchCalendarData = async () => {
       try {
-        const url = `${API_URL}/events/getCalendar`;
+        const url = `${API_URL}/events/getCalendar?page=${page}`;
         const response = await axios.get(url);
-        setCalendarEvents(response.data);
+        console.log("Server response for events:", response.data);
+        setCalendarData(response.data);
       } catch (error) {
         console.error("Error fetching calendar events:", error);
       }
     };
-    fetchCalendarEvents();
-  }, []);
+    fetchCalendarData();
+  }, [page]);
 
-  return calendarEvents;
+  return calendarData;
 }
 
 function CalendarContent() {
   // const [isSelected, setIsSelected] = useState(false);
   const [selectedButton, setSelectedButton] = useState("localBtn");
-  const calendarEvents = useGetCalendarEvents();
+  const [page, setPage] = useState(1);
+  const calendarData = useGetCalendarData(page);
   const { user } = useContext(AuthContext);
   const isDoctor = user && user.type === "doctor";
   const handleEventTypeClick = (buttonId) => {
@@ -45,7 +67,6 @@ function CalendarContent() {
   }, [selectedButton]);
   return (
     <>
-      {console.log(calendarEvents)}
       <FullViewportContainer
         maxWidth="100%"
         // sx={{ backgroundColor: "blueviolet", padding: "0 1rem" }}
@@ -64,23 +85,38 @@ function CalendarContent() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "1.25rem",
+                  // gap: "1.25rem",
                 }}
               >
-                <Typography variant="h3" fontWeight="500">
+                <Typography
+                  variant="h3"
+                  fontWeight="500"
+                  marginBottom="1.25rem"
+                >
                   Calendar Evenimente
                 </Typography>
                 <CalendarEventButtons
                   selectedButton={selectedButton}
                   handleEventTypeClick={handleEventTypeClick}
+                  style={{ marginBottom: "0.8rem" }}
                 />
-                {calendarEvents.length > 0 ? (
+                {calendarData.events && calendarData.events.length > 0 ? (
                   <CalendarEvents
-                    allCalendarEvents={calendarEvents}
+                    allCalendarEvents={calendarData.events}
                     showSignUpButton={!isDoctor}
                   />
                 ) : null}
-                {/* <CalendarEvents /> */}
+                {/* de adaugat aici pagination container */}
+                <PaginationContainer
+                  page={page}
+                  limit={calendarData.limit ? calendarData.limit : 0}
+                  totalResults={
+                    calendarData.totalFetchedEvents
+                      ? calendarData.totalFetchedEvents
+                      : 0
+                  }
+                  setPage={(page) => setPage(page)}
+                />
               </Box>
             </Box>
           </Grid>

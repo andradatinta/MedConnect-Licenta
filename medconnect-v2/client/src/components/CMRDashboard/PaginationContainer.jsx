@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Pagination, PaginationItem } from "@mui/material";
 
-const PaginationContainer = ({ page, totalSearchedUsers, limit, setPage }) => {
-  const totalPages = Math.ceil(totalSearchedUsers / limit);
+const PaginationContainer = ({ page, totalResults, limit, setPage }) => {
+  const totalPages = Math.ceil(totalResults / limit);
 
   console.log("totalPages:", totalPages);
 
@@ -20,9 +20,7 @@ const PaginationContainer = ({ page, totalSearchedUsers, limit, setPage }) => {
       <Pagination
         page={page}
         count={
-          totalSearchedUsers > 0 && limit > 0
-            ? Math.ceil(totalSearchedUsers / limit)
-            : 0
+          totalResults > 0 && limit > 0 ? Math.ceil(totalResults / limit) : 0
         }
         size="small"
         shape="rounded"
