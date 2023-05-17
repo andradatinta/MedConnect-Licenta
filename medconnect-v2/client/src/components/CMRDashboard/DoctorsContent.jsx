@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -9,15 +9,22 @@ import { API_URL } from "../../utils/constants";
 import DoctorSearchResultContainer from "./DoctorSearchResultContainer";
 import NoDoctorSearchResult from "./NoDoctorSearchResult";
 import SelectedDoctorDocuments from "./SelectedDoctorDocuments";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export function useGetSearchedUsers(searchQuery, page) {
   const [searchedUsers, setSearchedUsers] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchSearchedUsers = async () => {
       try {
         const url = `${API_URL}/users/searchedUsers?search=${searchQuery}&page=${page}`;
-        const response = await axios.get(url);
+
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
         console.log("Server response:", response.data);
         setSearchedUsers(response.data);
       } catch (error) {
@@ -30,7 +37,7 @@ export function useGetSearchedUsers(searchQuery, page) {
     } else {
       setSearchedUsers([]);
     }
-  }, [searchQuery, page]);
+  }, [searchQuery, page, user]);
 
   return searchedUsers;
 }

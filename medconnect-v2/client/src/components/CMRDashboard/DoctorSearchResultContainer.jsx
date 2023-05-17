@@ -33,7 +33,7 @@ function DoctorSearchResultContainer({
         })}
         <PaginationContainer
           page={page}
-          totalSearchedUsers={totalSearchedUsers}
+          totalResults={totalSearchedUsers}
           setPage={setPage}
           limit={limit}
         />

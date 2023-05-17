@@ -15,6 +15,7 @@ import CMRDashboard from "./pages/CMRDashboard";
 import DoctorsContent from "./components/CMRDashboard/DoctorsContent";
 import CMRSettings from "./components/CMRDashboard/CMRSettings";
 import UpcomingEventsContent from "./components/DoctorDashboard/UpcomingEventsContent";
+import ProtectedRoute from "./components/Routing/ProtectedRoute";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
   { path: "/calendar", element: <Calendar /> },
   {
     path: "doctor",
-    element: <DoctorDashboard />,
+    element: (
+      <ProtectedRoute requiredRole="doctor">
+        <DoctorDashboard />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
