@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -12,7 +12,23 @@ import {
 import { Refresh as RefreshIcon } from "@mui/icons-material";
 import { FilterControlLabel } from "./CalendarContent.styles";
 import { specializations } from "../../utils/constants";
-function FilterMenu2() {
+function FilterMenu2({ onFilterChange }) {
+  const [selectedSpecializations, setSelectedSpecializations] = useState([]);
+
+  const handleChecked = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedSpecializations((prev) => [...prev, value]);
+    } else {
+      setSelectedSpecializations((prev) =>
+        prev.filter((item) => item !== value)
+      );
+    }
+  };
+
+  useEffect(() => {
+    onFilterChange(selectedSpecializations);
+  }, [selectedSpecializations]);
   return (
     <>
       <Card
@@ -41,7 +57,7 @@ function FilterMenu2() {
           >
             <Box display="flex" alignItems="center">
               <Typography variant="h5">Specialitate</Typography>
-              <IconButton>
+              <IconButton onClick={() => setSelectedSpecializations([])}>
                 <RefreshIcon fontSize="small" />
               </IconButton>
             </Box>
@@ -56,7 +72,14 @@ function FilterMenu2() {
               {specializations.map((specialization) => (
                 <FilterControlLabel
                   key={specialization}
-                  control={<Checkbox size="small" />}
+                  control={
+                    <Checkbox
+                      size="small"
+                      value={specialization}
+                      onChange={handleChecked}
+                      checked={selectedSpecializations.includes(specialization)}
+                    />
+                  }
                   label={specialization}
                 />
               ))}

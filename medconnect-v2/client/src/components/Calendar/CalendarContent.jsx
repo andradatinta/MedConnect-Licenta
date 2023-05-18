@@ -28,13 +28,14 @@ import PaginationContainer from "../CMRDashboard/PaginationContainer";
 //   return calendarEvents;
 // }
 
-export function useGetCalendarData(page) {
+export function useGetCalendarData(page, selectedSpecializations) {
   const [calendarData, setCalendarData] = useState([]);
 
   useEffect(() => {
     const fetchCalendarData = async () => {
       try {
-        const url = `${API_URL}/events/getCalendar?page=${page}`;
+        const specializationQueryString = selectedSpecializations.join(",");
+        const url = `${API_URL}/events/getCalendar?page=${page}&specialization=${specializationQueryString}`;
         const response = await axios.get(url);
         console.log("Server response for events:", response.data);
         setCalendarData(response.data);
@@ -43,7 +44,7 @@ export function useGetCalendarData(page) {
       }
     };
     fetchCalendarData();
-  }, [page]);
+  }, [page, selectedSpecializations]);
 
   return calendarData;
 }
@@ -51,14 +52,19 @@ export function useGetCalendarData(page) {
 function CalendarContent() {
   // const [isSelected, setIsSelected] = useState(false);
   const [selectedButton, setSelectedButton] = useState("localBtn");
+  const [selectedSpecializations, setSelectedSpecializations] = useState([]);
   const [page, setPage] = useState(1);
-  const calendarData = useGetCalendarData(page);
+  const calendarData = useGetCalendarData(page, selectedSpecializations);
   const { user } = useContext(AuthContext);
   const isDoctor = user && user.type === "doctor";
   const handleEventTypeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
   // useGetCalendarEvents();
+
+  const handleFilterChange = (newFilters) => {
+    setSelectedSpecializations(newFilters);
+  };
 
   useEffect(() => {
     // If you need to run side effects based on selectedButton state
@@ -73,7 +79,7 @@ function CalendarContent() {
       >
         <Grid container spacing={2}>
           <Grid item xs={12} md={2}>
-            <FilterMenu2 />
+            <FilterMenu2 onFilterChange={handleFilterChange} />
           </Grid>
 
           {/* Right side main content */}

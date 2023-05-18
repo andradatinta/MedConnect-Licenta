@@ -42,7 +42,11 @@ const router = createBrowserRouter([
   },
   {
     path: "cmr",
-    element: <CMRDashboard />,
+    element: (
+      <ProtectedRoute requiredRole="cmr_member">
+        <CMRDashboard />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
