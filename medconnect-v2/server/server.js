@@ -17,12 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "client/build")));
 const eventRoutes = require("./routes/eventRoutes");
 const userRoutes = require("./routes/userRoutes");
+const fileRoutes = require("./routes/fileRoutes");
 const port = process.env.PORT || 5000;
 
 app.use(cors(corsOptions));
 
 app.use("/api/events", eventRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/files", fileRoutes);
 app.use(errorHandler);
 
 // app.listen(port);
