@@ -3,8 +3,17 @@ const asyncHandler = require("express-async-handler");
 const { gfs } = require("../middleware/multerConfig");
 
 exports.uploadFile = asyncHandler(async (req, res) => {
-  // This function should handle uploading the file with Multer and GridFS,
-  // then creating a new File document with the relevant metadata.
+  // Assuming req.file and req.user are already populated by the multer middleware and your user authentication middleware, respectively
+  const file = new File({
+    filename: req.file.filename,
+    contentType: req.file.mimetype,
+    fileId: req.file.id, // or req.file.filename, depending on how you want to locate the file later
+    owner: req.user._id, // assuming you have a user authentication middleware that assigns the authenticated user to req.user
+    // event: <event_id>, // if applicable
+    // uploadDate will be set to the current time by default
+  });
+
+  await file.save();
   res.json({ file: req.file });
 });
 

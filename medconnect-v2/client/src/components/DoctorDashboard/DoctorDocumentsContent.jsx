@@ -1,4 +1,4 @@
-import { React, useRef, useState } from "react";
+import { React, useRef, useState, useContext } from "react";
 import {
   Box,
   Typography,
@@ -9,10 +9,15 @@ import {
 } from "@mui/material";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import UploadedFileCard from "./UploadedFileCard";
+import axios from "axios";
+import { API_URL } from "../../utils/constants";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function DoctorDocumentsContent() {
   const fileInputRef = useRef();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState(null);
+  const { user } = useContext(AuthContext);
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -23,11 +28,39 @@ function DoctorDocumentsContent() {
     setSelectedFile(file);
   };
 
-  const handleFileUpload = (event) => {
-    // Implement the file upload logic here, e.g., send it to your server
-    console.log("Uploading file:", selectedFile);
+  // const handleFileUpload = (event) => {
+  //   // Implement the file upload logic here, e.g., send it to your server
+  //   console.log("Uploading file:", selectedFile);
+  //   event.stopPropagation();
+  // };
+
+  const handleFileUpload = async (event) => {
+    // Prevent event bubbling if necessary
     event.stopPropagation();
+
+    // Implement the file upload logic here
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      const url = `${API_URL}/files/upload`;
+
+      // Send it to your server
+      const response = await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      // Use the response data
+      console.log("File uploaded successfully:", response.data);
+      setUploadStatus("success");
+    } catch (error) {
+      console.log("Error during file upload:", error);
+      setUploadStatus("error");
+    }
   };
+
   return (
     <>
       <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
@@ -77,7 +110,11 @@ function DoctorDocumentsContent() {
                       sx={{ fontSize: "90px", opacity: 0.1 }}
                     />
                   </Grid>
-                  {selectedFile ? (
+                  {uploadStatus === "success" ? (
+                    <Typography variant="p" color="success" fontWeight="500">
+                      File uploaded successfully!
+                    </Typography>
+                  ) : selectedFile ? (
                     <Grid
                       item
                       xs={12}
@@ -89,7 +126,6 @@ function DoctorDocumentsContent() {
                       <Typography
                         variant="p"
                         color="primary"
-                        // marginRight="1rem"
                         sx={{
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
