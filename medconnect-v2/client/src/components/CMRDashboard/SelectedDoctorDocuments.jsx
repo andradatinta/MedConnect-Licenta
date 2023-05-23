@@ -1,9 +1,11 @@
 import { React } from "react";
 import { Typography, Grid, Card, CardContent, Box } from "@mui/material";
 import CMRUploadedFileCard from "./CMRUploadedFileCard";
+import { useGetUserDocuments } from "./DoctorsContent";
 // import PaginationContainer from "./PaginationContainer";
 
-function SelectedDoctorDocuments({ selectedDoctorData }) {
+function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
+  const documents = useGetUserDocuments(selectedDoctorId);
   return (
     <>
       <Grid item xs={12} md={12}>
@@ -32,7 +34,20 @@ function SelectedDoctorDocuments({ selectedDoctorData }) {
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
+              {documents.files &&
+                documents.files.map((document) => (
+                  <Grid item xs={12}>
+                    <CMRUploadedFileCard
+                      fileName={document.filename}
+                      uploadDate={new Date(
+                        document.uploadDate
+                      ).toLocaleDateString("en-GB")}
+                      fileValidationStatus={document.validated}
+                      selectedDoctorData={selectedDoctorData}
+                    />
+                  </Grid>
+                ))}
+              {/* <Grid item xs={12}>
                 <CMRUploadedFileCard
                   fileName="fisierul_meu"
                   uploadDate="23/03/2023"
@@ -71,7 +86,7 @@ function SelectedDoctorDocuments({ selectedDoctorData }) {
                   fileValidationStatus={true}
                   selectedDoctorData={selectedDoctorData}
                 />
-              </Grid>
+              </Grid> */}
               {/* <Grid item xs={12}>
                 <UploadedFileCard
                   fileName="document_cu_nume_mai_lung"

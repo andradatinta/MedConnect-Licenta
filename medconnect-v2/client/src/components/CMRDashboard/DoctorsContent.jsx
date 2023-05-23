@@ -66,6 +66,37 @@ export function useGetSelectedUserData(selectedDoctorId) {
   return selectedDoctorData;
 }
 
+export function useGetUserDocuments(userId, page = 1, limit = 4) {
+  const [userDocuments, setUserDocuments] = useState([]);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchUserDocuments = async () => {
+      try {
+        const url = `${API_URL}/files/getUserFiles/${userId}?page=${page}&limit=${limit}`;
+
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        console.log("Server response:", response.data);
+        setUserDocuments(response.data);
+      } catch (error) {
+        console.error("Error fetching user documents:", error);
+      }
+    };
+
+    if (userId) {
+      fetchUserDocuments();
+    } else {
+      setUserDocuments([]);
+    }
+  }, [userId, page, limit, user]);
+
+  return userDocuments;
+}
+
 function DoctorsContent() {
   const [searchText, setSearchText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -137,7 +168,10 @@ function DoctorsContent() {
             />
           </Grid>
           {selectedDoctorId ? (
-            <SelectedDoctorDocuments selectedDoctorData={selectedDoctorData} />
+            <SelectedDoctorDocuments
+              selectedDoctorData={selectedDoctorData}
+              selectedDoctorId={selectedDoctorId}
+            />
           ) : (
             <Grid item xs={12} md={12}>
               {searchedUsers &&

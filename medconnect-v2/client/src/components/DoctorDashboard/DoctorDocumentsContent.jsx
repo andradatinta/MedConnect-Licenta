@@ -1,4 +1,4 @@
-import { React, useRef, useState, useContext } from "react";
+import { React, useRef, useState, useContext, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -12,12 +12,44 @@ import UploadedFileCard from "./UploadedFileCard";
 import axios from "axios";
 import { API_URL } from "../../utils/constants";
 import { AuthContext } from "../../contexts/AuthContext";
+import PaginationContainer from "../CMRDashboard/PaginationContainer";
+
+export function useGetUserFiles(user, page) {
+  const [filesData, setFilesData] = useState([]);
+
+  useEffect(() => {
+    const getFiles = async () => {
+      try {
+        if (user && user._id) {
+          const response = await axios.get(
+            `${API_URL}/files/getUserFiles/${user._id}?page=${page}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            }
+          );
+          setFilesData(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getFiles();
+  }, [user, page]);
+
+  return filesData;
+}
 
 function DoctorDocumentsContent() {
   const fileInputRef = useRef();
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(null);
+  const [page, setPage] = useState(1);
   const { user } = useContext(AuthContext);
+  const userFilesData = useGetUserFiles(user, page);
+  console.log(userFilesData);
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -111,8 +143,8 @@ function DoctorDocumentsContent() {
                     />
                   </Grid>
                   {uploadStatus === "success" ? (
-                    <Typography variant="p" color="success" fontWeight="500">
-                      File uploaded successfully!
+                    <Typography variant="p" color="primary" fontWeight="500">
+                      Fișierul a fost încărcat!
                     </Typography>
                   ) : selectedFile ? (
                     <Grid
@@ -159,7 +191,7 @@ function DoctorDocumentsContent() {
           <Grid item xs={12}>
             <Card sx={{ backgroundColor: "#F8F9FA", maxHeight: "50vh" }}>
               <CardContent>
-                <Grid container flexDirection="column" gap="1rem">
+                <Grid container flexDirection="column">
                   <Grid
                     item
                     xs={12}
@@ -179,36 +211,32 @@ function DoctorDocumentsContent() {
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item xs={12}>
-                    <UploadedFileCard
-                      fileName="fisierul_meu"
-                      uploadDate="23/03/2023"
-                      fileValidationStatus={true}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <UploadedFileCard
-                      fileName="diploma1"
-                      uploadDate="03/03/2023"
-                      fileValidationStatus={false}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <UploadedFileCard
-                      fileName="document_cu_nume_mai_lung"
-                      uploadDate="25/07/2022"
-                      fileValidationStatus={true}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <UploadedFileCard
-                      fileName="document_cu_nume_mai_lung"
-                      uploadDate="25/07/2022"
-                      fileValidationStatus={true}
-                    />
-                  </Grid>
+                  {userFilesData &&
+                    userFilesData.files &&
+                    userFilesData.files.map((file) => (
+                      <Grid item xs={12} key={file._id}>
+                        <UploadedFileCard
+                          fileId={file._id}
+                          fileName={file.filename}
+                          fileUrl={file.fileUrl}
+                          uploadDate={new Date(
+                            file.uploadDate
+                          ).toLocaleDateString("en-GB")}
+                          fileValidationStatus={file.validated}
+                        />
+                      </Grid>
+                    ))}
                   <Grid item xs={12} alignSelf="center" marginTop="0.3rem">
-                    <Typography variant="p">Paginare</Typography>
+                    <PaginationContainer
+                      page={page}
+                      limit={userFilesData.limit ? userFilesData.limit : 0}
+                      totalResults={
+                        userFilesData.totalFetchedFiles
+                          ? userFilesData.totalFetchedFiles
+                          : 0
+                      }
+                      setPage={(page) => setPage(page)}
+                    />
                   </Grid>
                 </Grid>
               </CardContent>

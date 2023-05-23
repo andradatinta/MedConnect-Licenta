@@ -1,12 +1,26 @@
 import React from "react";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { CardContent, Card, Grid, Typography, Box } from "@mui/material";
+import { API_URL } from "../../utils/constants";
 
-function UploadedFileCard({ fileName, uploadDate, fileValidationStatus }) {
+function UploadedFileCard({
+  fileName,
+  uploadDate,
+  fileValidationStatus,
+  fileId,
+  fileUrl,
+}) {
   // const isFileValidated = false;
+  const handleCardClick = () => {
+    window.open(fileUrl, "_blank");
+  };
+
   return (
     <>
-      <Card sx={{ backgroundColor: "#FFFFFFCC", borderRadius: "10px" }}>
+      <Card
+        onClick={handleCardClick}
+        sx={{ backgroundColor: "#FFFFFFCC", borderRadius: "10px" }}
+      >
         <CardContent
           sx={{
             "&:last-child": {
