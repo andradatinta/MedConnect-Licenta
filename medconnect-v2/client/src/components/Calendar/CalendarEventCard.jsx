@@ -6,14 +6,18 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import EventDetailsModal from "./EventDetailsModal";
 import JoinEventModal from "./JoinEventModal";
+import { API_URL } from "../../utils/constants";
+import axios from "axios";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function CalendarEventCard({
   showSignUpButton,
+  eventId,
   eventName,
   dateTime,
   description,
@@ -24,6 +28,8 @@ function CalendarEventCard({
 }) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isJoinEventOpen, setIsJoinEventOpen] = useState(false);
+  const [eventSignUpStatus, setEventSignUpStatus] = useState("idle");
+  const { user } = useContext(AuthContext);
   const handleDetailsOpen = () => {
     setIsDetailsOpen(true);
   };
@@ -41,6 +47,35 @@ function CalendarEventCard({
   const handleOpenJoinEventModal = () => {
     handleDetailsClose(); // Close EventDetailsModal
     handleJoinEventOpen(); // Open JoinEventModal
+  };
+
+  const handleConfirmSignUp = async () => {
+    try {
+      // Get the user's token from the AuthContext
+      const token = user.token;
+
+      // Make a POST request to the /user/event/signup endpoint
+      // Include the eventId in the request body, and include the user's token in the Authorization header
+      const response = await axios.post(
+        `${API_URL}/users/eventSignUp`,
+        { eventId: eventId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // If the request was successful, show a success message
+      if (response.data.success) {
+        // alert("You have successfully signed up for the event!");
+        setEventSignUpStatus("success");
+      }
+    } catch (error) {
+      // If the request failed (for example, because the user has already signed up for the event), show an error message
+      // alert("Could not sign up for the event: " + error.response.data.message);
+      setEventSignUpStatus("failed");
+    }
   };
 
   return (
@@ -166,6 +201,11 @@ function CalendarEventCard({
         <JoinEventModal
           isJoinEventOpen={isJoinEventOpen}
           handleClose={handleJoinEventClose}
+          handleConfirmSignUp={handleConfirmSignUp}
+          eventName={eventName}
+          eventId={eventId}
+          dateTime={dateTime}
+          eventSignUpStatus={eventSignUpStatus}
         />
       )}
     </>

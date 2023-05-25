@@ -2,25 +2,25 @@ import React from "react";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { Typography, Grid, Box } from "@mui/material";
 
-function RecentEvent() {
+function RecentEvent({ event }) {
   return (
     <Grid container spacing={1} justifyContent="space-between">
       <Grid item xs={5}>
         <Box display="flex" alignItems="center" gap="0.5rem">
           <PeopleAltOutlinedIcon fontSize="small" sx={{ opacity: 0.3 }} />
           <Typography variant="p" color="primary">
-            Actualități în farmacologie și farmacoterapie
+            {event.name}
           </Typography>
         </Box>
       </Grid>
       <Grid item xs={2}>
         <Typography variant="p" color="primary">
-          29/04/2023
+          {new Date(event.dateTime).toLocaleDateString("en-GB")}
         </Typography>
       </Grid>
       <Grid item xs={1}>
         <Typography variant="p" color="secondary" fontWeight="500">
-          12 EMC
+          {`${event.credits} EMC`}
         </Typography>
       </Grid>
     </Grid>

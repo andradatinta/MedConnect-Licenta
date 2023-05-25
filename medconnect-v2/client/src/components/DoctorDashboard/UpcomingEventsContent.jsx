@@ -1,14 +1,45 @@
-import { React } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import UpcomingEvents from "./UpcomingEvents";
-import { useLocation } from "react-router-dom";
-import { useGetCalendarData } from "../Calendar/CalendarContent";
-function UpcomingEventsContent() {
-  const location = useLocation();
-  // const showSignUpButton = location.pathname === "/doctor/upcoming";
-  const calendarData = useGetCalendarData();
+// import { useLocation } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
+import { API_URL } from "../../utils/constants";
+import axios from "axios";
 
-  const showSignUpButton = location.pathname === "/doctor/upcoming";
+export function useGetUserUpcomingEvents(user) {
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchUserUpcomingEvents = async () => {
+      try {
+        const token = user.token;
+        const url = `${API_URL}/events/upcoming`;
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log("Server response for upcoming events:", response.data);
+        setUpcomingEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching upcoming events:", error);
+      }
+    };
+    fetchUserUpcomingEvents();
+  });
+
+  return upcomingEvents;
+}
+
+function UpcomingEventsContent() {
+  // const [page, setPage] = useState(1);
+  // const location = useLocation();
+  const { user } = useContext(AuthContext);
+  const isDoctor = user && user.type === "doctor";
+  // const showSignUpButton = location.pathname === "/doctor/upcoming";
+  const upcomingEvents = useGetUserUpcomingEvents(user);
+
+  // const showSignUpButton = location.pathname === "/doctor/upcoming";
 
   return (
     <>
@@ -25,10 +56,10 @@ function UpcomingEventsContent() {
             Evenimente viitoare
           </Typography>
         </Box>
-        {calendarData.events.length > 0 ? (
+        {upcomingEvents && upcomingEvents.length > 0 ? (
           <UpcomingEvents
-            showSignUpButton={showSignUpButton}
-            allCalendarEvents={calendarData.events}
+            showSignUpButton={!isDoctor}
+            allCalendarEvents={upcomingEvents}
           />
         ) : null}
       </Box>

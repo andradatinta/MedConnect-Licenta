@@ -19,6 +19,7 @@ function CalendarEvents({ allCalendarEvents, showSignUpButton }) {
               // de vazut cu imageUrl
               showSignUpButton={showSignUpButton}
               key={event._id}
+              eventId={event._id}
               eventName={event.name}
               dateTime={event.dateTime}
               description={event.description}

@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
       message: "CUIM is required for doctor accounts",
     },
   },
+  signedUpEvents: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

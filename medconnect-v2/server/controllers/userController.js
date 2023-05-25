@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
+const Event = require("../models/event");
 
 // generate jwt
 const generateToken = (id) => {
@@ -186,4 +187,37 @@ exports.getUserDetails = asyncHandler(async (req, res) => {
   } else {
     res.status(404).json({ message: "User not found" });
   }
+});
+
+exports.signUpForEvent = asyncHandler(async (req, res) => {
+  const { eventId } = req.body;
+  const userId = req.user.id;
+
+  // Check if the event exists
+  const event = await Event.findById(eventId);
+  if (!event) {
+    res.status(404);
+    throw new Error("Event not found");
+  }
+
+  // Find the user
+  const user = await User.findById(userId);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // Check if the user has already signed up for the event
+  if (user.signedUpEvents.includes(eventId)) {
+    res.status(400);
+    throw new Error("User has already signed up for this event");
+  }
+
+  // Add the event to the user's signedUpEvents
+  user.signedUpEvents.push(eventId);
+
+  // Save the user
+  await user.save();
+
+  res.json({ success: true });
 });

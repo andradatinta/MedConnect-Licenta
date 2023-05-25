@@ -17,5 +17,6 @@ router.get(
   userController.getSearchedForUsers
 );
 router.get("/:userId", userController.getUserDetails);
+router.post("/eventSignUp", routeProtect, userController.signUpForEvent);
 
 module.exports = router;

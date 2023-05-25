@@ -1,12 +1,42 @@
-import { React, useState } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Box, Typography, Grid, CardContent, Card } from "@mui/material";
 import ProgressTimeButtons from "./ProgressTimeButtons";
 import DashboardCircularProgress from "./DashboardCircularProgress";
 import DashboardDownloadCard from "./DashboardDownloadCard";
 import RecentEvent from "./RecentEvent";
+import axios from "axios";
+import { API_URL } from "../../utils/constants";
+import { AuthContext } from "../../contexts/AuthContext";
+
+export function useGetUserRecentEvents(user) {
+  const [recentEvents, setRecentEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchUserRecentEvents = async () => {
+      try {
+        const token = user.token;
+        const url = `${API_URL}/events/recent`;
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log("Server response for events:", response.data);
+        setRecentEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching recent events:", error);
+      }
+    };
+    fetchUserRecentEvents();
+  });
+
+  return recentEvents;
+}
 
 function ProgressContent() {
   const [selectedButton, setSelectedButton] = useState("oneYear");
+  const { user } = useContext(AuthContext);
+  const userRecentEvents = useGetUserRecentEvents(user);
   const handleProgressTimeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
@@ -102,16 +132,14 @@ function ProgressContent() {
                   </Grid>
                   <Grid item xs={12}>
                     <Box display="flex" flexDirection="column" gap="1.2rem">
-                      <RecentEvent />
-                      <RecentEvent />
-                      <RecentEvent />
-                      <RecentEvent />
+                      {userRecentEvents.map((event) => (
+                        <RecentEvent key={event._id} event={event} />
+                      ))}
                     </Box>
                   </Grid>
                 </Grid>
               </CardContent>
             </Card>
-            {/* <Typography>Recent events bitch</Typography> */}
           </Grid>
         </Grid>
       </Box>
