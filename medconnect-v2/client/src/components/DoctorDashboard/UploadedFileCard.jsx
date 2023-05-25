@@ -19,7 +19,13 @@ function UploadedFileCard({
     <>
       <Card
         onClick={handleCardClick}
-        sx={{ backgroundColor: "#FFFFFFCC", borderRadius: "10px" }}
+        sx={{
+          backgroundColor: "#FFFFFFCC",
+          borderRadius: "10px",
+          "&:hover": {
+            cursor: "pointer",
+          },
+        }}
       >
         <CardContent
           sx={{

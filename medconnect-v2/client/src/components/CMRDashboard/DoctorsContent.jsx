@@ -66,14 +66,14 @@ export function useGetSelectedUserData(selectedDoctorId) {
   return selectedDoctorData;
 }
 
-export function useGetUserDocuments(userId, page = 1, limit = 4) {
+export function useGetUserDocuments(userId, page) {
   const [userDocuments, setUserDocuments] = useState([]);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchUserDocuments = async () => {
       try {
-        const url = `${API_URL}/files/getUserFiles/${userId}?page=${page}&limit=${limit}`;
+        const url = `${API_URL}/files/getUserFiles/${userId}?page=${page}`;
 
         const response = await axios.get(url, {
           headers: {
@@ -92,7 +92,7 @@ export function useGetUserDocuments(userId, page = 1, limit = 4) {
     } else {
       setUserDocuments([]);
     }
-  }, [userId, page, limit, user]);
+  }, [userId, page, user]);
 
   return userDocuments;
 }

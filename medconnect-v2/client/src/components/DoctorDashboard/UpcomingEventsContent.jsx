@@ -2,42 +2,43 @@ import { React, useState, useContext, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import UpcomingEvents from "./UpcomingEvents";
 // import { useLocation } from "react-router-dom";
+import PaginationContainer from "../CMRDashboard/PaginationContainer";
 import { AuthContext } from "../../contexts/AuthContext";
 import { API_URL } from "../../utils/constants";
 import axios from "axios";
 
-export function useGetUserUpcomingEvents(user) {
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
+export function useGetUserUpcomingEvents(user, page) {
+  const [upcomingEventsData, setUpcomingEventsData] = useState([]);
 
   useEffect(() => {
     const fetchUserUpcomingEvents = async () => {
       try {
         const token = user.token;
-        const url = `${API_URL}/events/upcoming`;
+        const url = `${API_URL}/events/upcoming?page=${page}`;
         const response = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         console.log("Server response for upcoming events:", response.data);
-        setUpcomingEvents(response.data);
+        setUpcomingEventsData(response.data);
       } catch (error) {
         console.error("Error fetching upcoming events:", error);
       }
     };
     fetchUserUpcomingEvents();
-  });
+  }, [page]);
 
-  return upcomingEvents;
+  return upcomingEventsData;
 }
 
 function UpcomingEventsContent() {
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   // const location = useLocation();
   const { user } = useContext(AuthContext);
-  const isDoctor = user && user.type === "doctor";
+  // const isDoctor = user && user.type === "doctor";
   // const showSignUpButton = location.pathname === "/doctor/upcoming";
-  const upcomingEvents = useGetUserUpcomingEvents(user);
+  const upcomingEventsData = useGetUserUpcomingEvents(user, page);
 
   // const showSignUpButton = location.pathname === "/doctor/upcoming";
 
@@ -56,12 +57,23 @@ function UpcomingEventsContent() {
             Evenimente viitoare
           </Typography>
         </Box>
-        {upcomingEvents && upcomingEvents.length > 0 ? (
+        {upcomingEventsData.upcomingEvents &&
+        upcomingEventsData.upcomingEvents.length > 0 ? (
           <UpcomingEvents
-            showSignUpButton={!isDoctor}
-            allCalendarEvents={upcomingEvents}
+            showSignUpButton={true}
+            allCalendarEvents={upcomingEventsData.upcomingEvents}
           />
         ) : null}
+        <PaginationContainer
+          page={page}
+          limit={upcomingEventsData.limit ? upcomingEventsData.limit : 0}
+          totalResults={
+            upcomingEventsData.totalFetchedUpcomingEvents
+              ? upcomingEventsData.totalFetchedUpcomingEvents
+              : 0
+          }
+          setPage={(page) => setPage(page)}
+        />
       </Box>
     </>
   );

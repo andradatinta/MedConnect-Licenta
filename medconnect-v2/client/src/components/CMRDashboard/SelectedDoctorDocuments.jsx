@@ -1,11 +1,12 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { Typography, Grid, Card, CardContent, Box } from "@mui/material";
 import CMRUploadedFileCard from "./CMRUploadedFileCard";
 import { useGetUserDocuments } from "./DoctorsContent";
-// import PaginationContainer from "./PaginationContainer";
+import PaginationContainer from "./PaginationContainer";
 
 function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
-  const documents = useGetUserDocuments(selectedDoctorId);
+  const [page, setPage] = useState(1);
+  const documents = useGetUserDocuments(selectedDoctorId, page);
   return (
     <>
       <Grid item xs={12} md={12}>
@@ -103,7 +104,16 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
                 marginTop="0.3rem"
                 justifySelf="flex-end"
               >
-                <Typography variant="p">Paginare</Typography>
+                <PaginationContainer
+                  page={page}
+                  limit={documents.limit ? documents.limit : 0}
+                  totalResults={
+                    documents.totalFetchedFiles
+                      ? documents.totalFetchedFiles
+                      : 0
+                  }
+                  setPage={(page) => setPage(page)}
+                />
                 {/* <PaginationContainer /> */}
               </Grid>
             </Grid>

@@ -70,6 +70,8 @@ exports.getRecentEvents = asyncHandler(async (req, res) => {
 
 exports.getUpcomingEvents = asyncHandler(async (req, res) => {
   const userId = req.user.id;
+  const page = parseInt(req.query.page) - 1 || 0;
+  const limit = parseInt(req.query.limit) || 6;
 
   const user = await User.findById(userId);
   if (!user) {
@@ -82,12 +84,26 @@ exports.getUpcomingEvents = asyncHandler(async (req, res) => {
   const upcomingEvents = await Event.find({
     _id: { $in: user.signedUpEvents },
     dateTime: { $gte: currentDateTime },
+  })
+    .skip(page * limit)
+    .limit(limit);
+
+  const totalFetchedUpcomingEvents = await Event.countDocuments({
+    _id: { $in: user.signedUpEvents },
+    dateTime: { $gte: currentDateTime },
   });
+  const upcomingEventsData = {
+    upcomingEvents,
+    limit,
+    page: page + 1,
+    totalFetchedUpcomingEvents,
+  };
+  res.status(200).json(upcomingEventsData);
 
   if (!upcomingEvents) {
     res.status(404);
     throw new Error("No upcoming events found");
   }
 
-  res.status(200).json(upcomingEvents);
+  // res.status(200).json(upcomingEvents);
 });
