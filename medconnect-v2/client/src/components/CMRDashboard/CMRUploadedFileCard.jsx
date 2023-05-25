@@ -9,6 +9,8 @@ function CMRUploadedFileCard({
   uploadDate,
   fileValidationStatus,
   selectedDoctorData,
+  fileUrl,
+  fileId,
 }) {
   const [isValidateDocumentOpen, setIsValidateDocumentOpen] = useState(false);
   const handleValidateDocumentOpen = () => {
@@ -19,9 +21,22 @@ function CMRUploadedFileCard({
     setIsValidateDocumentOpen(false);
   };
 
+  const handleCardClick = () => {
+    window.open(fileUrl, "_blank");
+  };
+
   return (
     <>
-      <Card sx={{ backgroundColor: "#FFFFFFCC", borderRadius: "10px" }}>
+      <Card
+        onClick={handleCardClick}
+        sx={{
+          backgroundColor: "#FFFFFFCC",
+          borderRadius: "10px",
+          "&:hover": {
+            cursor: "pointer",
+          },
+        }}
+      >
         <CardContent
           sx={{
             "&:last-child": {

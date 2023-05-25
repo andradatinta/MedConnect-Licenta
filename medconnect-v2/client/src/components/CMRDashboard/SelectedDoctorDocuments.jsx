@@ -37,12 +37,14 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
               </Grid>
               {documents.files &&
                 documents.files.map((document) => (
-                  <Grid item xs={12}>
+                  <Grid item xs={12} key={document._id}>
                     <CMRUploadedFileCard
                       fileName={document.filename}
                       uploadDate={new Date(
                         document.uploadDate
                       ).toLocaleDateString("en-GB")}
+                      fileUrl={document.fileUrl}
+                      fileId={document.fileId}
                       fileValidationStatus={document.validated}
                       selectedDoctorData={selectedDoctorData}
                     />
