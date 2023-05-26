@@ -10,6 +10,7 @@ const fileSchema = new mongoose.Schema({
   validated: { type: Boolean, default: false },
   extractedCredits: { type: Number }, // Store the credits extracted from the diploma
   fileUrl: { type: String, required: true },
+  validationDate: { type: Date },
 });
 
 module.exports = mongoose.model("File", fileSchema);

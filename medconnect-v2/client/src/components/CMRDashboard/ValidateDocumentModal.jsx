@@ -13,6 +13,7 @@ function ValidateDocumentModal({
   handleClose,
   isValidateDocumentOpen,
   selectedDoctorData,
+  validateDocument,
 }) {
   return (
     <>
@@ -141,6 +142,7 @@ function ValidateDocumentModal({
               <Button
                 variant="contained"
                 color="secondary"
+                onClick={validateDocument}
                 sx={{ maxWidth: "70%" }}
               >
                 Validează documentul

@@ -28,19 +28,47 @@ export function useGetUserRecentEvents(user) {
       }
     };
     fetchUserRecentEvents();
-  });
+  }, []);
 
   return recentEvents;
+}
+
+export function useGetUserCredits(user, years) {
+  const [credits, setCredits] = useState(0);
+
+  useEffect(() => {
+    const fetchUserCredits = async () => {
+      try {
+        const token = user.token;
+        const url = `${API_URL}/users/${user._id}/credits?years=${years}`;
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCredits(response.data.totalCredits);
+      } catch (error) {
+        console.error("Error fetching user credits:", error);
+      }
+    };
+    fetchUserCredits();
+  }, [user, years]);
+
+  return credits;
 }
 
 function ProgressContent() {
   const [selectedButton, setSelectedButton] = useState("oneYear");
   const { user } = useContext(AuthContext);
   const userRecentEvents = useGetUserRecentEvents(user);
+  const userTotalCredits = useGetUserCredits(
+    user,
+    selectedButton === "oneYear" ? 1 : 5
+  );
   const handleProgressTimeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
-  const progressValue = 75;
+  // const progressValue = 75;
   return (
     <>
       <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
@@ -92,7 +120,8 @@ function ProgressContent() {
 
                       <Grid item xs={12} textAlign="center">
                         <DashboardCircularProgress
-                          progressValue={progressValue}
+                          // progressValue={progressValue}
+                          userTotalCredits={userTotalCredits}
                         />
                       </Grid>
                     </Grid>
@@ -122,7 +151,13 @@ function ProgressContent() {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Card sx={{ backgroundColor: "#F8F9FA", maxHeight: "35vh" }}>
+            <Card
+              sx={{
+                backgroundColor: "#F8F9FA",
+                maxHeight: "34vh",
+                minHeight: "34vh",
+              }}
+            >
               <CardContent>
                 <Grid container flexDirection="column">
                   <Grid item xs={12} marginBottom="2rem">

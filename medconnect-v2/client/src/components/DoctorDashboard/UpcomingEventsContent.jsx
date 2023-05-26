@@ -51,29 +51,34 @@ function UpcomingEventsContent() {
             display: "flex",
             flexDirection: "column",
             gap: "1.25rem",
+            position: "relative",
+            minHeight: "85vh",
+            maxHeight: "85vh",
           }}
         >
           <Typography variant="h3" fontWeight="500">
             Evenimente viitoare
           </Typography>
+          {upcomingEventsData.upcomingEvents &&
+          upcomingEventsData.upcomingEvents.length > 0 ? (
+            <UpcomingEvents
+              showSignUpButton={true}
+              allCalendarEvents={upcomingEventsData.upcomingEvents}
+            />
+          ) : null}
+          <Box sx={{ position: "absolute", bottom: "-15px", width: "100%" }}>
+            <PaginationContainer
+              page={page}
+              limit={upcomingEventsData.limit ? upcomingEventsData.limit : 0}
+              totalResults={
+                upcomingEventsData.totalFetchedUpcomingEvents
+                  ? upcomingEventsData.totalFetchedUpcomingEvents
+                  : 0
+              }
+              setPage={(page) => setPage(page)}
+            />
+          </Box>
         </Box>
-        {upcomingEventsData.upcomingEvents &&
-        upcomingEventsData.upcomingEvents.length > 0 ? (
-          <UpcomingEvents
-            showSignUpButton={true}
-            allCalendarEvents={upcomingEventsData.upcomingEvents}
-          />
-        ) : null}
-        <PaginationContainer
-          page={page}
-          limit={upcomingEventsData.limit ? upcomingEventsData.limit : 0}
-          totalResults={
-            upcomingEventsData.totalFetchedUpcomingEvents
-              ? upcomingEventsData.totalFetchedUpcomingEvents
-              : 0
-          }
-          setPage={(page) => setPage(page)}
-        />
       </Box>
     </>
   );

@@ -91,6 +91,9 @@ function CalendarContent() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
+                  position: "relative",
+                  minHeight: "85vh",
+                  maxHeight: "85vh",
                   // gap: "1.25rem",
                 }}
               >
@@ -113,16 +116,20 @@ function CalendarContent() {
                   />
                 ) : null}
                 {/* de adaugat aici pagination container */}
-                <PaginationContainer
-                  page={page}
-                  limit={calendarData.limit ? calendarData.limit : 0}
-                  totalResults={
-                    calendarData.totalFetchedEvents
-                      ? calendarData.totalFetchedEvents
-                      : 0
-                  }
-                  setPage={(page) => setPage(page)}
-                />
+                <Box
+                  sx={{ position: "absolute", bottom: "-15px", width: "100%" }}
+                >
+                  <PaginationContainer
+                    page={page}
+                    limit={calendarData.limit ? calendarData.limit : 0}
+                    totalResults={
+                      calendarData.totalFetchedEvents
+                        ? calendarData.totalFetchedEvents
+                        : 0
+                    }
+                    setPage={(page) => setPage(page)}
+                  />
+                </Box>
               </Box>
             </Box>
           </Grid>

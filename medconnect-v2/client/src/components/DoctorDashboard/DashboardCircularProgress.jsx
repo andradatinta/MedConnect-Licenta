@@ -1,11 +1,13 @@
 import React from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
-function DashboardCircularProgress({ progressValue }) {
+function DashboardCircularProgress({ userTotalCredits }) {
+  const maxCredits = 25;
+  const progressValue = (userTotalCredits / maxCredits) * 100;
   return (
     <>
       <Typography variant="h3" fontWeight="500" marginBottom="1rem">
-        17/25
+        {`${userTotalCredits}/${maxCredits}`}
       </Typography>
       <Box position="relative" display="inline-flex">
         <CircularProgress

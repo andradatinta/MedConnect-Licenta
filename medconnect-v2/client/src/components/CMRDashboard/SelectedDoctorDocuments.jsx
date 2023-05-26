@@ -10,7 +10,14 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
   return (
     <>
       <Grid item xs={12} md={12}>
-        <Card sx={{ backgroundColor: "#F8F9FA", height: "510px" }}>
+        <Card
+          sx={{
+            backgroundColor: "#F8F9FA",
+            maxHeight: "500px",
+            minHeight: "500px",
+            position: "relative",
+          }}
+        >
           <CardContent>
             <Grid container flexDirection="column" gap="1rem">
               <Grid
@@ -44,60 +51,12 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
                         document.uploadDate
                       ).toLocaleDateString("en-GB")}
                       fileUrl={document.fileUrl}
-                      fileId={document.fileId}
+                      fileId={document._id}
                       fileValidationStatus={document.validated}
                       selectedDoctorData={selectedDoctorData}
                     />
                   </Grid>
                 ))}
-              {/* <Grid item xs={12}>
-                <CMRUploadedFileCard
-                  fileName="fisierul_meu"
-                  uploadDate="23/03/2023"
-                  fileValidationStatus={true}
-                  selectedDoctorData={selectedDoctorData}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <CMRUploadedFileCard
-                  fileName="diploma1"
-                  uploadDate="03/03/2023"
-                  fileValidationStatus={false}
-                  selectedDoctorData={selectedDoctorData}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <CMRUploadedFileCard
-                  fileName="document_cu_nume_mai_lung"
-                  uploadDate="25/07/2022"
-                  fileValidationStatus={true}
-                  selectedDoctorData={selectedDoctorData}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <CMRUploadedFileCard
-                  fileName="document_cu_nume_mai_lung"
-                  uploadDate="25/07/2022"
-                  fileValidationStatus={true}
-                  selectedDoctorData={selectedDoctorData}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <CMRUploadedFileCard
-                  fileName="document_cu_nume_mai_lung"
-                  uploadDate="25/07/2022"
-                  fileValidationStatus={true}
-                  selectedDoctorData={selectedDoctorData}
-                />
-              </Grid> */}
-              {/* <Grid item xs={12}>
-                <UploadedFileCard
-                  fileName="document_cu_nume_mai_lung"
-                  uploadDate="25/07/2022"
-                  fileValidationStatus={true}
-                />
-              </Grid> */}
-              <Box flexGrow={1}></Box>
 
               <Grid
                 item
@@ -105,6 +64,11 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
                 alignSelf="center"
                 marginTop="0.3rem"
                 justifySelf="flex-end"
+                sx={{
+                  position: "absolute", // Set position to absolute
+                  bottom: "5px", // Adjust this value as needed
+                  width: "100%",
+                }}
               >
                 <PaginationContainer
                   page={page}
@@ -120,16 +84,6 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
               </Grid>
             </Grid>
           </CardContent>
-          {/* <Grid
-            container
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-end"
-          >
-            <Grid item xs={12} marginTop="0.3rem">
-              <Typography variant="p">Paginare</Typography>
-            </Grid>
-          </Grid> */}
         </Card>
       </Grid>
     </>

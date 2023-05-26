@@ -18,5 +18,6 @@ router.get(
 );
 router.get("/:userId", userController.getUserDetails);
 router.post("/eventSignUp", routeProtect, userController.signUpForEvent);
+router.get("/:userId/credits", userController.calculateUserCredits);
 
 module.exports = router;

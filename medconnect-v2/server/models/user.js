@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
     default: [],
   },
+  accreditationDate: { type: Date },
 });
 
 module.exports = mongoose.model("User", userSchema);

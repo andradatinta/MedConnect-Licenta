@@ -31,12 +31,14 @@ function DoctorSearchResultContainer({
           limit,
           totalSearchedUsers,
         })}
-        <PaginationContainer
-          page={page}
-          totalResults={totalSearchedUsers}
-          setPage={setPage}
-          limit={limit}
-        />
+        <Box sx={{ position: "absolute", bottom: "5px", width: "100%" }}>
+          <PaginationContainer
+            page={page}
+            totalResults={totalSearchedUsers}
+            setPage={setPage}
+            limit={limit}
+          />
+        </Box>
       </Box>
     </>
   );

@@ -103,3 +103,24 @@ exports.getUserFiles = asyncHandler(async (req, res) => {
     throw new Error("Files not found");
   }
 });
+
+exports.updateFileValidation = asyncHandler(async (req, res) => {
+  const fileId = req.params.id;
+  const { validated, validationDate } = req.body;
+
+  try {
+    const file = await File.findById(fileId);
+
+    if (!file) {
+      return res.status(404).json({ error: "File not found" });
+    }
+
+    file.validated = validated;
+    file.validationDate = validationDate;
+    await file.save();
+
+    res.json({ message: "File validation updated successfully!" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});

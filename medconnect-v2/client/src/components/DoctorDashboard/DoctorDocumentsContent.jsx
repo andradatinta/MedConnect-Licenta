@@ -189,7 +189,13 @@ function DoctorDocumentsContent() {
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Card sx={{ backgroundColor: "#F8F9FA", maxHeight: "50vh" }}>
+            <Card
+              sx={{
+                backgroundColor: "#F8F9FA",
+                maxHeight: "50vh",
+                minHeight: "50vh",
+              }}
+            >
               <CardContent>
                 <Grid container flexDirection="column">
                   <Grid
@@ -211,22 +217,30 @@ function DoctorDocumentsContent() {
                       </Typography>
                     </Box>
                   </Grid>
-                  {userFilesData &&
-                    userFilesData.files &&
-                    userFilesData.files.map((file) => (
-                      <Grid item xs={12} key={file._id}>
-                        <UploadedFileCard
-                          fileId={file._id}
-                          fileName={file.filename}
-                          fileUrl={file.fileUrl}
-                          uploadDate={new Date(
-                            file.uploadDate
-                          ).toLocaleDateString("en-GB")}
-                          fileValidationStatus={file.validated}
-                        />
-                      </Grid>
-                    ))}
-                  <Grid item xs={12} alignSelf="center" marginTop="0.3rem">
+                  <Grid item xs={12}>
+                    {userFilesData &&
+                      userFilesData.files &&
+                      userFilesData.files.map((file) => (
+                        <Grid item xs={12} key={file._id} marginBottom="1rem">
+                          <UploadedFileCard
+                            fileId={file._id}
+                            fileName={file.filename}
+                            fileUrl={file.fileUrl}
+                            uploadDate={new Date(
+                              file.uploadDate
+                            ).toLocaleDateString("en-GB")}
+                            fileValidationStatus={file.validated}
+                          />
+                        </Grid>
+                      ))}
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    alignSelf="center"
+                    marginTop="0.3rem"
+                    sx={{ position: "absolute", bottom: "5px" }}
+                  >
                     <PaginationContainer
                       page={page}
                       limit={userFilesData.limit ? userFilesData.limit : 0}

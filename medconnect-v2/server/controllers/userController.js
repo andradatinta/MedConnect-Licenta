@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const Event = require("../models/event");
+const File = require("../models/file");
 
 // generate jwt
 const generateToken = (id) => {
@@ -220,4 +221,35 @@ exports.signUpForEvent = asyncHandler(async (req, res) => {
   await user.save();
 
   res.json({ success: true });
+});
+
+exports.calculateUserCredits = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const { years } = req.query;
+  const givenYearsAgo = new Date();
+  givenYearsAgo.setFullYear(givenYearsAgo.getFullYear() - years);
+
+  const user = await User.findById(userId);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  let startDate = givenYearsAgo;
+  if (user.accreditationDate && user.accreditationDate > givenYearsAgo) {
+    startDate = user.accreditationDate;
+  }
+
+  const files = await File.find({
+    owner: userId,
+    validated: true,
+    validationDate: { $gte: startDate },
+  });
+
+  const totalCredits = files.reduce(
+    (sum, file) => sum + file.extractedCredits,
+    0
+  );
+
+  res.status(200).json({ totalCredits });
 });

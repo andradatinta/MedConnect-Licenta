@@ -118,7 +118,14 @@ function DoctorsContent() {
   // useGetSearchedUsers();
   return (
     <>
-      <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
+      <Box
+        sx={{
+          marginLeft: "6rem",
+          marginTop: "1rem",
+          minHeight: "85vh",
+          position: "relative",
+        }}
+      >
         {/* whole content box above */}
         <Box
           sx={{

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { CardContent, Card, Grid, Typography, Box } from "@mui/material";
 import { DocumentsWideButton } from "../DoctorDashboard/DoctorDashboard.styles";
 import ValidateDocumentModal from "./ValidateDocumentModal";
+import { API_URL } from "../../utils/constants";
+import axios from "axios";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function CMRUploadedFileCard({
   fileName,
@@ -13,7 +16,9 @@ function CMRUploadedFileCard({
   fileId,
 }) {
   const [isValidateDocumentOpen, setIsValidateDocumentOpen] = useState(false);
-  const handleValidateDocumentOpen = () => {
+  const { user } = useContext(AuthContext);
+  const handleValidateDocumentOpen = (event) => {
+    event.stopPropagation();
     setIsValidateDocumentOpen(true);
   };
 
@@ -23,6 +28,35 @@ function CMRUploadedFileCard({
 
   const handleCardClick = () => {
     window.open(fileUrl, "_blank");
+  };
+
+  // Inside your CMRUploadedFileCard component...
+
+  const validateDocument = async () => {
+    try {
+      const url = `${API_URL}/files/${fileId}`;
+      const response = await axios.put(
+        url,
+        {
+          validated: true,
+          validationDate: new Date(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Document validation successful");
+        handleValidateDocumentClose();
+        // You might also want to fetch the updated document data here,
+        // or trigger some other update in your UI.
+      }
+    } catch (error) {
+      console.error("Error during document validation:", error);
+    }
   };
 
   return (
@@ -66,7 +100,7 @@ function CMRUploadedFileCard({
             </Grid>
             <Grid item xs={2}>
               <DocumentsWideButton
-                onClick={handleValidateDocumentOpen}
+                onClick={(event) => handleValidateDocumentOpen(event)}
                 sx={{
                   maxWidth: "fit-content",
                   minWidth: "75%",
@@ -97,6 +131,7 @@ function CMRUploadedFileCard({
           isValidateDocumentOpen={isValidateDocumentOpen}
           handleClose={handleValidateDocumentClose}
           selectedDoctorData={selectedDoctorData}
+          validateDocument={validateDocument}
         />
       )}
       {console.log(selectedDoctorData)}
