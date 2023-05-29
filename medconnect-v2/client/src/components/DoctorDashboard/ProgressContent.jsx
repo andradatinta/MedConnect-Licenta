@@ -7,6 +7,7 @@ import RecentEvent from "./RecentEvent";
 import axios from "axios";
 import { API_URL } from "../../utils/constants";
 import { AuthContext } from "../../contexts/AuthContext";
+import NoEventsDisplay from "../ErrorMessages/NoEventsDisplay";
 
 export function useGetUserRecentEvents(user) {
   const [recentEvents, setRecentEvents] = useState([]);
@@ -167,6 +168,7 @@ function ProgressContent() {
                   </Grid>
                   <Grid item xs={12}>
                     <Box display="flex" flexDirection="column" gap="1.2rem">
+                      {userRecentEvents.length === 0 && <NoEventsDisplay />}
                       {userRecentEvents.map((event) => (
                         <RecentEvent key={event._id} event={event} />
                       ))}

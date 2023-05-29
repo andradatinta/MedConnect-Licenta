@@ -253,3 +253,12 @@ exports.calculateUserCredits = asyncHandler(async (req, res) => {
 
   res.status(200).json({ totalCredits });
 });
+
+exports.getUserAccreditationDate = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.userId);
+  if (user.accreditationDate) {
+    res.status(200).json({ accreditationDate: user.accreditationDate });
+  } else {
+    res.status(404).json({ message: "Accreditation date not found" });
+  }
+});
