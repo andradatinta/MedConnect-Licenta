@@ -14,7 +14,7 @@ import { API_URL } from "../../utils/constants";
 import { AuthContext } from "../../contexts/AuthContext";
 import PaginationContainer from "../CMRDashboard/PaginationContainer";
 
-export function useGetUserFiles(user, page) {
+export function useGetUserFiles(user, page, refresh) {
   const [filesData, setFilesData] = useState([]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function useGetUserFiles(user, page) {
     };
 
     getFiles();
-  }, [user, page]);
+  }, [user, page, refresh]);
 
   return filesData;
 }
@@ -47,8 +47,9 @@ function DoctorDocumentsContent() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(null);
   const [page, setPage] = useState(1);
+  const [refresh, setRefresh] = useState(0); // new state variable for triggering a refresh
   const { user } = useContext(AuthContext);
-  const userFilesData = useGetUserFiles(user, page);
+  const userFilesData = useGetUserFiles(user, page, refresh);
   console.log(userFilesData);
 
   const handleClick = () => {
@@ -87,6 +88,7 @@ function DoctorDocumentsContent() {
       // Use the response data
       console.log("File uploaded successfully:", response.data);
       setUploadStatus("success");
+      setRefresh(refresh + 1); // Trigger a refresh
     } catch (error) {
       console.log("Error during file upload:", error);
       setUploadStatus("error");

@@ -14,6 +14,7 @@ function CMRUploadedFileCard({
   selectedDoctorData,
   fileUrl,
   fileId,
+  setRefresh,
 }) {
   const [isValidateDocumentOpen, setIsValidateDocumentOpen] = useState(false);
   const { user } = useContext(AuthContext);
@@ -51,6 +52,7 @@ function CMRUploadedFileCard({
       if (response.status === 200) {
         console.log("Document validation successful");
         handleValidateDocumentClose();
+        setRefresh((prevRefresh) => prevRefresh + 1);
         // You might also want to fetch the updated document data here,
         // or trigger some other update in your UI.
       }

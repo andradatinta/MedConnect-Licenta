@@ -6,7 +6,8 @@ import PaginationContainer from "./PaginationContainer";
 
 function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
   const [page, setPage] = useState(1);
-  const documents = useGetUserDocuments(selectedDoctorId, page);
+  const [refresh, setRefresh] = useState(0);
+  const documents = useGetUserDocuments(selectedDoctorId, page, refresh);
   return (
     <>
       <Grid item xs={12} md={12}>
@@ -54,6 +55,7 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
                       fileId={document._id}
                       fileValidationStatus={document.validated}
                       selectedDoctorData={selectedDoctorData}
+                      setRefresh={setRefresh}
                     />
                   </Grid>
                 ))}

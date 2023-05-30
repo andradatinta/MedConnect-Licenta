@@ -66,7 +66,7 @@ export function useGetSelectedUserData(selectedDoctorId) {
   return selectedDoctorData;
 }
 
-export function useGetUserDocuments(userId, page) {
+export function useGetUserDocuments(userId, page, refresh) {
   const [userDocuments, setUserDocuments] = useState([]);
   const { user } = useContext(AuthContext);
 
@@ -92,7 +92,7 @@ export function useGetUserDocuments(userId, page) {
     } else {
       setUserDocuments([]);
     }
-  }, [userId, page, user]);
+  }, [userId, page, user, refresh]);
 
   return userDocuments;
 }

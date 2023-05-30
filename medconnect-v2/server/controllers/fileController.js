@@ -243,6 +243,7 @@ exports.getUserFiles = asyncHandler(async (req, res) => {
 
   const files = await File.find({ owner: userId })
     .populate("owner", "firstName lastName")
+    .sort({ uploadDate: -1 })
     .skip(page * limit)
     .limit(limit);
 
