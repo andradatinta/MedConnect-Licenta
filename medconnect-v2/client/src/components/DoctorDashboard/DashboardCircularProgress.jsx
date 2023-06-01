@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
-function DashboardCircularProgress({ userTotalCredits }) {
-  const maxCredits = 25;
+function DashboardCircularProgress({ userTotalCredits, selectedButton }) {
+  const maxCredits = selectedButton === "oneYear" ? 25 : 200;
   const progressValue = (userTotalCredits / maxCredits) * 100;
   return (
     <>

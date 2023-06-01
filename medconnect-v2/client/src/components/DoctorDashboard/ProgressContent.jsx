@@ -123,6 +123,7 @@ function ProgressContent() {
                         <DashboardCircularProgress
                           // progressValue={progressValue}
                           userTotalCredits={userTotalCredits}
+                          selectedButton={selectedButton}
                         />
                       </Grid>
                     </Grid>

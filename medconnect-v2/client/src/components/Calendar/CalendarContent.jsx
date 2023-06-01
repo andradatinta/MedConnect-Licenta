@@ -9,33 +9,18 @@ import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
 import PaginationContainer from "../CMRDashboard/PaginationContainer";
 
-// export function useGetCalendarEvents() {
-//   const [calendarEvents, setCalendarEvents] = useState([]);
-
-//   useEffect(() => {
-//     const fetchCalendarEvents = async () => {
-//       try {
-//         const url = `${API_URL}/events/getCalendar`;
-//         const response = await axios.get(url);
-//         setCalendarEvents(response.data);
-//       } catch (error) {
-//         console.error("Error fetching calendar events:", error);
-//       }
-//     };
-//     fetchCalendarEvents();
-//   }, []);
-
-//   return calendarEvents;
-// }
-
-export function useGetCalendarData(page, selectedSpecializations) {
+export function useGetCalendarData(
+  page,
+  selectedSpecializations,
+  selectedButton
+) {
   const [calendarData, setCalendarData] = useState([]);
 
   useEffect(() => {
     const fetchCalendarData = async () => {
       try {
         const specializationQueryString = selectedSpecializations.join(",");
-        const url = `${API_URL}/events/getCalendar?page=${page}&specialization=${specializationQueryString}`;
+        const url = `${API_URL}/events/getCalendar?page=${page}&specialization=${specializationQueryString}&sort=${selectedButton}`;
         const response = await axios.get(url);
         console.log("Server response for events:", response.data);
         setCalendarData(response.data);
@@ -44,17 +29,21 @@ export function useGetCalendarData(page, selectedSpecializations) {
       }
     };
     fetchCalendarData();
-  }, [page, selectedSpecializations]);
+  }, [page, selectedSpecializations, selectedButton]);
 
   return calendarData;
 }
 
 function CalendarContent() {
   // const [isSelected, setIsSelected] = useState(false);
-  const [selectedButton, setSelectedButton] = useState("localBtn");
+  const [selectedButton, setSelectedButton] = useState("national");
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
   const [page, setPage] = useState(1);
-  const calendarData = useGetCalendarData(page, selectedSpecializations);
+  const calendarData = useGetCalendarData(
+    page,
+    selectedSpecializations,
+    selectedButton
+  );
   const { user } = useContext(AuthContext);
   const isDoctor = user && user.type === "doctor";
   const handleEventTypeClick = (buttonId) => {

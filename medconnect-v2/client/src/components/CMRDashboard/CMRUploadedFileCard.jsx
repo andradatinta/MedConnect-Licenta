@@ -31,8 +31,6 @@ function CMRUploadedFileCard({
     window.open(fileUrl, "_blank");
   };
 
-  // Inside your CMRUploadedFileCard component...
-
   const validateDocument = async () => {
     try {
       const url = `${API_URL}/files/${fileId}`;
@@ -53,8 +51,6 @@ function CMRUploadedFileCard({
         console.log("Document validation successful");
         handleValidateDocumentClose();
         setRefresh((prevRefresh) => prevRefresh + 1);
-        // You might also want to fetch the updated document data here,
-        // or trigger some other update in your UI.
       }
     } catch (error) {
       console.error("Error during document validation:", error);

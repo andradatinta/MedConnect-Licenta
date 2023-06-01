@@ -8,20 +8,20 @@ function CalendarEventButtons(props) {
   return (
     <Box sx={{ display: "flex", gap: "2rem" }}>
       <CalendarSelectToggleButton
-        onClick={() => handleEventTypeClick("localBtn")}
-        isSelected={selectedButton === "localBtn"}
-      >
-        Locale
-      </CalendarSelectToggleButton>
-      <CalendarSelectToggleButton
-        onClick={() => handleEventTypeClick("nationalBtn")}
-        isSelected={selectedButton === "nationalBtn"}
+        onClick={() => handleEventTypeClick("national")}
+        isSelected={selectedButton === "national"}
       >
         Nationale
       </CalendarSelectToggleButton>
       <CalendarSelectToggleButton
-        onClick={() => handleEventTypeClick("internationalBtn")}
-        isSelected={selectedButton === "internationalBtn"}
+        onClick={() => handleEventTypeClick("local")}
+        isSelected={selectedButton === "local"}
+      >
+        Locale
+      </CalendarSelectToggleButton>
+      <CalendarSelectToggleButton
+        onClick={() => handleEventTypeClick("international")}
+        isSelected={selectedButton === "international"}
       >
         Internationale
       </CalendarSelectToggleButton>

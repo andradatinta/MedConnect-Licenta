@@ -6,6 +6,7 @@ const { specializations, eventSortType } = require("../util/constants");
 exports.getCalendarEvents = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) - 1 || 0;
   const limit = parseInt(req.query.limit) || 6;
+  let sortType = req.query.sort || "local";
   // const sort = req.query.sort || "local";
   let specialization = req.query.specialization || "All";
 
@@ -20,14 +21,16 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
   // } else {
   // 	sortBy[sort[0]] = "asc";
   // }
-  const events = await Event.find({})
-    .where("specialization")
-    .in([...specialization])
+  const events = await Event.find({
+    specialization: { $in: [...specialization] },
+    sortType: sortType, // filtering by sortType
+  })
     .skip(page * limit)
     .limit(limit);
 
   const totalFetchedEvents = await Event.countDocuments({
     specialization: { $in: [...specialization] },
+    sortType: sortType, // filtering by sortType
   });
   const calendarEventsData = {
     events,
