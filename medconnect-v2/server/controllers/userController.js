@@ -289,3 +289,39 @@ exports.changePassword = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "Password changed successfully" });
 });
+
+exports.changeEmail = asyncHandler(async (req, res) => {
+  const { newEmail } = req.body;
+
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // Check if the new email is already in use
+  const userWithNewEmail = await User.findOne({ email: newEmail });
+  if (userWithNewEmail) {
+    res.status(400);
+    throw new Error("Email is already in use");
+  }
+
+  // Update user email
+  user.email = newEmail;
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    message: "Email updated successfully",
+    user: {
+      _id: updatedUser.id,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      email: updatedUser.email,
+      type: updatedUser.type,
+      specialization: updatedUser.specialization,
+      cuim: updatedUser.cuim,
+      token: generateToken(updatedUser._id),
+      // include any other user fields you want here
+    },
+  });
+});

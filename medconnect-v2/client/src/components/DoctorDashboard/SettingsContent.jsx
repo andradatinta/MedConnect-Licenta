@@ -10,12 +10,12 @@ import {
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
 import ChangePasswordModal from "./ChangePasswordModal";
-// import ChangeEmailModal from "./ChangeEmailModal";
+import ChangeEmailModal from "./ChangeEmailModal";
 
 function SettingsContent() {
   const { user } = useContext(AuthContext);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
-  // const [openEmailModal, setOpenEmailModal] = useState(false);
+  const [openEmailModal, setOpenEmailModal] = useState(false);
 
   const handleOpenPasswordModal = () => {
     setOpenPasswordModal(true);
@@ -25,13 +25,13 @@ function SettingsContent() {
     setOpenPasswordModal(false);
   };
 
-  // const handleOpenEmailModal = () => {
-  //   setOpenEmailModal(true);
-  // };
+  const handleOpenEmailModal = () => {
+    setOpenEmailModal(true);
+  };
 
-  // const handleCloseEmailModal = () => {
-  //   setOpenEmailModal(false);
-  // };
+  const handleCloseEmailModal = () => {
+    setOpenEmailModal(false);
+  };
   return (
     <>
       <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
@@ -82,7 +82,7 @@ function SettingsContent() {
                 <Button
                   variant="outlined"
                   color="primary"
-                  // onClick={handleOpenEmailModal}
+                  onClick={handleOpenEmailModal}
                 >
                   Modifică
                 </Button>
@@ -116,12 +116,12 @@ function SettingsContent() {
                 handleClose={handleClosePasswordModal}
               />
             )}
-            {/* {openEmailModal && (
+            {openEmailModal && (
               <ChangeEmailModal
                 open={openEmailModal}
                 handleClose={handleCloseEmailModal}
               />
-            )} */}
+            )}
           </Container>
         </Box>
       </Box>

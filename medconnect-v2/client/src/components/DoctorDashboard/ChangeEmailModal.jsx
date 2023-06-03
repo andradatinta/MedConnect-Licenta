@@ -4,11 +4,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
   Grid,
+  TextField,
 } from "@mui/material";
+import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useContext, useRef } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function ChangeEmailModal({ open, handleClose }) {
@@ -18,8 +18,8 @@ function ChangeEmailModal({ open, handleClose }) {
     watch,
     formState: { errors },
   } = useForm();
-  const password = useRef({});
-  password.current = watch("newEmail", "");
+  // const password = useRef({});
+  // password.current = watch("newEmail", "");
 
   const { updateEmail, error: authError } = useContext(AuthContext); // You need to implement updatePassword
 
@@ -30,22 +30,27 @@ function ChangeEmailModal({ open, handleClose }) {
   return (
     <>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Modifica email</DialogTitle>
-        <DialogContent sx={{ marginTop: "1.5rem" }}>
+        <DialogTitle>Modifică email</DialogTitle>
+
+        <DialogContent
+          sx={{
+            marginTop: "1.5rem",
+          }}
+        >
           <form
             onSubmit={handleSubmit(onSubmit)}
             style={{ marginTop: "0.5rem" }}
           >
             <Grid
               container
-              spacing={3}
+              spacing={1}
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Grid item alignItems="center" xs={8}>
+              <Grid item alignItems="center" xs={12} md={12}>
                 <Controller
                   name="newEmail"
                   control={control}
@@ -67,10 +72,10 @@ function ChangeEmailModal({ open, handleClose }) {
 
             <DialogActions sx={{ marginTop: "2rem" }}>
               <Button type="submit" color="primary">
-                Confirma
+                Confirmă
               </Button>
               <Button onClick={handleClose} color="primary">
-                Anuleaza
+                Anulează
               </Button>
             </DialogActions>
           </form>
