@@ -12,8 +12,10 @@ import {
 import { Refresh as RefreshIcon } from "@mui/icons-material";
 import { FilterControlLabel } from "./CalendarContent.styles";
 import { specializations } from "../../utils/constants";
+import { monthNames } from "../../utils/constants";
 function FilterMenu2({ onFilterChange }) {
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
+  const [selectedMonths, setSelectedMonths] = useState([]);
 
   const handleChecked = (event) => {
     const { value, checked } = event.target;
@@ -26,9 +28,18 @@ function FilterMenu2({ onFilterChange }) {
     }
   };
 
+  const handleMonthChecked = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedMonths((prev) => [...prev, value]);
+    } else {
+      setSelectedMonths((prev) => prev.filter((item) => item !== value));
+    }
+  };
+
   useEffect(() => {
-    onFilterChange(selectedSpecializations);
-  }, [selectedSpecializations, onFilterChange]);
+    onFilterChange(selectedSpecializations, selectedMonths);
+  }, [selectedSpecializations, onFilterChange, selectedMonths]);
   return (
     <>
       <Card
@@ -106,65 +117,45 @@ function FilterMenu2({ onFilterChange }) {
           <Box sx={{ height: "50%", marginBottom: "0.8rem" }}>
             <Box display="flex" alignItems="center">
               <Typography variant="h5">Lună</Typography>
-              <IconButton>
+              <IconButton onClick={() => setSelectedMonths([])}>
                 <RefreshIcon fontSize="small" />
               </IconButton>
             </Box>
             <Grid container spacing={2}>
               <Grid item md={6}>
                 <FormGroup>
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Ianuarie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Februarie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Martie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Aprilie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Mai"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Iunie"
-                  />
+                  {monthNames.slice(0, 6).map((month, index) => (
+                    <FilterControlLabel
+                      key={month}
+                      control={
+                        <Checkbox
+                          size="small"
+                          value={month}
+                          onChange={handleMonthChecked}
+                          checked={selectedMonths.includes(month)}
+                        />
+                      }
+                      label={month}
+                    />
+                  ))}
                 </FormGroup>
               </Grid>
               <Grid item md={6}>
                 <FormGroup>
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Iulie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="August"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Septembrie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Octombrie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Noiembrie"
-                  />
-                  <FilterControlLabel
-                    control={<Checkbox size="small" />}
-                    label="Decembrie"
-                  />
+                  {monthNames.slice(6).map((month, index) => (
+                    <FilterControlLabel
+                      key={month}
+                      control={
+                        <Checkbox
+                          size="small"
+                          value={month}
+                          onChange={handleMonthChecked}
+                          checked={selectedMonths.includes(month)}
+                        />
+                      }
+                      label={month}
+                    />
+                  ))}
                 </FormGroup>
               </Grid>
             </Grid>

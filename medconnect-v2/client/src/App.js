@@ -16,6 +16,7 @@ import DoctorsContent from "./components/CMRDashboard/DoctorsContent";
 import CMRSettings from "./components/CMRDashboard/CMRSettings";
 import UpcomingEventsContent from "./components/DoctorDashboard/UpcomingEventsContent";
 import ProtectedRoute from "./components/Routing/ProtectedRoute";
+import SettingsContent from "./components/DoctorDashboard/SettingsContent";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       },
       { path: "documents", element: <DoctorDocumentsContent /> },
       { path: "upcoming", element: <UpcomingEventsContent /> },
+      { path: "settings", element: <SettingsContent /> },
     ],
   },
   {

@@ -1,8 +1,11 @@
-import React from "react";
+import { React, useMemo } from "react";
 import { Box, Pagination, PaginationItem } from "@mui/material";
 
 const PaginationContainer = ({ page, totalResults, limit, setPage }) => {
-  const totalPages = Math.ceil(totalResults / limit);
+  const totalPages = useMemo(
+    () => Math.ceil(totalResults / limit),
+    [totalResults, limit]
+  );
 
   console.log("totalPages:", totalPages);
 

@@ -20,12 +20,24 @@ const authReducer = (state, action) => {
     case "REGISTER_START":
     case "LOGIN_START":
       return { ...state, loading: true };
+    case "UPDATE_PASSWORD_START":
+      return { ...state, loading: true };
+    // case "UPDATE_EMAIL_START":
+    //   return { ...state, loading: true };
     case "REGISTER_SUCCESS":
     case "LOGIN_SUCCESS":
+      return { ...state, loading: false, loggedIn: true };
+    case "UPDATE_PASSWORD_SUCCESS":
       return { ...state, loading: false, user: action.payload, loggedIn: true };
+    // case "UPDATE_EMAIL_SUCCESS":
+    //   return { ...state, loading: false, user: action.payload, loggedIn: true };
     case "REGISTER_FAILURE":
     case "LOGIN_FAILURE":
       return { ...state, loading: false, error: action.payload };
+    case "UPDATE_PASSWORD_FAILURE":
+      return { ...state, loading: false, error: action.payload };
+    // case "UPDATE_EMAIL_FAILURE":
+    //   return { ...state, loading: false, error: action.payload };
     case "LOGOUT":
       return { ...initialState, loggedIn: false };
     default:
@@ -108,6 +120,68 @@ const AuthProvider = ({ children }) => {
     dispatch({ type: "LOGOUT" });
   };
 
+  const updatePassword = async (data) => {
+    try {
+      dispatch({ type: "UPDATE_PASSWORD_START" }); // You may need to define this in your reducer
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          // add the Authorization header with the user's token
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      };
+
+      // Assuming your password change endpoint is /api/users/change-password
+      const response = await api.put("/api/users/updatePassword", data, config);
+
+      dispatch({
+        type: "UPDATE_PASSWORD_SUCCESS",
+        payload: state.user, // You may need to define this in your reducer
+      });
+    } catch (error) {
+      dispatch({
+        type: "UPDATE_PASSWORD_FAILURE", // You may need to define this in your reducer
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+      return error.response ? error.response.data.message : error.message;
+    }
+  };
+
+  // const updateEmail = async (data) => {
+  //   try {
+  //     dispatch({ type: "UPDATE_PASSWORD_START" }); // You may need to define this in your reducer
+
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         // add the Authorization header with the user's token
+  //         Authorization: `Bearer ${state.user.token}`,
+  //       },
+  //     };
+
+  //     // Assuming your password change endpoint is /api/users/change-password
+  //     const response = await api.put("/api/users/updatePassword", data, config);
+
+  //     dispatch({
+  //       type: "UPDATE_PASSWORD_SUCCESS",
+  //       payload: state.user, // You may need to define this in your reducer
+  //     });
+  //   } catch (error) {
+  //     dispatch({
+  //       type: "UPDATE_PASSWORD_FAILURE", // You may need to define this in your reducer
+  //       payload:
+  //         error.response && error.response.data.message
+  //           ? error.response.data.message
+  //           : error.message,
+  //     });
+  //     return error.response ? error.response.data.message : error.message;
+  //   }
+  // };
+
   return (
     <AuthContext.Provider
       value={{
@@ -117,6 +191,8 @@ const AuthProvider = ({ children }) => {
         register,
         login,
         logout,
+        updatePassword,
+        // updateEmail,
         loggedIn: state.loggedIn,
       }}
     >

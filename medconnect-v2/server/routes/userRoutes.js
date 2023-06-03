@@ -20,5 +20,6 @@ router.get("/:userId", userController.getUserDetails);
 router.post("/eventSignUp", routeProtect, userController.signUpForEvent);
 router.get("/:userId/credits", userController.calculateUserCredits);
 router.get("/:userId/accreditation", userController.getUserAccreditationDate);
+router.put("/updatePassword", routeProtect, userController.changePassword);
 
 module.exports = router;

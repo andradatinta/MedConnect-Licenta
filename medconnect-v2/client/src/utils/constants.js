@@ -34,7 +34,37 @@ export const specializations = [
   "Chirurgie pediatrică",
   "Chirurgie plastică",
   "Obstetrică-ginecologie",
-  "Oftalmogie",
+  "Oftalmologie",
   "Ortopedie",
   "Urologie",
 ];
+
+export const monthNames = [
+  "Ianuarie",
+  "Februarie",
+  "Martie",
+  "Aprilie",
+  "Mai",
+  "Iunie",
+  "Iulie",
+  "August",
+  "Septembrie",
+  "Octombrie",
+  "Noiembrie",
+  "Decembrie",
+];
+
+export const monthMapping = {
+  Ianuarie: "January",
+  Februarie: "February",
+  Martie: "March",
+  Aprilie: "April",
+  Mai: "May",
+  Iunie: "June",
+  Iulie: "July",
+  August: "August",
+  Septembrie: "September",
+  Octombrie: "October",
+  Noiembrie: "November",
+  Decembrie: "December",
+};

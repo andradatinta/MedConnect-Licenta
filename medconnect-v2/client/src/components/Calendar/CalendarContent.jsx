@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import { isEqual } from "lodash";
+
 import { Grid, Typography, Box } from "@mui/material";
 import { FullViewportContainer } from "../SignUp/SignUp.styles";
 import CalendarEventButtons from "./CalendarEventButtons";
@@ -8,10 +10,12 @@ import { API_URL } from "../../utils/constants";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
 import PaginationContainer from "../CMRDashboard/PaginationContainer";
+import { monthMapping } from "../../utils/constants";
 
 export function useGetCalendarData(
   page,
   selectedSpecializations,
+  englishSelectedMonths,
   selectedButton
 ) {
   const [calendarData, setCalendarData] = useState([]);
@@ -20,16 +24,19 @@ export function useGetCalendarData(
     const fetchCalendarData = async () => {
       try {
         const specializationQueryString = selectedSpecializations.join(",");
-        const url = `${API_URL}/events/getCalendar?page=${page}&specialization=${specializationQueryString}&sort=${selectedButton}`;
+        const monthQueryString = englishSelectedMonths.join(",");
+        const url = `${API_URL}/events/getCalendar?page=${page}&specialization=${specializationQueryString}&month=${monthQueryString}&sort=${selectedButton}`;
         const response = await axios.get(url);
-        console.log("Server response for events:", response.data);
-        setCalendarData(response.data);
+        if (!isEqual(response.data, calendarData)) {
+          console.log("Server response for events:", response.data);
+          setCalendarData(response.data);
+        }
       } catch (error) {
         console.error("Error fetching calendar events:", error);
       }
     };
     fetchCalendarData();
-  }, [page, selectedSpecializations, selectedButton]);
+  }, [page, selectedSpecializations, selectedButton, englishSelectedMonths]);
 
   return calendarData;
 }
@@ -38,21 +45,28 @@ function CalendarContent() {
   // const [isSelected, setIsSelected] = useState(false);
   const [selectedButton, setSelectedButton] = useState("national");
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
+  const [selectedMonths, setSelectedMonths] = useState([]);
+  const englishSelectedMonths = selectedMonths.map(
+    (month) => monthMapping[month]
+  );
   const [page, setPage] = useState(1);
   const calendarData = useGetCalendarData(
     page,
     selectedSpecializations,
+    englishSelectedMonths,
     selectedButton
   );
   const { user } = useContext(AuthContext);
   const isDoctor = user && user.type === "doctor";
+
   const handleEventTypeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
   // useGetCalendarEvents();
 
-  const handleFilterChange = (newFilters) => {
-    setSelectedSpecializations(newFilters);
+  const handleFilterChange = (newSpecializationFilters, newMonthFilters) => {
+    setSelectedSpecializations(newSpecializationFilters);
+    setSelectedMonths(newMonthFilters);
   };
 
   useEffect(() => {

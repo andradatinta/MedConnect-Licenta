@@ -262,3 +262,30 @@ exports.getUserAccreditationDate = asyncHandler(async (req, res) => {
     res.status(404).json({ message: "Accreditation date not found" });
   }
 });
+
+exports.changePassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // Compare provided password with the stored one
+  const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+  if (!passwordMatch) {
+    res.status(401);
+    throw new Error("Old password is incorrect");
+  }
+
+  // Hash new password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  // Update user password
+  user.password = hashedPassword;
+  await user.save();
+
+  res.status(200).json({ message: "Password changed successfully" });
+});

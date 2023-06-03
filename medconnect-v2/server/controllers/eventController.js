@@ -9,10 +9,32 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
   let sortType = req.query.sort || "local";
   // const sort = req.query.sort || "local";
   let specialization = req.query.specialization || "All";
+  let month = req.query.month || "All";
+
+  const monthNumberMapping = {
+    January: 1,
+    February: 2,
+    March: 3,
+    April: 4,
+    May: 5,
+    June: 6,
+    July: 7,
+    August: 8,
+    September: 9,
+    October: 10,
+    November: 11,
+    December: 12,
+  };
 
   specialization === "All"
     ? (specialization = [...specializations])
     : (specialization = req.query.specialization.split(","));
+
+  month === "All"
+    ? (month = Object.values(monthNumberMapping)) // array of all month numbers
+    : (month = req.query.month
+        .split(",")
+        .map((monthName) => monthNumberMapping[monthName]));
   // req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
 
   // let sortBy = {};
@@ -24,6 +46,7 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
   const events = await Event.find({
     specialization: { $in: [...specialization] },
     sortType: sortType, // filtering by sortType
+    $expr: { $in: [{ $month: "$dateTime" }, month] },
   })
     .skip(page * limit)
     .limit(limit);
@@ -31,6 +54,7 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
   const totalFetchedEvents = await Event.countDocuments({
     specialization: { $in: [...specialization] },
     sortType: sortType, // filtering by sortType
+    $expr: { $in: [{ $month: "$dateTime" }, month] },
   });
   const calendarEventsData = {
     events,
@@ -39,12 +63,11 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
     totalFetchedEvents,
     specializations: specializations,
   };
-  res.status(200).json(calendarEventsData);
-
   if (!events) {
     res.status(400);
     throw new Error("No events to display");
   }
+  res.status(200).json(calendarEventsData);
 });
 
 exports.getRecentEvents = asyncHandler(async (req, res) => {
