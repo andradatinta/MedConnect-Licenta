@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, CircularProgress } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
@@ -13,11 +13,13 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 export function useGetSearchedUsers(searchQuery, page) {
   const [searchedUsers, setSearchedUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchSearchedUsers = async () => {
       try {
+        setIsLoading(true);
         const url = `${API_URL}/users/searchedUsers?search=${searchQuery}&page=${page}`;
 
         const response = await axios.get(url, {
@@ -29,6 +31,8 @@ export function useGetSearchedUsers(searchQuery, page) {
         setSearchedUsers(response.data);
       } catch (error) {
         console.error("Error fetching searched doctors:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -39,7 +43,7 @@ export function useGetSearchedUsers(searchQuery, page) {
     }
   }, [searchQuery, page, user]);
 
-  return searchedUsers;
+  return { searchedUsers, isLoading };
 }
 
 export function useGetSelectedUserData(selectedDoctorId) {
@@ -103,7 +107,7 @@ function DoctorsContent() {
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const [page, setPage] = useState(1);
-  const searchedUsers = useGetSearchedUsers(searchQuery, page);
+  const { searchedUsers, isLoading } = useGetSearchedUsers(searchQuery, page);
   const selectedDoctorData = useGetSelectedUserData(selectedDoctorId);
   const handleSeeDocumentsClick = (doctorId) => {
     setSelectedDoctorId(doctorId);
@@ -181,9 +185,20 @@ function DoctorsContent() {
             />
           ) : (
             <Grid item xs={12} md={12}>
-              {searchedUsers &&
-              searchedUsers.searchedUsers &&
-              searchedUsers.searchedUsers.length > 0 ? (
+              {isLoading ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "4rem",
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              ) : searchedUsers &&
+                searchedUsers.searchedUsers &&
+                searchedUsers.searchedUsers.length > 0 ? (
                 <DoctorSearchResultContainer
                   searchedUsersResult={searchedUsers.searchedUsers}
                   onClickSeeDocuments={handleSeeDocumentsClick}
@@ -199,6 +214,7 @@ function DoctorsContent() {
               ) : searchAttempted ? (
                 <NoDoctorSearchResult />
               ) : null}
+              {}
             </Grid>
           )}
         </Grid>

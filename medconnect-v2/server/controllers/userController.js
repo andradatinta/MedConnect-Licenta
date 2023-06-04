@@ -346,21 +346,30 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
   // 4. Create reset URL
   const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
 
-  const message = `You are receiving this because you (or someone else) has requested the reset of the password for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process within the next 10 minutes:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`;
+  const message = `<div style="font-family: 'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif;">
+  <h1>Ați solicitat resetarea parolei</h1>
+  <p style="font-weight: 400">Ați primit acest email deoarece ați solicitat resetarea parolei pentru contul dumneavoastră.</p>
+  <p style="font-weight: 400">Vă rugăm să dați click pe butonul de mai jos pentru a finaliza procesul în următoarele 10 minute:</p>
+  <div style="text-align: center;">
+    <a href="${resetUrl}" style="background-color: #034694; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none;">Resetează Parola</a>
+  </div>
+  <p style="font-weight: 400">Dacă nu ați solicitat acest lucru, vă rugăm să ignorați acest email și parola dumneavoastră va rămâne neschimbată.</p>
+</div>`;
 
   try {
     // 5. Send it to user's email
     await sendEmail({
       email: user.email,
-      subject: "Your password reset token (valid for 10 minutes)",
+      subject:
+        "Token-ul dumneavoastră pentru resetarea parolei (valabil pentru 10 minute)",
       message,
     });
 
-    res.status(200).json({ message: "Token sent to email!" });
+    res.status(200).json({ message: "Token-ul a fost trimis pe email!" });
   } catch (err) {
     console.log(err);
     res.status(500);
-    throw new Error("There was an error sending the email");
+    throw new Error("A apărut o eroare în timpul trimiterii email-ului");
   }
 });
 

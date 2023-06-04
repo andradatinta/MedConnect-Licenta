@@ -1,5 +1,5 @@
 import { React, useState, useContext, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
 import UpcomingEvents from "./UpcomingEvents";
 // import { useLocation } from "react-router-dom";
 import PaginationContainer from "../CMRDashboard/PaginationContainer";
@@ -9,10 +9,12 @@ import axios from "axios";
 
 export function useGetUserUpcomingEvents(user, page) {
   const [upcomingEventsData, setUpcomingEventsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserUpcomingEvents = async () => {
       try {
+        setIsLoading(true);
         const token = user.token;
         const url = `${API_URL}/events/upcoming?page=${page}`;
         const response = await axios.get(url, {
@@ -24,12 +26,14 @@ export function useGetUserUpcomingEvents(user, page) {
         setUpcomingEventsData(response.data);
       } catch (error) {
         console.error("Error fetching upcoming events:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchUserUpcomingEvents();
   }, [page]);
 
-  return upcomingEventsData;
+  return { upcomingEventsData, isLoading };
 }
 
 function UpcomingEventsContent() {
@@ -38,7 +42,10 @@ function UpcomingEventsContent() {
   const { user } = useContext(AuthContext);
   // const isDoctor = user && user.type === "doctor";
   // const showSignUpButton = location.pathname === "/doctor/upcoming";
-  const upcomingEventsData = useGetUserUpcomingEvents(user, page);
+  const { upcomingEventsData, isLoading } = useGetUserUpcomingEvents(
+    user,
+    page
+  );
 
   // const showSignUpButton = location.pathname === "/doctor/upcoming";
 
@@ -59,8 +66,19 @@ function UpcomingEventsContent() {
           <Typography variant="h3" fontWeight="500">
             Evenimente viitoare
           </Typography>
-          {upcomingEventsData.upcomingEvents &&
-          upcomingEventsData.upcomingEvents.length > 0 ? (
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "4rem",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : upcomingEventsData.upcomingEvents &&
+            upcomingEventsData.upcomingEvents.length > 0 ? (
             <UpcomingEvents
               showSignUpButton={true}
               allCalendarEvents={upcomingEventsData.upcomingEvents}

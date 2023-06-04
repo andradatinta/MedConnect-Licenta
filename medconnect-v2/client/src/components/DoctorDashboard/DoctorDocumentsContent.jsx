@@ -13,13 +13,16 @@ import axios from "axios";
 import { API_URL } from "../../utils/constants";
 import { AuthContext } from "../../contexts/AuthContext";
 import PaginationContainer from "../CMRDashboard/PaginationContainer";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export function useGetUserFiles(user, page, refresh) {
-  const [filesData, setFilesData] = useState([]);
+  const [userFilesData, setUserFilesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getFiles = async () => {
       try {
+        setIsLoading(true);
         if (user && user._id) {
           const response = await axios.get(
             `${API_URL}/files/getUserFiles/${user._id}?page=${page}`,
@@ -29,17 +32,19 @@ export function useGetUserFiles(user, page, refresh) {
               },
             }
           );
-          setFilesData(response.data);
+          setUserFilesData(response.data);
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     getFiles();
   }, [user, page, refresh]);
 
-  return filesData;
+  return { userFilesData, isLoading };
 }
 
 function DoctorDocumentsContent() {
@@ -49,7 +54,7 @@ function DoctorDocumentsContent() {
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(0); // new state variable for triggering a refresh
   const { user } = useContext(AuthContext);
-  const userFilesData = useGetUserFiles(user, page, refresh);
+  const { userFilesData, isLoading } = useGetUserFiles(user, page, refresh);
   console.log(userFilesData);
 
   const handleClick = () => {
@@ -220,7 +225,19 @@ function DoctorDocumentsContent() {
                     </Box>
                   </Grid>
                   <Grid item xs={12}>
-                    {userFilesData &&
+                    {isLoading ? (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginTop: "4rem",
+                        }}
+                      >
+                        <CircularProgress />
+                      </Box>
+                    ) : (
+                      userFilesData &&
                       userFilesData.files &&
                       userFilesData.files.map((file) => (
                         <Grid item xs={12} key={file._id} marginBottom="1rem">
@@ -234,7 +251,8 @@ function DoctorDocumentsContent() {
                             fileValidationStatus={file.validated}
                           />
                         </Grid>
-                      ))}
+                      ))
+                    )}
                   </Grid>
                   <Grid
                     item
