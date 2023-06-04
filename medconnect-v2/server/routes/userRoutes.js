@@ -22,5 +22,7 @@ router.get("/:userId/credits", userController.calculateUserCredits);
 router.get("/:userId/accreditation", userController.getUserAccreditationDate);
 router.put("/updatePassword", routeProtect, userController.changePassword);
 router.put("/updateEmail", routeProtect, userController.changeEmail);
+router.post("/forgotPassword", userController.forgotPassword);
+router.post("/resetPassword/:token", userController.resetPassword);
 
 module.exports = router;

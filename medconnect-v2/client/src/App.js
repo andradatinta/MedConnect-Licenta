@@ -17,6 +17,8 @@ import CMRSettings from "./components/CMRDashboard/CMRSettings";
 import UpcomingEventsContent from "./components/DoctorDashboard/UpcomingEventsContent";
 import ProtectedRoute from "./components/Routing/ProtectedRoute";
 import SettingsContent from "./components/DoctorDashboard/SettingsContent";
+import ForgotPassword from "./components/Login/ForgotPassword";
+import ResetPassword from "./components/Login/ResetPassword";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -25,6 +27,9 @@ const router = createBrowserRouter([
   { path: "/signupcmr", element: <SignUpCMR /> },
   { path: "/login", element: <Login /> },
   { path: "/calendar", element: <Calendar /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/reset-password", element: <ResetPassword /> },
+
   {
     path: "doctor",
     element: (

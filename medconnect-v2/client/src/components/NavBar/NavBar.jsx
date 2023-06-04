@@ -58,7 +58,7 @@ function NavBar() {
             </MuiLink>
           </NavigationLinks>
           <NavigationAccount>
-            {!loggedIn ? (
+            {!user ? (
               <>
                 <MuiLink component={RouterLink} to="/login" sx={{ ml: 2 }}>
                   <Typography variant="p" color="primary">

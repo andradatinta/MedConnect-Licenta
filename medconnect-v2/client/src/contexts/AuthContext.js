@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 const api = axios.create({
   baseURL: "http://localhost:5000",
@@ -26,7 +26,7 @@ const authReducer = (state, action) => {
       return { ...state, loading: true };
     case "REGISTER_SUCCESS":
     case "LOGIN_SUCCESS":
-      return { ...state, loading: false, loggedIn: true };
+      return { ...state, loading: false, loggedIn: true, user: action.payload };
     case "UPDATE_PASSWORD_SUCCESS":
       return { ...state, loading: false, user: action.payload, loggedIn: true };
     case "UPDATE_EMAIL_SUCCESS":
@@ -47,6 +47,10 @@ const authReducer = (state, action) => {
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(state.user));
+  }, [state.user]);
+
   // const [loggedIn, setLoggedIn] = useState(!!state.user);
   // const loggedIn = useMemo(() => !!state.user, [state.user]);
 

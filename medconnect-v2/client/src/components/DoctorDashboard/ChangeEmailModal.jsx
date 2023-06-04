@@ -15,11 +15,8 @@ function ChangeEmailModal({ open, handleClose }) {
   const {
     handleSubmit,
     control,
-    watch,
     formState: { errors },
   } = useForm();
-  // const password = useRef({});
-  // password.current = watch("newEmail", "");
 
   const { updateEmail, error: authError } = useContext(AuthContext); // You need to implement updatePassword
 

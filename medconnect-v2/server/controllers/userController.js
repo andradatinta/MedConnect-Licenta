@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const Event = require("../models/event");
 const File = require("../models/file");
+const sendEmail = require("../util/sendEmail");
 
 // generate jwt
 const generateToken = (id) => {
@@ -324,4 +325,87 @@ exports.changeEmail = asyncHandler(async (req, res) => {
       // include any other user fields you want here
     },
   });
+});
+
+exports.forgotPassword = asyncHandler(async (req, res) => {
+  // 1. Get user based on POSTed email
+  const user = await User.findOne({ email: req.body.email });
+
+  // 2. If there is no user, send an error
+  if (!user) {
+    res.status(404);
+    throw new Error("There is no user with that email.");
+  }
+
+  // 3. If user exists, generate the reset token
+  // This could be a random string, but we will use a JWT
+  const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "10m", // token will expire in 10 minutes
+  });
+
+  // 4. Create reset URL
+  const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
+
+  const message = `You are receiving this because you (or someone else) has requested the reset of the password for your account.\n\nPlease click on the following link, or paste this into your browser to complete the process within the next 10 minutes:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`;
+
+  try {
+    // 5. Send it to user's email
+    await sendEmail({
+      email: user.email,
+      subject: "Your password reset token (valid for 10 minutes)",
+      message,
+    });
+
+    res.status(200).json({ message: "Token sent to email!" });
+  } catch (err) {
+    console.log(err);
+    res.status(500);
+    throw new Error("There was an error sending the email");
+  }
+});
+
+exports.resetPassword = asyncHandler(async (req, res) => {
+  // Get the token from the URL
+  const { token } = req.params;
+
+  // Get the new password and confirmation password from the request body
+  const { newPassword, confirmPassword } = req.body;
+
+  if (!newPassword || !confirmPassword) {
+    res.status(400);
+    throw new Error("New password and confirmation password are required");
+  }
+
+  // Compare the new password and confirmation password
+  if (newPassword !== confirmPassword) {
+    res.status(400);
+    throw new Error("New password and confirmation password do not match");
+  }
+
+  try {
+    // Decode the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Get the user with the decoded id
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the user's password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error("Invalid or expired token");
+  }
 });

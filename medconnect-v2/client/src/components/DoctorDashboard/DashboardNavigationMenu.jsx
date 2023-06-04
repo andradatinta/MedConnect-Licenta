@@ -36,7 +36,7 @@ function DashboardNavigationMenu() {
       default:
         setSelectedButton("");
     }
-  }, [location.pathname]);
+  }, [location.pathname, user]);
 
   return (
     <>

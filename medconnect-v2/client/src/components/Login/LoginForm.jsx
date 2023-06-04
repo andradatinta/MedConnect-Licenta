@@ -103,7 +103,7 @@ function LoginForm() {
               }}
             >
               <HelpCenterIcon color="primary" sx={{ marginRight: "0.5rem" }} />
-              <Typography component={Link} to="/reset-password" variant="p">
+              <Typography component={Link} to="/forgot-password" variant="p">
                 Mi-am uitat parola
               </Typography>
             </Box>
