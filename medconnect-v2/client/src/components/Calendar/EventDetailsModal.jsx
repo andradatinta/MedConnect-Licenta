@@ -5,7 +5,9 @@ import {
   DialogActions,
   Button,
   Typography,
+  Box,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 function EventDetailsModal({
   isDetailsOpen,
@@ -30,6 +32,14 @@ function EventDetailsModal({
       >
         {/* <DialogTitle>Detalii</DialogTitle> */}
         <DialogContent>
+          <Box display="flex" justifyContent="flex-end">
+            <CloseIcon
+              fontSize="large"
+              opacity="0.3"
+              onClick={handleClose}
+              sx={{ cursor: "pointer" }}
+            />
+          </Box>
           <Typography
             variant="h4"
             color="secondary"
@@ -57,11 +67,10 @@ function EventDetailsModal({
               marginBottom: "0.8rem",
             }}
           >
-            Data
+            Data & ora
           </Typography>
           <Typography color="primary" sx={{ marginBottom: "1rem" }}>
-            {/* xx/xx/xxxx */}
-            {new Date(dateTime).toLocaleString()}
+            {new Date(dateTime).toLocaleString("en-GB")}
           </Typography>
           <Typography
             variant="h4"
@@ -75,32 +84,7 @@ function EventDetailsModal({
             Detalii
           </Typography>
           <Typography color="primary" sx={{ marginBottom: "1rem" }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim ad
-            min.
-            {/* {description} */}
+            {description}
           </Typography>
           <Typography
             variant="h4"

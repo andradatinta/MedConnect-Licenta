@@ -169,8 +169,7 @@ function JoinEventModal({
                 </Typography>
                 {/* <Typography color="#21252987">xx/xx/2023</Typography> */}
                 <Typography color="#21252987" sx={{ marginBottom: "1rem" }}>
-                  {/* 15:00 */}
-                  {dateTime}
+                  {new Date(dateTime).toLocaleString("en-GB")}
                 </Typography>
               </Grid>
               {/* <Grid item xs={12}>

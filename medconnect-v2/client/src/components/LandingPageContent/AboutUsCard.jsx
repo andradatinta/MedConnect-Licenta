@@ -10,9 +10,25 @@ import { useTheme } from "@mui/material/styles";
 function AboutUsCard({ iconUrl, title, description, breakLineTitle = null }) {
   const theme = useTheme();
   const isScreenSmall = useMediaQuery(theme.breakpoints.down("md"));
+  const isMediumLarge = useMediaQuery("(max-width:1225px)");
+  const cardStyles = {
+    width: "80%",
+    maxWidth: 345,
+    mb: 2,
+    minHeight: "330px",
+    transition: "0.3s",
+  };
+
+  if (!isScreenSmall && !isMediumLarge) {
+    cardStyles[":hover"] = {
+      transform: "translateY(-10px)",
+    };
+  }
   return (
-    <Card sx={{ width: "80%", maxWidth: 345, height: "330px", mb: 2 }}>
-      <CardContent>
+    <Card sx={cardStyles}>
+      <CardContent
+      // sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
+      >
         <AboutUsCardsContainer>
           <Box
             sx={{
@@ -21,18 +37,11 @@ function AboutUsCard({ iconUrl, title, description, breakLineTitle = null }) {
               mb: 2,
             }}
           >
-            <Box
-              sx={{
-                width: "50%",
-                height: "auto",
-              }}
-            >
-              <img
-                src={iconUrl}
-                alt="Your illustration"
-                style={{ width: "100%", height: "auto" }}
-              />
-            </Box>
+            <img
+              src={iconUrl}
+              alt="Your illustration"
+              style={{ maxWidth: "40%", height: "auto" }}
+            />
           </Box>
           <Box sx={{ marginBottom: "20px", textAlign: "center" }}>
             <Typography variant="h5">{title}</Typography>

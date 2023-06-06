@@ -1,4 +1,4 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useRef } from "react";
 import { Grid, TextField, Container } from "@mui/material";
 import { GridWideButton } from "../LandingPageContent/LandingPageContent.styles";
 import { useForm, Controller } from "react-hook-form";
@@ -15,9 +15,13 @@ function SignUpFormCMR() {
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
   const [apiError, setApiError] = useState("");
+  const password = useRef({});
 
   const onSubmit = async (data) => {
-    // register(data, "/doctor");
+    if (data.password !== data.confirmPassword) {
+      setApiError("Parolele nu corespund!");
+      return;
+    }
 
     const errorMessage = await register(data, "/cmr");
     if (!errorMessage) {
@@ -42,7 +46,7 @@ function SignUpFormCMR() {
               name="lastName"
               control={control}
               defaultValue=""
-              rules={{ required: "Last name is required" }}
+              rules={{ required: "Numele trebuie completat!" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -60,7 +64,7 @@ function SignUpFormCMR() {
               name="firstName"
               control={control}
               defaultValue=""
-              rules={{ required: "First name is required" }}
+              rules={{ required: "Prenumele trebuie completat!" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -80,7 +84,7 @@ function SignUpFormCMR() {
               control={control}
               defaultValue=""
               rules={{
-                required: "First name is required",
+                required: "Email-ul trebuie completat!",
                 validate: (value) =>
                   value.endsWith("@cmr.ro") ||
                   "Invalid email domain for a CMR member account",
@@ -104,7 +108,7 @@ function SignUpFormCMR() {
               name="password"
               control={control}
               defaultValue=""
-              rules={{ required: "Password is required" }}
+              rules={{ required: "Parola trebuie completată!" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -114,6 +118,33 @@ function SignUpFormCMR() {
                   fullWidth
                   error={!!errors.password}
                   helperText={errors.password?.message}
+                  onChange={(e) => {
+                    password.current = e.target.value;
+                    field.onChange(e);
+                  }}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name="confirmPassword"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Confirmarea parolei trebuie completată!",
+                validate: (value) =>
+                  value === password.current || "Parolele nu corespund!",
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Confirmare Parolă"
+                  variant="outlined"
+                  type="password"
+                  fullWidth
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword?.message}
                 />
               )}
             />

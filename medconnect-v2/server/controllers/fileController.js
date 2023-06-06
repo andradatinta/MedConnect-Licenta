@@ -14,111 +14,8 @@ function analyzePdfText(text) {
     return null; // Or some default value, if no credits were found
   }
 }
-// functie upload inainte de pdf parser
 
-// exports.uploadFile = asyncHandler(async (req, res) => {
-//   // Upload the file to Firebase Storage
-//   const bucket = firebaseAdmin.storage().bucket();
-//   const fileBlob = bucket.file(`${req.user._id}/` + req.file.originalname);
-//   console.log(req.file.id + ".pdf");
-//   const blobStream = fileBlob.createWriteStream();
-//   blobStream.on("error", (err) => {
-//     throw new Error("Error uploading file to Firebase Storage: " + err);
-//   });
-//   blobStream.on("finish", async () => {
-//     const downloadURL = await fileBlob.getSignedUrl({
-//       action: "read",
-//       expires: "03-01-2500", // Adjust the expiration date as needed
-//     });
-
-//     const file = new File({
-//       filename: req.file.originalname,
-//       contentType: req.file.mimetype,
-//       owner: req.user._id,
-//       fileUrl: downloadURL[0],
-//     });
-
-//     console.log("File uploaded successfully!");
-//     console.log("Download URL:", downloadURL[0]);
-
-//     res.json({ success: true, downloadURL: downloadURL[0] });
-
-//     // Save the file metadata to MongoDB
-//     await file.save();
-//   });
-//   blobStream.end(req.file.buffer);
-// });
-
-// exports.getFile = asyncHandler(async (req, res) => {
-//   const fileId = req.params.id;
-
-//   try {
-//     const file = await File.findById(fileId);
-//     if (!file) {
-//       return res.status(404).json({ error: "File not found" });
-//     }
-
-//     res.json({ fileUrl: file.fileUrl });
-//   } catch (error) {
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
-// upload pentru pdf uri normale
-// exports.uploadFile = asyncHandler(async (req, res) => {
-//   // Upload the file to Firebase Storage
-//   const bucket = firebaseAdmin.storage().bucket();
-//   const fileBlob = bucket.file(`${req.user._id}/` + req.file.originalname);
-//   console.log(req.file.id + ".pdf");
-//   const blobStream = fileBlob.createWriteStream();
-//   blobStream.on("error", (err) => {
-//     throw new Error("Error uploading file to Firebase Storage: " + err);
-//   });
-//   blobStream.on("finish", async () => {
-//     const downloadURL = await fileBlob.getSignedUrl({
-//       action: "read",
-//       expires: "03-01-2500", // Adjust the expiration date as needed
-//     });
-//     // Parse the PDF
-//     let data;
-//     try {
-//       data = await pdfParse(req.file.buffer);
-//       console.log("PDF parsed successfully");
-//     } catch (error) {
-//       console.log("Error parsing the PDF", error);
-//       throw error;
-//     }
-
-//     // Analyze the text
-//     let credits;
-//     try {
-//       console.log("uite textul: ", data.text);
-//       credits = analyzePdfText(data.text);
-//       console.log("Text analyzed successfully, credits:", credits);
-//     } catch (error) {
-//       console.log("Error analyzing the text", error);
-//       throw error;
-//     }
-
-//     const file = new File({
-//       filename: req.file.originalname,
-//       contentType: req.file.mimetype,
-//       owner: req.user._id,
-//       fileUrl: downloadURL[0],
-//       extractedCredits: credits,
-//     });
-
-//     console.log("File uploaded successfully!");
-//     console.log("Download URL:", downloadURL[0]);
-
-//     res.json({ success: true, downloadURL: downloadURL[0] });
-
-//     // Save the file metadata to MongoDB
-//     await file.save();
-//   });
-//   blobStream.end(req.file.buffer);
-// });
-
-// incercare tesseract
+// incercare integrare
 exports.uploadFile = asyncHandler(async (req, res) => {
   // Upload the file to Firebase Storage
   const bucket = firebaseAdmin.storage().bucket();
@@ -136,34 +33,69 @@ exports.uploadFile = asyncHandler(async (req, res) => {
         expires: "03-01-2500",
       });
 
-      // Fetch the image and convert the response data into a Buffer
-      const response = await axios.get(downloadURL[0], {
-        responseType: "arraybuffer",
-      });
-      const imageBuffer = Buffer.from(response.data, "binary");
-
-      // Create Tesseract worker with Romanian language data
-      const worker = await createWorker({
-        logger: (m) => console.log(m), // Add logger here
-        langPath:
-          "C:\\Users\\Dell\\Documents\\Facultate\\AN 3\\LICENTA\\medconnect-development\\MedConnect-Licenta\\medconnect-v2\\server\\tessdata",
-      });
-
-      await worker.loadLanguage("ron");
-      await worker.initialize("ron");
-
-      // Recognize text in the image
-      const {
-        data: { text },
-      } = await worker.recognize(imageBuffer);
-      console.log(text);
-
-      // Extract the number of credits
-      const creditsRegex = /(\d+)\scredite\sEMC/;
-      const match = text.match(creditsRegex);
+      let text = "";
       let numCredits = 0;
-      if (match) {
-        numCredits = Number(match[1]);
+
+      if (req.file.mimetype === "application/pdf") {
+        // Try to parse the text with pdf-parse
+        let data;
+        try {
+          data = await pdfParse(req.file.buffer);
+          console.log("PDF parsed successfully");
+          text = data.text;
+        } catch (error) {
+          console.log("Error parsing the PDF", error);
+          // Handle the error or try OCR as a fallback
+        }
+
+        if (text) {
+          // Analyze the text
+          let credits;
+          try {
+            console.log("uite textul: ", text);
+            credits = analyzePdfText(text);
+            console.log("Text analyzed successfully, credits:", credits);
+            numCredits = credits || 0; // Assume 0 credits if credits is null
+          } catch (error) {
+            console.log("Error analyzing the text", error);
+            throw error;
+          }
+        }
+      }
+
+      // If no credits found or file is not a pdf, try OCR
+      if (!numCredits || req.file.mimetype !== "application/pdf") {
+        // Fetch the image and convert the response data into a Buffer
+        const response = await axios.get(downloadURL[0], {
+          responseType: "arraybuffer",
+        });
+        const imageBuffer = Buffer.from(response.data, "binary");
+
+        // Create Tesseract worker with Romanian language data
+        const worker = await createWorker({
+          logger: (m) => console.log(m), // Add logger here
+          langPath:
+            "C:\\Users\\Dell\\Documents\\Facultate\\AN 3\\LICENTA\\medconnect-development\\MedConnect-Licenta\\medconnect-v2\\server\\tessdata",
+        });
+
+        await worker.loadLanguage("ron");
+        await worker.initialize("ron");
+
+        // Recognize text in the image
+        const {
+          data: { text },
+        } = await worker.recognize(imageBuffer);
+        console.log(text);
+
+        // Extract the number of credits
+        const creditsRegex = /(\d+)\scredite\sEMC/;
+        const match = text.match(creditsRegex);
+        if (match) {
+          numCredits = Number(match[1]);
+        }
+
+        // terminate the worker after it's done
+        await worker.terminate();
       }
 
       // Save the file metadata and the number of credits to MongoDB
@@ -181,9 +113,6 @@ exports.uploadFile = asyncHandler(async (req, res) => {
       console.log("Number of credits:", numCredits);
 
       res.json({ success: true, downloadURL: downloadURL[0] });
-
-      // terminate the worker after it's done
-      await worker.terminate();
     } catch (err) {
       console.error(err);
       res

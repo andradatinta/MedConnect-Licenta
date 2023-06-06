@@ -1,14 +1,17 @@
 import React from "react";
 import AboutUsCard from "./AboutUsCard";
 import CMRMemberLandingPage from "./CMRMemberLandingPage";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Grid } from "@mui/material";
 
 function AboutUs() {
+  const isMediumLarge = useMediaQuery("(max-width:1225px)");
   return (
     <>
       <Grid
         container
+        direction={isMediumLarge ? "column" : "row"}
         justifyContent="center"
         alignItems="center"
         spacing={2}
@@ -25,7 +28,7 @@ function AboutUs() {
             iconUrl="/graphics/calendar-about-us.svg"
             title="Calendarul Evenimentelor"
             description="Ai acces la calendarul evenimentelor EMC locale, naționale și
-            internaționale, la care te poți înscrie direct prin intermediul
+            internaționale, la care te poți înscrie direct cu
             MedConnect."
           />
         </Grid>
@@ -39,9 +42,8 @@ function AboutUs() {
           <AboutUsCard
             iconUrl="/graphics/credits-about-us.svg"
             title="Managementul"
-            description="Ține evidența digitală a punctajului tău și fii notificat cu privire la numărul
-            de credite necesar pentru a atinge minimul, timpul rămas până la următoarea evaluare
-            profesională etc."
+            description="Ține evidența digitală a punctajului tău și fii informat cu privire la numărul
+            de credite necesar pentru a atinge minimul."
             breakLineTitle="creditelor EMC"
           />
         </Grid>
@@ -49,6 +51,8 @@ function AboutUs() {
           item
           xs={7}
           sm={3}
+          // lg={3}
+          // md={3}
           // xl={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >

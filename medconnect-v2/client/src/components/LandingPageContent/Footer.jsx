@@ -70,7 +70,7 @@ function Footer() {
               color="white"
               sx={{ display: "inline" }}
             >
-              contact@medconnect.ro
+              medconnect2023@gmail.com
             </Typography>
           </Container>
         </Grid>

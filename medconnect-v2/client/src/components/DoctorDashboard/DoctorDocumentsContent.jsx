@@ -53,6 +53,7 @@ function DoctorDocumentsContent() {
   const [uploadStatus, setUploadStatus] = useState(null);
   const [page, setPage] = useState(1);
   const [refresh, setRefresh] = useState(0); // new state variable for triggering a refresh
+  const [uploading, setUploading] = useState(false); // Add this line
   const { user } = useContext(AuthContext);
   const { userFilesData, isLoading } = useGetUserFiles(user, page, refresh);
   console.log(userFilesData);
@@ -66,18 +67,13 @@ function DoctorDocumentsContent() {
     setSelectedFile(file);
   };
 
-  // const handleFileUpload = (event) => {
-  //   // Implement the file upload logic here, e.g., send it to your server
-  //   console.log("Uploading file:", selectedFile);
-  //   event.stopPropagation();
-  // };
-
   const handleFileUpload = async (event) => {
     // Prevent event bubbling if necessary
     event.stopPropagation();
 
     // Implement the file upload logic here
     try {
+      setUploading(true);
       const formData = new FormData();
       formData.append("file", selectedFile);
       const url = `${API_URL}/files/upload`;
@@ -97,6 +93,8 @@ function DoctorDocumentsContent() {
     } catch (error) {
       console.log("Error during file upload:", error);
       setUploadStatus("error");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -149,7 +147,9 @@ function DoctorDocumentsContent() {
                       sx={{ fontSize: "90px", opacity: 0.1 }}
                     />
                   </Grid>
-                  {uploadStatus === "success" ? (
+                  {uploading ? (
+                    <CircularProgress />
+                  ) : uploadStatus === "success" ? (
                     <Typography variant="p" color="primary" fontWeight="500">
                       Fișierul a fost încărcat!
                     </Typography>

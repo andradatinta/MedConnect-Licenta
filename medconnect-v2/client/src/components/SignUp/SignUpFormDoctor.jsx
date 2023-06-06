@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useState, useRef } from "react";
 import { Grid, TextField, Container } from "@mui/material";
 import { GridWideButton } from "../LandingPageContent/LandingPageContent.styles";
 import { useForm, Controller } from "react-hook-form";
@@ -15,10 +15,13 @@ function SignUpFormDoctor() {
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
   const [apiError, setApiError] = useState("");
+  const password = useRef({});
 
   const onSubmit = async (data) => {
-    // register(data, "/doctor");
-
+    if (data.password !== data.confirmPassword) {
+      setApiError("Parolele nu corespund!");
+      return;
+    }
     const errorMessage = await register(data, "/doctor");
     if (!errorMessage) {
       navigate("/calendar");
@@ -44,7 +47,7 @@ function SignUpFormDoctor() {
               name="lastName"
               control={control}
               defaultValue=""
-              rules={{ required: "Last name is required" }}
+              rules={{ required: "Numele trebuie completat!" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -62,7 +65,7 @@ function SignUpFormDoctor() {
               name="firstName"
               control={control}
               defaultValue=""
-              rules={{ required: "First name is required" }}
+              rules={{ required: "Prenumele trebuie completat!" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -82,7 +85,7 @@ function SignUpFormDoctor() {
               control={control}
               defaultValue=""
               rules={{
-                required: "Email is required",
+                required: "Email-ul trebuie completat!",
               }}
               render={({ field }) => (
                 <TextField
@@ -103,7 +106,7 @@ function SignUpFormDoctor() {
               name="password"
               control={control}
               defaultValue=""
-              rules={{ required: "Password is required" }}
+              rules={{ required: "Parola trebuie completată!" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -113,17 +116,45 @@ function SignUpFormDoctor() {
                   fullWidth
                   error={!!errors.password}
                   helperText={errors.password?.message}
+                  onChange={(e) => {
+                    password.current = e.target.value;
+                    field.onChange(e);
+                  }}
                 />
               )}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name="confirmPassword"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Confirmarea parolei trebuie completată!",
+                validate: (value) =>
+                  value === password.current || "Parolele nu corespund!",
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Confirmare Parolă"
+                  variant="outlined"
+                  type="password"
+                  fullWidth
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword?.message}
+                />
+              )}
+            />
+          </Grid>
+
           {/* Fourth Row */}
           <Grid item xs={12}>
             <Controller
               name="specialization"
               control={control}
               defaultValue=""
-              rules={{ required: "Specialization is required" }}
+              rules={{ required: "Specialitatea trebuie completată!" }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -142,7 +173,7 @@ function SignUpFormDoctor() {
               name="cuim"
               control={control}
               defaultValue=""
-              rules={{ required: "CUIM is required" }}
+              rules={{ required: "CUIM trebuie completat!" }}
               render={({ field }) => (
                 <TextField
                   {...field}

@@ -50,22 +50,13 @@ export const CustomCentered = styled(Box)(({ theme }) => ({
 }));
 
 export const AboutUsCardsContainer = styled(Container)(({ theme }) => ({
-  display: "flex",
-  // justifyContent: "center",
-  alignItems: "center",
+  display: "grid",
+  gridTemplateRows: "auto 1fr auto",
+  height: "100%",
   boxSizing: "border-box",
-  flexDirection: "column",
   paddingLeft: "0px",
   paddingRight: "0px",
 }));
-// export const AboutUsCardsContainer = styled(Container)(({ theme }) => ({
-//   display: "grid",
-//   gridTemplateRows: "auto 1fr auto",
-//   height: "100%",
-//   boxSizing: "border-box",
-//   paddingLeft: "0px",
-//   paddingRight: "0px",
-// }));
 
 export const WideButton = styled(Button)(({ theme }) => ({
   boxShadow: "5px 5px 15px #00000029",
