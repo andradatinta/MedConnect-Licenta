@@ -11,6 +11,9 @@ import { NavigationAccount, NavigationLinks } from "./NavBar.styles";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext, useEffect } from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import DrawerNavBar from "./DrawerNavBar";
+import { useTheme } from "@mui/material/styles";
 
 function NavBar() {
   const { loggedIn, logout, user } = useContext(AuthContext);
@@ -27,76 +30,86 @@ function NavBar() {
     // console.log("loggedIn este: ", loggedIn);
     console.log("NavBar loggedIn state changed:", loggedIn);
   }, [loggedIn]);
+  const matches = useMediaQuery("(max-width:600px)");
+  const theme = useTheme();
+  // const isScreenSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  // You can adjust this value
 
   return (
     <>
-      <AppBar position="sticky" sx={{ backgroundColor: "#ffffff" }}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="logo"
-            component={RouterLink}
-            to="/"
-          >
-            <img
-              src="/graphics/medconnect-logo-blue-cropped.svg"
-              alt="Logo"
-              height="25"
-            />
-          </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <NavigationLinks>
-            <MuiLink component={RouterLink} to="/">
-              <Typography variant="p">Despre Noi</Typography>
-            </MuiLink>
-            <MuiLink component={RouterLink} to="/">
-              <Typography variant="p">Membru CMR</Typography>
-            </MuiLink>
-            <MuiLink component={RouterLink} to="/calendar">
-              <Typography variant="p">Calendar</Typography>
-            </MuiLink>
-          </NavigationLinks>
-          <NavigationAccount>
-            {!user ? (
-              <>
-                <MuiLink component={RouterLink} to="/login" sx={{ ml: 2 }}>
-                  <Typography variant="p" color="primary">
-                    Login
-                  </Typography>
-                </MuiLink>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  component={RouterLink}
-                  to="/signup"
-                >
-                  <Typography variant="p">Înregistrează-te</Typography>
-                </Button>
-              </>
-            ) : (
-              user && (
+      {matches ? (
+        <DrawerNavBar />
+      ) : (
+        <AppBar position="sticky" sx={{ backgroundColor: "#ffffff" }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="logo"
+              component={RouterLink}
+              to="/"
+            >
+              <img
+                src="/graphics/medconnect-logo-blue-cropped.svg"
+                alt="Logo"
+                height="25"
+              />
+            </IconButton>
+            <Box sx={{ flexGrow: 1 }} />
+            <NavigationLinks>
+              <MuiLink component={RouterLink} to="/">
+                <Typography variant="p">Despre Noi</Typography>
+              </MuiLink>
+              <MuiLink component={RouterLink} to="/">
+                <Typography variant="p">Membru CMR</Typography>
+              </MuiLink>
+              <MuiLink component={RouterLink} to="/calendar">
+                <Typography variant="p">Calendar</Typography>
+              </MuiLink>
+            </NavigationLinks>
+            <NavigationAccount>
+              {!user ? (
                 <>
-                  <MuiLink
-                    component={RouterLink}
-                    to="/"
-                    onClick={logout}
-                    sx={{ ml: 2 }}
-                  >
+                  <MuiLink component={RouterLink} to="/login" sx={{ ml: 2 }}>
                     <Typography variant="p" color="primary">
-                      Logout
+                      Login
                     </Typography>
                   </MuiLink>
-                  <MuiLink component={RouterLink} to={accountTypeRoute}>
-                    <AccountCircleOutlinedIcon sx={{ marginRight: "0.3rem" }} />
-                    <Typography variant="p">Contul meu</Typography>
-                  </MuiLink>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    component={RouterLink}
+                    to="/signup"
+                  >
+                    <Typography variant="p">Înregistrează-te</Typography>
+                  </Button>
                 </>
-              )
-            )}
-          </NavigationAccount>
-        </Toolbar>
-      </AppBar>
+              ) : (
+                user && (
+                  <>
+                    <MuiLink
+                      component={RouterLink}
+                      to="/"
+                      onClick={logout}
+                      sx={{ ml: 2 }}
+                    >
+                      <Typography variant="p" color="primary">
+                        Logout
+                      </Typography>
+                    </MuiLink>
+                    <MuiLink component={RouterLink} to={accountTypeRoute}>
+                      <AccountCircleOutlinedIcon
+                        sx={{ marginRight: "0.3rem" }}
+                      />
+                      <Typography variant="p">Contul meu</Typography>
+                    </MuiLink>
+                  </>
+                )
+              )}
+            </NavigationAccount>
+          </Toolbar>
+        </AppBar>
+      )}
     </>
   );
 }

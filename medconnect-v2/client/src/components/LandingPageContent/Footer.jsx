@@ -1,8 +1,12 @@
 import React from "react";
 import { Box, Grid, Typography, Container } from "@mui/material";
 import { FooterLinkButton } from "./LandingPageContent.styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 function Footer() {
+  const theme = useTheme();
+  const isScreenSmall = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       sx={{ backgroundColor: "#03469494", padding: "2rem", marginTop: "auto" }}
@@ -47,7 +51,13 @@ function Footer() {
           </Box>
         </Grid>
         <Grid item alignSelf="end">
-          <Container sx={{ display: "flex", gap: "0.5rem" }}>
+          <Container
+            sx={{
+              display: "flex",
+              gap: "0.5rem",
+              paddingLeft: isScreenSmall ? "0px !important" : "normal",
+            }}
+          >
             <Typography
               variant="body1"
               color="white"

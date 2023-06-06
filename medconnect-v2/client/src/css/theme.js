@@ -64,7 +64,7 @@ const theme = createTheme({
           // height: "61px",
           width: "fit-content",
           maxWidth: "200px",
-          fontSize: "16px",
+          fontSize: "16px", // adjust as needed
           padding: "8px 16px",
           letterSpacing: "0.63px",
           "&:hover": {
@@ -216,36 +216,6 @@ const theme = createTheme({
         },
       },
     },
-    // MuiToggleButton: {
-    //   styleOverrides: {
-    //     sizeMedium: {
-    //       textTransform: "none",
-    //       backgroundColor: "#F8F9FA",
-    //       boxShadow: "5px 5px 15px #00000029",
-    //       borderRadius: "30px",
-    //       // border: "#7070701A",
-    //       // opacity: "1",
-    //       color: "#034694",
-    //       "&:hover": {
-    //         boxShadow: "5px 5px 15px #00000040",
-    //         backgroundColor: "#F8F9FA",
-    //         border: "#7070701A",
-    //       },
-    //       // width: "100%",
-    //       fontSize: "10px",
-    //       // padding: "8px 4px",
-    //       letterSpacing: "0.63px",
-    //     },
-    //     selected: {
-    //       backgroundColor: "#034694",
-    //       color: "#ffffff",
-    //       "&:hover": {
-    //         boxShadow: "8px 8px 20px #00000040",
-    //         backgroundColor: "#034694",
-    //       },
-    //     },
-    //   },
-    // },
   },
 });
 

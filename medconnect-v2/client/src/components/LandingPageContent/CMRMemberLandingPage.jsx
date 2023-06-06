@@ -1,51 +1,76 @@
 import React from "react";
-import { CustomCentered, WideButton } from "./LandingPageContent.styles";
-import { Typography } from "@mui/material";
+import { WideButton } from "./LandingPageContent.styles";
+import { Typography, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 function CMRMemberLandingPage() {
+  const theme = useTheme();
+  const isScreenSmall = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
-      <CustomCentered>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ marginTop: "3rem" }}
+      >
         <Box sx={{ textAlign: "center" }}>
           <Typography
             variant="h2"
-            sx={{ marginBottom: "0.5rem", marginTop: "3rem" }}
+            sx={{
+              marginBottom: "0.5rem",
+              fontSize: isScreenSmall ? "1.5rem" : "1.87rem",
+            }}
           >
             Ești membru CMR?
           </Typography>
-          <Typography variant="h2">
+          <Typography
+            variant="h2"
+            sx={{ fontSize: isScreenSmall ? "1.5rem" : "1.87rem" }}
+          >
             Facilitează-ți munca cu MedConnect!
           </Typography>
         </Box>
-      </CustomCentered>
+      </Grid>
 
-      <Container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "3rem",
-        }}
+      <Grid
+        container
+        spacing={2}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ marginTop: "0.5rem" }}
       >
-        <Box sx={{ width: "30%" }}>
+        <Grid item xs={6} sm={3}>
           <img
             src="/graphics/landing-page-2.svg"
             alt="Your illustration"
             style={{ width: "100%", height: "auto" }}
           />
-        </Box>
-        <Box sx={{ width: "50%", textAlign: "center" }}>
-          <Typography variant="h3">
+        </Grid>
+        <Grid item xs={12} sm={5} sx={{ textAlign: "center" }}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontSize: isScreenSmall ? "1.25rem" : "1.56rem",
+              marginRight: isScreenSmall ? "0.5rem" : 0,
+              marginLeft: isScreenSmall ? "0.5rem" : 0,
+            }}
+          >
             Creează-ți acum un cont pentru a valida punctajele medicilor
             eficient!
           </Typography>
-          <WideButton href="/signupcmr" sx={{ marginTop: "2rem" }}>
+          <WideButton
+            href="/signupcmr"
+            sx={{ marginTop: "2rem", marginBottom: isScreenSmall ? "4rem" : 0 }}
+          >
             <Typography variant="p">Înregistrează-te ca membru CMR</Typography>
           </WideButton>
-        </Box>
-      </Container>
+        </Grid>
+      </Grid>
     </>
   );
 }

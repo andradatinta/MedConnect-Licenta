@@ -12,13 +12,6 @@ function LandingPage() {
       <LandingPageContentGrid />
       <AboutUs />
       <Footer />
-      {/* <ul>
-        {events.map((event) => (
-          <li key={event.title}>
-            Title: {event.title}, Date: {event.date}
-          </li>
-        ))}
-      </ul> */}
     </>
   );
 }
