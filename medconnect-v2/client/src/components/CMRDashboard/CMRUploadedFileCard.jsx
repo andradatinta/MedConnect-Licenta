@@ -15,6 +15,7 @@ function CMRUploadedFileCard({
   fileUrl,
   fileId,
   setRefresh,
+  processedCredits,
 }) {
   const [isValidateDocumentOpen, setIsValidateDocumentOpen] = useState(false);
   const { user } = useContext(AuthContext);
@@ -130,6 +131,7 @@ function CMRUploadedFileCard({
           handleClose={handleValidateDocumentClose}
           selectedDoctorData={selectedDoctorData}
           validateDocument={validateDocument}
+          processedCredits={processedCredits}
         />
       )}
       {console.log(selectedDoctorData)}

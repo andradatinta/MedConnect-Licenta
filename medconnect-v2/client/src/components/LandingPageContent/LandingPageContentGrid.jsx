@@ -6,6 +6,7 @@ import { MainContainer, CustomCentered } from "./LandingPageContent.styles";
 import { ImageBox } from "../SignUp/SignUp.styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 function LandingPageContent() {
   const theme = useTheme();
@@ -58,19 +59,19 @@ function LandingPageContent() {
                   fontSize: isScreenSmall ? "1.25rem" : "1.56rem",
                 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incidid ut labore et dolore magna aliqua. Ut enim
-                ad min.
+                MedConnect este platforma care facilitează întregul proces de
+                trimitere a documentelor și validare a creditelor EMC în timp
+                real și într-o manieră transparentă.
               </Typography>
             </Box>
             <Button
               variant="contained"
               color="secondary"
               size="large"
-              href="http://localhost:3000/test"
-              // sx={{ margin: isScreenSmall ? "auto" : "inherit" }}
+              component={RouterLink}
+              to="/login"
             >
-              <Typography variant="p">Lorem ipsum</Typography>
+              <Typography variant="p">Intră în cont</Typography>
             </Button>
           </Grid>
           <Grid

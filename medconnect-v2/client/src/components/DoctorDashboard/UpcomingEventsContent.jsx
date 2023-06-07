@@ -1,11 +1,11 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import UpcomingEvents from "./UpcomingEvents";
-// import { useLocation } from "react-router-dom";
 import PaginationContainer from "../CMRDashboard/PaginationContainer";
 import { AuthContext } from "../../contexts/AuthContext";
 import { API_URL } from "../../utils/constants";
 import axios from "axios";
+import NoUpcomingEventsDisplay from "../ErrorMessages/NoUpcomingEventsDisplay";
 
 export function useGetUserUpcomingEvents(user, page) {
   const [upcomingEventsData, setUpcomingEventsData] = useState([]);
@@ -38,21 +38,15 @@ export function useGetUserUpcomingEvents(user, page) {
 
 function UpcomingEventsContent() {
   const [page, setPage] = useState(1);
-  // const location = useLocation();
   const { user } = useContext(AuthContext);
-  // const isDoctor = user && user.type === "doctor";
-  // const showSignUpButton = location.pathname === "/doctor/upcoming";
   const { upcomingEventsData, isLoading } = useGetUserUpcomingEvents(
     user,
     page
   );
 
-  // const showSignUpButton = location.pathname === "/doctor/upcoming";
-
   return (
     <>
       <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
-        {/* whole content box above */}
         <Box
           sx={{
             display: "flex",
@@ -83,7 +77,9 @@ function UpcomingEventsContent() {
               showSignUpButton={true}
               allCalendarEvents={upcomingEventsData.upcomingEvents}
             />
-          ) : null}
+          ) : (
+            <NoUpcomingEventsDisplay />
+          )}
           <Box sx={{ position: "absolute", bottom: "-15px", width: "100%" }}>
             <PaginationContainer
               page={page}

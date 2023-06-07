@@ -27,6 +27,7 @@ function CalendarEvents({ allCalendarEvents, showSignUpButton }) {
               credits={event.credits}
               contactEmail={event.contactEmail}
               specialization={event.specialization}
+              imageUrl={event.imageUrl}
             />
           </Grid>
         ))}

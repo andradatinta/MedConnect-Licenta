@@ -14,6 +14,7 @@ function ValidateDocumentModal({
   isValidateDocumentOpen,
   selectedDoctorData,
   validateDocument,
+  processedCredits,
 }) {
   return (
     <>
@@ -67,7 +68,7 @@ function ValidateDocumentModal({
                 Credite EMC
               </Typography>
               <Typography color="#21252987" sx={{ marginBottom: "1rem" }}>
-                12 EMC
+                {`${processedCredits} EMC`}
               </Typography>
               <Typography
                 variant="h4"

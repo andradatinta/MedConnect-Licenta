@@ -101,7 +101,6 @@ function DoctorDocumentsContent() {
   return (
     <>
       <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
-        {/* whole content box above */}
         <Box
           sx={{
             display: "flex",
@@ -117,7 +116,6 @@ function DoctorDocumentsContent() {
           container
           spacing={2}
           sx={{
-            // backgroundColor: "blue",
             marginTop: "1rem",
           }}
         >
@@ -214,10 +212,10 @@ function DoctorDocumentsContent() {
                   >
                     <Box display="flex" justifyContent="space-between">
                       <Typography variant="p" color="primary" fontWeight="500">
-                        Fisier
+                        Fișier
                       </Typography>
                       <Typography variant="p" color="primary" fontWeight="500">
-                        Data incarcarii
+                        Data încărcării
                       </Typography>
                       <Typography variant="p" color="primary" fontWeight="500">
                         Status

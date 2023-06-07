@@ -3,6 +3,7 @@ import { Box, Grid, Typography, Container } from "@mui/material";
 import { FooterLinkButton } from "./LandingPageContent.styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 function Footer() {
   const theme = useTheme();
@@ -33,17 +34,17 @@ function Footer() {
               gap: "2rem",
             }}
           >
-            <FooterLinkButton href="/test">
+            <FooterLinkButton component={RouterLink} to="/">
               <Typography variant="body1" color="white">
                 Despre Noi
               </Typography>
             </FooterLinkButton>
-            <FooterLinkButton>
+            <FooterLinkButton component={RouterLink} to="/signupcmr">
               <Typography variant="body1" color="white">
                 Membru CMR
               </Typography>
             </FooterLinkButton>
-            <FooterLinkButton>
+            <FooterLinkButton component={RouterLink} to="/calendar">
               <Typography variant="body1" color="white">
                 Calendar
               </Typography>

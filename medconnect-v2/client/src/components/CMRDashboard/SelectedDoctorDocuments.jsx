@@ -30,10 +30,10 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
               >
                 <Box display="flex" justifyContent="space-between">
                   <Typography variant="p" color="primary" fontWeight="500">
-                    Fisier
+                    Fișier
                   </Typography>
                   <Typography variant="p" color="primary" fontWeight="500">
-                    Data incarcarii
+                    Data încărcării
                   </Typography>
                   <Typography variant="p" color="primary" fontWeight="500">
                     Validare
@@ -53,6 +53,7 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
                       ).toLocaleDateString("en-GB")}
                       fileUrl={document.fileUrl}
                       fileId={document._id}
+                      processedCredits={document.extractedCredits}
                       fileValidationStatus={document.validated}
                       selectedDoctorData={selectedDoctorData}
                       setRefresh={setRefresh}

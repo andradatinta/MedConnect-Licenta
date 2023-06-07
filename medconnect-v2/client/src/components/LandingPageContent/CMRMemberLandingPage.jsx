@@ -4,6 +4,7 @@ import { Typography, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 function CMRMemberLandingPage() {
   const theme = useTheme();
@@ -64,7 +65,8 @@ function CMRMemberLandingPage() {
             eficient!
           </Typography>
           <WideButton
-            href="/signupcmr"
+            component={RouterLink}
+            to="/signupcmr"
             sx={{ marginTop: "2rem", marginBottom: isScreenSmall ? "4rem" : 0 }}
           >
             <Typography variant="p">Înregistrează-te ca membru CMR</Typography>

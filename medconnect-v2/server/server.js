@@ -15,7 +15,7 @@ const errorHandler = require("./middleware/errorMiddleware");
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.join(__dirname, "client/public")));
 const eventRoutes = require("./routes/eventRoutes");
 const userRoutes = require("./routes/userRoutes");
 const fileRoutes = require("./routes/fileRoutes");
@@ -24,23 +24,7 @@ const port = process.env.PORT || 5000;
 const serviceAccount = require("./serviceAccountKey.json");
 firebaseAdmin.initializeApp({
   credential: firebaseAdmin.credential.cert(serviceAccount),
-
-  // credential: firebaseAdmin.credential.cert({
-  //   type: process.env.TYPE,
-  //   project_id: process.env.PROJECT_ID,
-  //   private_key_id: process.env.PRIVATE_KEY_ID,
-  //   private_key: process.env.PRIVATE_KEY.split(String.raw`\n`).join("\n"),
-  //   client_email: process.env.CLIENT_EMAIL,
-  //   client_id: process.env.CLIENT_ID,
-  //   auth_uri: process.env.AUTH_URI,
-  //   token_uri: process.env.TOKEN_URI,
-  //   auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
-  //   client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
-  //   universe_domain: process.env.UNIVERSE_DOMAIN,
-  // }),
   storageBucket: "medconnect-26600.appspot.com",
-
-  // Add other Firebase configuration options if needed
 });
 
 app.use(cors(corsOptions));

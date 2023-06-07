@@ -35,19 +35,14 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
     : (month = req.query.month
         .split(",")
         .map((monthName) => monthNumberMapping[monthName]));
-  // req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
 
-  // let sortBy = {};
-  // if (sort[1]) {
-  // 	sortBy[sort[0]] = sort[1];
-  // } else {
-  // 	sortBy[sort[0]] = "asc";
-  // }
   const events = await Event.find({
     specialization: { $in: [...specialization] },
     sortType: sortType, // filtering by sortType
     $expr: { $in: [{ $month: "$dateTime" }, month] },
+    dateTime: { $gte: new Date() },
   })
+    .sort({ dateTime: 1 })
     .skip(page * limit)
     .limit(limit);
 
@@ -55,6 +50,7 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
     specialization: { $in: [...specialization] },
     sortType: sortType, // filtering by sortType
     $expr: { $in: [{ $month: "$dateTime" }, month] },
+    dateTime: { $gte: new Date() },
   });
   const calendarEventsData = {
     events,

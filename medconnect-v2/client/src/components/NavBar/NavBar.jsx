@@ -13,27 +13,17 @@ import { useContext, useEffect } from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DrawerNavBar from "./DrawerNavBar";
-import { useTheme } from "@mui/material/styles";
 
 function NavBar() {
   const { loggedIn, logout, user } = useContext(AuthContext);
-  // const accountTypeRoute = user.type === "doctor" ? "/doctor" : "/cmr";
   const accountTypeRoute =
     user && user.type ? (user.type === "doctor" ? "/doctor" : "/cmr") : "/";
-  // force navbar to rerender
-  // const location = useLocation();
 
   useEffect(() => {
     // A no-op effect that depends on the location
-    // const testLogged = loggedIn;
-    // console.log("testlogged este: ", testLogged);
-    // console.log("loggedIn este: ", loggedIn);
     console.log("NavBar loggedIn state changed:", loggedIn);
   }, [loggedIn]);
   const matches = useMediaQuery("(max-width:600px)");
-  const theme = useTheme();
-  // const isScreenSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  // You can adjust this value
 
   return (
     <>

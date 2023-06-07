@@ -33,6 +33,7 @@ function UpcomingEvents({ showSignUpButton, allCalendarEvents }) {
               credits={event.credits}
               contactEmail={event.contactEmail}
               specialization={event.specialization}
+              imageUrl={event.imageUrl}
             />
           </Grid>
         ))}

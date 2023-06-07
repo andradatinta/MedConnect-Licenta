@@ -24,6 +24,7 @@ function CalendarEventCard({
   location,
   credits,
   contactEmail,
+  imageUrl,
   specialization,
 }) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -93,8 +94,8 @@ function CalendarEventCard({
                   }}
                 >
                   <img
-                    src="/graphics/calendar-card-3.jpg"
-                    alt="Your illustration"
+                    src={imageUrl}
+                    alt="Event Presentation"
                     style={{
                       width: "100%",
                       height: "auto",
@@ -110,14 +111,11 @@ function CalendarEventCard({
                     textAlign: "center",
                     alignItems: "flex-start",
                     gap: "0.4rem",
-                    // backgroundColor: "yellow",
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
-                      // justifyContent: "center",
-
                       alignItems: "center",
                     }}
                   >

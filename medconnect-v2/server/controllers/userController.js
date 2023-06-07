@@ -28,6 +28,11 @@ exports.registerUserDoctor = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please add all fields");
   }
+
+  if (password.length < 8) {
+    res.status(400);
+    throw new Error("Password should be at least 8 characters");
+  }
   // check if the user exists
 
   const userExists = await User.findOne({ email });
