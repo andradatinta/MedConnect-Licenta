@@ -51,14 +51,6 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(state.user));
   }, [state.user]);
 
-  // const [loggedIn, setLoggedIn] = useState(!!state.user);
-  // const loggedIn = useMemo(() => !!state.user, [state.user]);
-
-  // useEffect(() => {
-  //   console.log("AuthProvider state.user changed:", state.user);
-  //   setLoggedIn(!!state.user);
-  // }, [state.user]);
-
   const register = async (data, endpoint) => {
     try {
       dispatch({ type: "REGISTER_START" });
@@ -143,6 +135,7 @@ const AuthProvider = ({ children }) => {
         type: "UPDATE_PASSWORD_SUCCESS",
         payload: state.user, // You may need to define this in your reducer
       });
+      return { error: false, message: response.data.message };
     } catch (error) {
       dispatch({
         type: "UPDATE_PASSWORD_FAILURE", // You may need to define this in your reducer
@@ -151,7 +144,10 @@ const AuthProvider = ({ children }) => {
             ? error.response.data.message
             : error.message,
       });
-      return error.response ? error.response.data.message : error.message;
+      return {
+        error: true,
+        message: error.response ? error.response.data.message : error.message,
+      };
     }
   };
 
@@ -175,6 +171,7 @@ const AuthProvider = ({ children }) => {
         payload: response.data.user,
       });
       localStorage.setItem("user", JSON.stringify(response.data.user)); // Update localStorage with the updated user data
+      return { error: false, message: response.data.message };
     } catch (error) {
       dispatch({
         type: "UPDATE_EMAIL_FAILURE", // You may need to define this in your reducer
@@ -183,7 +180,10 @@ const AuthProvider = ({ children }) => {
             ? error.response.data.message
             : error.message,
       });
-      return error.response ? error.response.data.message : error.message;
+      return {
+        error: true,
+        message: error.response ? error.response.data.message : error.message,
+      };
     }
   };
 

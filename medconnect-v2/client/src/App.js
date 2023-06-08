@@ -13,7 +13,6 @@ import ProgressContent from "./components/DoctorDashboard/ProgressContent";
 import DoctorDocumentsContent from "./components/DoctorDashboard/DoctorDocumentsContent";
 import CMRDashboard from "./pages/CMRDashboard";
 import DoctorsContent from "./components/CMRDashboard/DoctorsContent";
-import CMRSettings from "./components/CMRDashboard/CMRSettings";
 import UpcomingEventsContent from "./components/DoctorDashboard/UpcomingEventsContent";
 import ProtectedRoute from "./components/Routing/ProtectedRoute";
 import SettingsContent from "./components/DoctorDashboard/SettingsContent";
@@ -59,7 +58,7 @@ const router = createBrowserRouter([
         index: true,
         element: <DoctorsContent />,
       },
-      { path: "settings", element: <CMRSettings /> },
+      { path: "settings", element: <SettingsContent /> },
     ],
   },
 ]);

@@ -108,7 +108,13 @@ function SignUpFormCMR() {
               name="password"
               control={control}
               defaultValue=""
-              rules={{ required: "Parola trebuie completată!" }}
+              rules={{
+                required: "Parola trebuie completată!",
+                minLength: {
+                  value: 8,
+                  message: "Parola trebuie să aibă cel puțin 8 caractere!",
+                },
+              }}
               render={({ field }) => (
                 <TextField
                   {...field}

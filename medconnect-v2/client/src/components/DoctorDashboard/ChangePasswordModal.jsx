@@ -6,9 +6,10 @@ import {
   DialogTitle,
   TextField,
   Grid,
+  Typography,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function ChangePasswordModal({ open, handleClose }) {
@@ -18,20 +19,50 @@ function ChangePasswordModal({ open, handleClose }) {
     watch,
     formState: { errors },
   } = useForm();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const password = useRef({});
   password.current = watch("newPassword", "");
 
   const { updatePassword, error: authError } = useContext(AuthContext); // You need to implement updatePassword
 
   const onSubmit = async ({ confirmPassword, ...data }) => {
-    await updatePassword(data);
+    const response = await updatePassword(data);
+    if (response.error) {
+      // Handle error (maybe use a useState hook to display the error in the modal)
+      setErrorMessage(response.message);
+    } else {
+      // Handle success (maybe use a useState hook to display the success message in the modal)
+      setSuccessMessage(response.message);
+      setTimeout(handleClose, 3000);
+      // handleClose();
+    }
+  };
+
+  const handleCloseAndClear = () => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
     handleClose();
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Modifica parola</DialogTitle>
+    <Dialog open={open} onClose={handleCloseAndClear}>
+      <DialogTitle>Modifică parola</DialogTitle>
       <DialogContent sx={{ marginTop: "1.5rem" }}>
+        {successMessage && (
+          <Typography
+            sx={{ color: "green", textAlign: "center", marginBottom: "2rem" }}
+          >
+            {successMessage}
+          </Typography>
+        )}
+        {errorMessage && (
+          <Typography
+            sx={{ color: "red", textAlign: "center", marginBottom: "2rem" }}
+          >
+            {errorMessage}
+          </Typography>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: "0.5rem" }}>
           <Grid
             container
@@ -47,7 +78,7 @@ function ChangePasswordModal({ open, handleClose }) {
                 name="oldPassword"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Old password is required" }}
+                rules={{ required: "Parola curentă trebuie completată!" }}
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -65,11 +96,11 @@ function ChangePasswordModal({ open, handleClose }) {
                 name="newPassword"
                 control={control}
                 defaultValue=""
-                rules={{ required: "New password is required" }}
+                rules={{ required: "Parola nouă trebuie completată!" }}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    label="Parola noua"
+                    label="Parola nouă"
                     type="password"
                     fullWidth
                     error={!!errors.newPassword}
@@ -84,14 +115,14 @@ function ChangePasswordModal({ open, handleClose }) {
                 control={control}
                 defaultValue=""
                 rules={{
-                  required: "Confirm password is required",
+                  required: "Confirmarea parolei trebuie completată!",
                   validate: (value) =>
-                    value === password.current || "The passwords do not match",
+                    value === password.current || "Parolele nu corespund!",
                 }}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    label="Confirm New Password"
+                    label="Confirmă noua parolă"
                     type="password"
                     fullWidth
                     error={!!errors.confirmPassword}
@@ -104,10 +135,10 @@ function ChangePasswordModal({ open, handleClose }) {
 
           <DialogActions sx={{ marginTop: "2rem" }}>
             <Button type="submit" color="primary">
-              Confirma
+              Confirmă
             </Button>
             <Button onClick={handleClose} color="primary">
-              Anuleaza
+              Anulează
             </Button>
           </DialogActions>
         </form>

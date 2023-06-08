@@ -179,7 +179,13 @@ function SignUpFormDoctor() {
               name="cuim"
               control={control}
               defaultValue=""
-              rules={{ required: "CUIM trebuie completat!" }}
+              rules={{
+                required: "CUIM trebuie completat!",
+                pattern: {
+                  value: /^[A-Z][\w\d]{5}$/,
+                  message: "CUIM invalid!",
+                },
+              }}
               render={({ field }) => (
                 <TextField
                   {...field}

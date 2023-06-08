@@ -86,6 +86,11 @@ exports.registerUserCMR = asyncHandler(async (req, res) => {
     throw new Error("Invalid email domain for a CMR member account");
   }
 
+  if (password.length < 8) {
+    res.status(400);
+    throw new Error("Password should be at least 8 characters");
+  }
+
   // check if the user exists
 
   const userExists = await User.findOne({ email });
@@ -282,7 +287,7 @@ exports.changePassword = asyncHandler(async (req, res) => {
   const passwordMatch = await bcrypt.compare(oldPassword, user.password);
   if (!passwordMatch) {
     res.status(401);
-    throw new Error("Old password is incorrect");
+    throw new Error("Parola curentă introdusă este greșită!");
   }
 
   // Hash new password
@@ -309,7 +314,7 @@ exports.changeEmail = asyncHandler(async (req, res) => {
   const userWithNewEmail = await User.findOne({ email: newEmail });
   if (userWithNewEmail) {
     res.status(400);
-    throw new Error("Email is already in use");
+    throw new Error("Adresa de email este deja folosită!");
   }
 
   // Update user email
@@ -317,7 +322,7 @@ exports.changeEmail = asyncHandler(async (req, res) => {
   const updatedUser = await user.save();
 
   res.status(200).json({
-    message: "Email updated successfully",
+    message: "Adresa de email a fost schimbată!",
     user: {
       _id: updatedUser.id,
       firstName: updatedUser.firstName,

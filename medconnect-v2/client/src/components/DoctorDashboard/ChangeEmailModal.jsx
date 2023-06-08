@@ -6,8 +6,9 @@ import {
   DialogTitle,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -17,16 +18,31 @@ function ChangeEmailModal({ open, handleClose }) {
     control,
     formState: { errors },
   } = useForm();
-
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { updateEmail, error: authError } = useContext(AuthContext); // You need to implement updatePassword
 
   const onSubmit = async (data) => {
-    await updateEmail(data);
+    const response = await updateEmail(data);
+    if (response.error) {
+      // Handle error (maybe use a useState hook to display the error in the modal)
+      setErrorMessage(response.message);
+    } else {
+      // Handle success (maybe use a useState hook to display the success message in the modal)
+      setSuccessMessage(response.message);
+      setTimeout(handleClose, 3000);
+      // handleClose();
+    }
+  };
+
+  const handleCloseAndClear = () => {
+    setErrorMessage(null);
+    setSuccessMessage(null);
     handleClose();
   };
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleCloseAndClear}>
         <DialogTitle>Modifică email</DialogTitle>
 
         <DialogContent
@@ -34,6 +50,20 @@ function ChangeEmailModal({ open, handleClose }) {
             marginTop: "1.5rem",
           }}
         >
+          {successMessage && (
+            <Typography
+              sx={{ color: "green", textAlign: "center", marginBottom: "2rem" }}
+            >
+              {successMessage}
+            </Typography>
+          )}
+          {errorMessage && (
+            <Typography
+              sx={{ color: "red", textAlign: "center", marginBottom: "2rem" }}
+            >
+              {errorMessage}
+            </Typography>
+          )}
           <form
             onSubmit={handleSubmit(onSubmit)}
             style={{ marginTop: "0.5rem" }}
@@ -52,11 +82,13 @@ function ChangeEmailModal({ open, handleClose }) {
                   name="newEmail"
                   control={control}
                   defaultValue=""
-                  rules={{ required: "New email is required" }}
+                  rules={{
+                    required: "Adresa de email nouă trebuie completată!",
+                  }}
                   render={({ field }) => (
                     <TextField
                       {...field}
-                      label="Adresa de email noua"
+                      label="Adresa de email nouă"
                       type="email"
                       fullWidth
                       error={!!errors.newEmail}
