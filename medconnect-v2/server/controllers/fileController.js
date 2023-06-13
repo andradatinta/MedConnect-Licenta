@@ -138,32 +138,6 @@ exports.getFile = asyncHandler(async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-// exports.getUserFiles = asyncHandler(async (req, res) => {
-//   const user = req.user;
-//   const page = parseInt(req.query.page) - 1 || 0;
-//   const limit = parseInt(req.query.limit) || 4;
-
-//   const files = await File.find({ owner: user._id })
-//     .populate("owner", "firstName lastName")
-//     .skip(page * limit)
-//     .limit(limit);
-
-//   const totalFetchedFiles = await File.countDocuments({ owner: user._id });
-
-//   const userFilesData = {
-//     files,
-//     limit,
-//     page: page + 1,
-//     totalFetchedFiles,
-//   };
-
-//   if (files) {
-//     res.status(200).json(userFilesData);
-//   } else {
-//     res.status(404);
-//     throw new Error("Files not found");
-//   }
-// });
 
 exports.getUserFiles = asyncHandler(async (req, res) => {
   const userId = req.params.userId;

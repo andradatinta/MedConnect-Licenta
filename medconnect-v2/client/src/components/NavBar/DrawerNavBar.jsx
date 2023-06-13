@@ -40,7 +40,7 @@ function DrawerNavBar() {
             <MuiLink component={RouterLink} to="/">
               <Typography variant="p">Despre Noi</Typography>
             </MuiLink>
-            <MuiLink component={RouterLink} to="/">
+            <MuiLink component={RouterLink} to="/signupcmr">
               <Typography variant="p">Membru CMR</Typography>
             </MuiLink>
             <MuiLink component={RouterLink} to="/calendar">

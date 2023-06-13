@@ -6,8 +6,12 @@ import {
   FullViewportContainer,
   ImageBox,
 } from "../SignUp/SignUp.styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 function LoginContent() {
+  const theme = useTheme();
+  const isScreenSmall = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
       <>
@@ -33,13 +37,15 @@ function LoginContent() {
               justifyContent="center"
               alignItems="center"
             >
-              <ImageBox>
-                <img
-                  src="/graphics/login.svg"
-                  alt="Your illustration"
-                  style={{ width: "80%", height: "auto" }}
-                />
-              </ImageBox>
+              {!isScreenSmall && (
+                <ImageBox>
+                  <img
+                    src="/graphics/login.svg"
+                    alt="Your illustration"
+                    style={{ width: "80%", height: "auto" }}
+                  />
+                </ImageBox>
+              )}
             </Grid>
           </Grid>
         </FullViewportContainer>

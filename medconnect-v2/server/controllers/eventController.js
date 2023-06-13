@@ -1,13 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const Event = require("../models/event");
 const User = require("../models/user");
-const { specializations, eventSortType } = require("../util/constants");
+const { specializations } = require("../util/constants");
 
 exports.getCalendarEvents = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) - 1 || 0;
   const limit = parseInt(req.query.limit) || 6;
   let sortType = req.query.sort || "local";
-  // const sort = req.query.sort || "local";
   let specialization = req.query.specialization || "All";
   let month = req.query.month || "All";
 
