@@ -30,14 +30,14 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
     : (specialization = req.query.specialization.split(","));
 
   month === "All"
-    ? (month = Object.values(monthNumberMapping)) // array of all month numbers
+    ? (month = Object.values(monthNumberMapping))
     : (month = req.query.month
         .split(",")
         .map((monthName) => monthNumberMapping[monthName]));
 
   const events = await Event.find({
     specialization: { $in: [...specialization] },
-    sortType: sortType, // filtering by sortType
+    sortType: sortType,
     $expr: { $in: [{ $month: "$dateTime" }, month] },
     dateTime: { $gte: new Date() },
   })
@@ -47,7 +47,7 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
 
   const totalFetchedEvents = await Event.countDocuments({
     specialization: { $in: [...specialization] },
-    sortType: sortType, // filtering by sortType
+    sortType: sortType,
     $expr: { $in: [{ $month: "$dateTime" }, month] },
     dateTime: { $gte: new Date() },
   });

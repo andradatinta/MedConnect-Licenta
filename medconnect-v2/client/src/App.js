@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/Routing/ProtectedRoute";
 import SettingsContent from "./components/DoctorDashboard/SettingsContent";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
+import NotFoundPage from "./components/Routing/NotFoundPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       { path: "settings", element: <SettingsContent /> },
     ],
   },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
 ]);
 
 function App() {
@@ -68,8 +73,6 @@ function App() {
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-
-    // <User />
   );
 }
 

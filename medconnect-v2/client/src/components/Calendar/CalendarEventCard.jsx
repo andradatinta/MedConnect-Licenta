@@ -193,6 +193,7 @@ function CalendarEventCard({
           dateTime={dateTime}
           location={location}
           contactEmail={contactEmail}
+          showSignUpButton={showSignUpButton}
         />
       )}
       {isJoinEventOpen && (

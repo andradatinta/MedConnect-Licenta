@@ -70,6 +70,7 @@ function LandingPageContent() {
               size="large"
               component={RouterLink}
               to="/login"
+              sx={{ minWidth: isScreenSmall ? "150px" : "none" }}
             >
               <Typography variant="p">Intră în cont</Typography>
             </Button>
@@ -97,13 +98,19 @@ function LandingPageContent() {
       <CustomCentered>
         <Typography
           variant="h4"
-          sx={{ fontSize: isScreenSmall ? "1rem" : "1.25rem" }}
+          sx={{
+            fontSize: isScreenSmall ? "1rem" : "1.25rem",
+            marginTop: isScreenSmall ? "1.5rem" : "none",
+          }}
         >
           Despre Noi
         </Typography>
         <KeyboardDoubleArrowDownIcon
           color="primary"
-          sx={{ marginLeft: "0.3rem" }}
+          sx={{
+            marginLeft: "0.3rem",
+            marginTop: isScreenSmall ? "1.5rem" : "none",
+          }}
         />
       </CustomCentered>
     </>

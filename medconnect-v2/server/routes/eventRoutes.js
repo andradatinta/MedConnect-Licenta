@@ -5,7 +5,7 @@ const routeProtect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/getCalendar", eventsController.getCalendarEvents);
+router.get("/calendar", eventsController.getCalendarEvents);
 router.get("/recent", routeProtect, eventsController.getRecentEvents);
 router.get("/upcoming", routeProtect, eventsController.getUpcomingEvents);
 

@@ -25,7 +25,7 @@ export function useGetCalendarData(
       try {
         const specializationQueryString = selectedSpecializations.join(",");
         const monthQueryString = englishSelectedMonths.join(",");
-        const url = `${API_URL}/events/getCalendar?page=${page}&specialization=${specializationQueryString}&month=${monthQueryString}&sort=${selectedButton}`;
+        const url = `${API_URL}/events/calendar?page=${page}&specialization=${specializationQueryString}&month=${monthQueryString}&sort=${selectedButton}`;
         const response = await axios.get(url);
         if (!isEqual(response.data, calendarData)) {
           console.log("Server response for events:", response.data);

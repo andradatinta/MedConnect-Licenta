@@ -155,7 +155,7 @@ function SignUpFormDoctor() {
           </Grid>
 
           {/* Fourth Row */}
-          <Grid item xs={12}>
+          <Grid item xs={12} md={6}>
             <Controller
               name="specialization"
               control={control}
@@ -174,7 +174,7 @@ function SignUpFormDoctor() {
             />
           </Grid>
           {/* Fifth Row */}
-          <Grid item xs={12}>
+          <Grid item xs={12} md={6}>
             <Controller
               name="cuim"
               control={control}
@@ -189,7 +189,7 @@ function SignUpFormDoctor() {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="CUIM (Codul Unic de Identificare al Medicului)"
+                  label="CUIM"
                   variant="outlined"
                   fullWidth
                   error={!!errors.cuim}

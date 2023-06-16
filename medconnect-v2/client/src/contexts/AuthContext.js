@@ -10,7 +10,7 @@ const initialState = {
   user: localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null,
-  loggedIn: localStorage.getItem("user") !== null, // false
+  loggedIn: localStorage.getItem("user") !== null,
   loading: false,
   error: null,
 };
@@ -62,7 +62,6 @@ const AuthProvider = ({ children }) => {
         payload: response.data,
       });
 
-      // Log in the user right after registering
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: response.data,

@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 function DashboardMenuButtons({ selectedButton }) {
   const navigate = useNavigate();
-  // const location = useLocation();
 
   return (
     <>
@@ -17,7 +16,6 @@ function DashboardMenuButtons({ selectedButton }) {
         <Grid item xs={12}>
           <DashboardMenuButton
             isSelected={selectedButton === "progres"}
-            // onClick={() => handleSelectedMenuOptionClick("progres")}
             onClick={() => navigate("/doctor")}
           >
             <Box sx={{ display: "flex", gap: "0.6rem" }}>

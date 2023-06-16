@@ -1,8 +1,6 @@
 import { React, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Grid, TextField, Container, Button, Typography } from "@mui/material";
-import { GridWideButton } from "../LandingPageContent/LandingPageContent.styles";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function ForgotPassword() {
@@ -13,7 +11,6 @@ function ForgotPassword() {
   } = useForm();
 
   const [apiError, setApiError] = useState("");
-  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
@@ -39,7 +36,9 @@ function ForgotPassword() {
         >
           {apiError && (
             <Grid item xs={12}>
-              <p style={{ color: "red", textAlign: "center" }}>{apiError}</p>
+              <p style={{ color: "#6F00FF", textAlign: "center" }}>
+                {apiError}
+              </p>
             </Grid>
           )}
           <Grid item xs={12}>
@@ -68,7 +67,16 @@ function ForgotPassword() {
             />
           </Grid>
           <Grid item xs={8}>
-            <Button variant="contained" color="primary" type="submit">
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#0358a0",
+                },
+              }}
+            >
               Resetează parola
             </Button>
           </Grid>

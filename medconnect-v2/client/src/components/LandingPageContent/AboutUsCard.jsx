@@ -21,7 +21,7 @@ function AboutUsCard({ iconUrl, title, description, breakLineTitle = null }) {
 
   if (!isScreenSmall && !isMediumLarge) {
     cardStyles[":hover"] = {
-      transform: "translateY(-10px)",
+      transform: "translateY(-15px)",
     };
   }
   return (

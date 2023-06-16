@@ -17,11 +17,8 @@ function EventDetailsModal({
   location,
   contactEmail,
   handleOpenJoinEventModal,
+  showSignUpButton,
 }) {
-  // const handleJoinButtonClick = () => {
-  //   handleClose();
-  //   handleJoinEventClose(true);
-  // };
   return (
     <>
       <Dialog
@@ -30,7 +27,6 @@ function EventDetailsModal({
         scroll="paper"
         maxWidth="md"
       >
-        {/* <DialogTitle>Detalii</DialogTitle> */}
         <DialogContent>
           <Box display="flex" justifyContent="flex-end">
             <CloseIcon
@@ -102,12 +98,14 @@ function EventDetailsModal({
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleOpenJoinEventModal} color="secondary">
-            Înscrie-te
-          </Button>
-          <Button onClick={handleClose} color="primary">
+          {!showSignUpButton ? (
+            <Button onClick={handleOpenJoinEventModal} color="secondary">
+              Înscrie-te
+            </Button>
+          ) : null}
+          {/* <Button onClick={handleClose} color="primary">
             Închide
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
     </>

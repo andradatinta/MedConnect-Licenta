@@ -1,6 +1,5 @@
 const File = require("../models/file");
 const asyncHandler = require("express-async-handler");
-const { gfs } = require("../middleware/multerConfig");
 const firebaseAdmin = require("firebase-admin");
 const pdfParse = require("pdf-parse");
 const { createWorker } = require("tesseract.js");
@@ -9,13 +8,12 @@ const axios = require("axios");
 function analyzePdfText(text) {
   const match = text.match(/(\d+)\s+credite\s+EMC/i);
   if (match) {
-    return parseInt(match[1], 10); // Convert the matched credits to a number
+    return parseInt(match[1], 10);
   } else {
-    return null; // Or some default value, if no credits were found
+    return null;
   }
 }
 
-// incercare integrare
 exports.uploadFile = asyncHandler(async (req, res) => {
   // Upload the file to Firebase Storage
   const bucket = firebaseAdmin.storage().bucket();
@@ -49,13 +47,11 @@ exports.uploadFile = asyncHandler(async (req, res) => {
         }
 
         if (text) {
-          // Analyze the text
           let credits;
           try {
-            console.log("uite textul: ", text);
             credits = analyzePdfText(text);
             console.log("Text analyzed successfully, credits:", credits);
-            numCredits = credits || 0; // Assume 0 credits if credits is null
+            numCredits = credits || 0;
           } catch (error) {
             console.log("Error analyzing the text", error);
             throw error;
@@ -73,7 +69,7 @@ exports.uploadFile = asyncHandler(async (req, res) => {
 
         // Create Tesseract worker with Romanian language data
         const worker = await createWorker({
-          logger: (m) => console.log(m), // Add logger here
+          logger: (m) => console.log(m),
           langPath:
             "C:\\Users\\Dell\\Documents\\Facultate\\AN 3\\LICENTA\\medconnect-development\\MedConnect-Licenta\\medconnect-v2\\server\\tessdata",
         });
@@ -81,24 +77,20 @@ exports.uploadFile = asyncHandler(async (req, res) => {
         await worker.loadLanguage("ron");
         await worker.initialize("ron");
 
-        // Recognize text in the image
         const {
           data: { text },
         } = await worker.recognize(imageBuffer);
         console.log(text);
 
-        // Extract the number of credits
         const creditsRegex = /(\d+)\scredite\sEMC/;
         const match = text.match(creditsRegex);
         if (match) {
           numCredits = Number(match[1]);
         }
 
-        // terminate the worker after it's done
         await worker.terminate();
       }
 
-      // Save the file metadata and the number of credits to MongoDB
       const file = new File({
         filename: req.file.originalname,
         contentType: req.file.mimetype,

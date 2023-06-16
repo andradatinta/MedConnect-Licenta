@@ -46,15 +46,11 @@ function DashboardNavigationMenu() {
           padding: "1rem",
           height: "calc(100vh - 128px)",
           width: "100%",
-          // overflowY: "scroll",
         }}
       >
         <CardContent
           sx={{
-            // backgroundColor: "blue",
             height: "100%",
-            // display: "column",
-            // justifyContent: "space-between",
             padding: "0",
           }}
         >

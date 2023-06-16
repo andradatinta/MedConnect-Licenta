@@ -70,7 +70,6 @@ exports.registerUserDoctor = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid user data");
   }
-  // res.json({ message: "Register Doctor" });
 });
 
 exports.registerUserCMR = asyncHandler(async (req, res) => {
@@ -124,12 +123,10 @@ exports.registerUserCMR = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid user data");
   }
-  // res.json({ message: "Register CMR" });
 });
 
 exports.loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  // check for user email
   const user = await User.findOne({ email });
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(201).json({
@@ -138,7 +135,6 @@ exports.loginUser = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       type: user.type,
-      // s ar putea sa pun aici specialization?: ca pot si sa nu existe
       specialization: user.specialization,
       cuim: user.cuim,
       token: generateToken(user._id),
@@ -147,7 +143,6 @@ exports.loginUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid user data");
   }
-  // res.json({ message: "Authenticate user" });
 });
 
 exports.getLoggedInUser = asyncHandler(async (req, res) => {
@@ -338,22 +333,17 @@ exports.changeEmail = asyncHandler(async (req, res) => {
 });
 
 exports.forgotPassword = asyncHandler(async (req, res) => {
-  // 1. Get user based on POSTed email
   const user = await User.findOne({ email: req.body.email });
 
-  // 2. If there is no user, send an error
   if (!user) {
     res.status(404);
     throw new Error("There is no user with that email.");
   }
 
-  // 3. If user exists, generate the reset token
-  // This could be a random string, but we will use a JWT
   const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "10m", // token will expire in 10 minutes
+    expiresIn: "10m",
   });
 
-  // 4. Create reset URL
   const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
 
   const message = `<div style="font-family: 'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif;">
@@ -367,7 +357,6 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
 </div>`;
 
   try {
-    // 5. Send it to user's email
     await sendEmail({
       email: user.email,
       subject:
@@ -384,10 +373,8 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
 });
 
 exports.resetPassword = asyncHandler(async (req, res) => {
-  // Get the token from the URL
   const { token } = req.params;
 
-  // Get the new password and confirmation password from the request body
   const { newPassword, confirmPassword } = req.body;
 
   if (!newPassword || !confirmPassword) {
@@ -395,28 +382,22 @@ exports.resetPassword = asyncHandler(async (req, res) => {
     throw new Error("New password and confirmation password are required");
   }
 
-  // Compare the new password and confirmation password
   if (newPassword !== confirmPassword) {
     res.status(400);
     throw new Error("New password and confirmation password do not match");
   }
 
   try {
-    // Decode the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Get the user with the decoded id
     const user = await User.findById(decoded.id);
     if (!user) {
       res.status(404);
       throw new Error("User not found");
     }
 
-    // Hash the new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-    // Update the user's password in the database
     user.password = hashedPassword;
     await user.save();
 

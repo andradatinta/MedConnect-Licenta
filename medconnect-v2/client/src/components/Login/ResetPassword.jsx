@@ -100,7 +100,16 @@ function ResetPassword() {
             />
           </Grid>
           <Grid item xs={8}>
-            <Button variant="contained" color="primary" type="submit">
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#0358a0",
+                },
+              }}
+            >
               Schimbă parola
             </Button>
           </Grid>
