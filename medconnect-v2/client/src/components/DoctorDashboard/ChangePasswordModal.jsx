@@ -96,7 +96,13 @@ function ChangePasswordModal({ open, handleClose }) {
                 name="newPassword"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Parola nouă trebuie completată!" }}
+                rules={{
+                  required: "Parola nouă trebuie completată!",
+                  minLength: {
+                    value: 8,
+                    message: "Parola trebuie să aibă cel puțin 8 caractere!",
+                  },
+                }}
                 render={({ field }) => (
                   <TextField
                     {...field}

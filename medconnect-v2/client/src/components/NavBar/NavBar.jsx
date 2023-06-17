@@ -75,26 +75,22 @@ function NavBar() {
                   </Button>
                 </>
               ) : (
-                user && (
-                  <>
-                    <MuiLink
-                      component={RouterLink}
-                      to="/"
-                      onClick={logout}
-                      sx={{ ml: 2 }}
-                    >
-                      <Typography variant="p" color="primary">
-                        Logout
-                      </Typography>
-                    </MuiLink>
-                    <MuiLink component={RouterLink} to={accountTypeRoute}>
-                      <AccountCircleOutlinedIcon
-                        sx={{ marginRight: "0.3rem" }}
-                      />
-                      <Typography variant="p">Contul meu</Typography>
-                    </MuiLink>
-                  </>
-                )
+                <>
+                  <MuiLink
+                    component={RouterLink}
+                    to="/"
+                    onClick={logout}
+                    sx={{ ml: 2 }}
+                  >
+                    <Typography variant="p" color="primary">
+                      Logout
+                    </Typography>
+                  </MuiLink>
+                  <MuiLink component={RouterLink} to={accountTypeRoute}>
+                    <AccountCircleOutlinedIcon sx={{ marginRight: "0.3rem" }} />
+                    <Typography variant="p">Contul meu</Typography>
+                  </MuiLink>
+                </>
               )}
             </NavigationAccount>
           </Toolbar>

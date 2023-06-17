@@ -14,6 +14,7 @@ import JoinEventModal from "./JoinEventModal";
 import { API_URL } from "../../utils/constants";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
+import { CircularProgress } from "@mui/material";
 
 function CalendarEventCard({
   showSignUpButton,
@@ -30,6 +31,7 @@ function CalendarEventCard({
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isJoinEventOpen, setIsJoinEventOpen] = useState(false);
   const [eventSignUpStatus, setEventSignUpStatus] = useState("idle");
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const { user } = useContext(AuthContext);
   const handleDetailsOpen = () => {
     setIsDetailsOpen(true);
@@ -91,15 +93,25 @@ function CalendarEventCard({
                     width: "50%",
                     height: "auto",
                     flex: 1,
+                    position: "relative", // add this
+                    display: "flex", // add this
+                    justifyContent: "center", // add this
+                    alignItems: "center", // add this
                   }}
                 >
+                  {!isImageLoaded && (
+                    <CircularProgress sx={{ animationDuration: "0.3s" }} />
+                  )}
+
                   <img
                     src={imageUrl}
                     alt="Event Presentation"
+                    onLoad={() => setIsImageLoaded(true)} // add this
                     style={{
                       width: "100%",
                       height: "auto",
                       borderRadius: "30px",
+                      display: isImageLoaded ? "block" : "none", // add this
                     }}
                   />
                 </Box>

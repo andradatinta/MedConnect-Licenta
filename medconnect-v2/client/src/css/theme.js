@@ -216,6 +216,13 @@ const theme = createTheme({
         },
       },
     },
+    // MuiCircularProgress: {
+    //   styleOverrides: {
+    //     root: {
+    //       animationDuration: "0.5s",
+    //     },
+    //   },
+    // },
   },
 });
 

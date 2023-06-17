@@ -22,12 +22,12 @@ function DrawerNavBar() {
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <Box
           sx={{
-            width: "250px", // width of the drawer
-            p: 2, // padding inside the drawer
+            width: "250px",
+            p: 2,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between", // Pushes items to top and bottom
-            height: "100%", // Makes box take up all the height of the drawer
+            justifyContent: "space-between",
+            height: "100%",
           }}
         >
           <img

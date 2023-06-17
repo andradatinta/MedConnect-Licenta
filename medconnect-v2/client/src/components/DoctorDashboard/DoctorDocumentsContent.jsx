@@ -14,6 +14,7 @@ import { API_URL } from "../../utils/constants";
 import { AuthContext } from "../../contexts/AuthContext";
 import PaginationContainer from "../CMRDashboard/PaginationContainer";
 import CircularProgress from "@mui/material/CircularProgress";
+import NoUploadedFilesDisplay from "../ErrorMessages/NoUploadedFilesDisplay";
 
 export function useGetUserFiles(user, page, refresh) {
   const [userFilesData, setUserFilesData] = useState([]);
@@ -234,22 +235,26 @@ function DoctorDocumentsContent() {
                       >
                         <CircularProgress />
                       </Box>
+                    ) : userFilesData && userFilesData.files ? (
+                      userFilesData.files.length === 0 ? (
+                        <NoUploadedFilesDisplay />
+                      ) : (
+                        userFilesData.files.map((file) => (
+                          <Grid item xs={12} key={file._id} marginBottom="1rem">
+                            <UploadedFileCard
+                              fileId={file._id}
+                              fileName={file.filename}
+                              fileUrl={file.fileUrl}
+                              uploadDate={new Date(
+                                file.uploadDate
+                              ).toLocaleDateString("en-GB")}
+                              fileValidationStatus={file.validated}
+                            />
+                          </Grid>
+                        ))
+                      )
                     ) : (
-                      userFilesData &&
-                      userFilesData.files &&
-                      userFilesData.files.map((file) => (
-                        <Grid item xs={12} key={file._id} marginBottom="1rem">
-                          <UploadedFileCard
-                            fileId={file._id}
-                            fileName={file.filename}
-                            fileUrl={file.fileUrl}
-                            uploadDate={new Date(
-                              file.uploadDate
-                            ).toLocaleDateString("en-GB")}
-                            fileValidationStatus={file.validated}
-                          />
-                        </Grid>
-                      ))
+                      <NoUploadedFilesDisplay />
                     )}
                   </Grid>
                   <Grid
