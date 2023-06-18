@@ -20,7 +20,7 @@ export function useGetSearchedUsers(searchQuery, page) {
     const fetchSearchedUsers = async () => {
       try {
         setIsLoading(true);
-        const url = `${API_URL}/users/searchedUsers?search=${searchQuery}&page=${page}`;
+        const url = `${API_URL}/users/search?search=${searchQuery}&page=${page}`;
 
         const response = await axios.get(url, {
           headers: {

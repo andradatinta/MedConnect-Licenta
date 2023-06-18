@@ -36,9 +36,11 @@ export function useGetUserRecentEvents(user) {
 
 export function useGetUserCredits(user, years) {
   const [credits, setCredits] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserCredits = async () => {
+      setLoading(true);
       try {
         const token = user.token;
         const url = `${API_URL}/users/${user._id}/credits?years=${years}`;
@@ -48,21 +50,23 @@ export function useGetUserCredits(user, years) {
           },
         });
         setCredits(response.data.totalCredits);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching user credits:", error);
+        setLoading(false);
       }
     };
     fetchUserCredits();
   }, [user, years]);
 
-  return credits;
+  return [credits, loading];
 }
 
 function ProgressContent() {
   const [selectedButton, setSelectedButton] = useState("oneYear");
   const { user } = useContext(AuthContext);
   const userRecentEvents = useGetUserRecentEvents(user);
-  const userTotalCredits = useGetUserCredits(
+  const [userTotalCredits, loading] = useGetUserCredits(
     user,
     selectedButton === "oneYear" ? 1 : 5
   );
@@ -124,6 +128,7 @@ function ProgressContent() {
                           // progressValue={progressValue}
                           userTotalCredits={userTotalCredits}
                           selectedButton={selectedButton}
+                          loading={loading}
                         />
                       </Grid>
                     </Grid>

@@ -14,7 +14,7 @@ function ForgotPassword() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("/api/users/forgotPassword", data);
+      const response = await axios.post("/api/users/forgot-password", data);
       if (response.status === 200) {
         // navigate("/confirmation");
         setApiError("A password reset link has been sent to your email.");

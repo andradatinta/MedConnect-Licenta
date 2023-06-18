@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
     try {
       dispatch({ type: "REGISTER_START" });
 
-      const response = await api.post(`/api/users/signup${endpoint}`, data);
+      const response = await api.post(`/api/users/register-${endpoint}`, data);
 
       dispatch({
         type: "REGISTER_SUCCESS",
@@ -128,7 +128,11 @@ const AuthProvider = ({ children }) => {
       };
 
       // Assuming your password change endpoint is /api/users/change-password
-      const response = await api.put("/api/users/updatePassword", data, config);
+      const response = await api.put(
+        "/api/users/change-password",
+        data,
+        config
+      );
 
       dispatch({
         type: "UPDATE_PASSWORD_SUCCESS",
@@ -163,7 +167,7 @@ const AuthProvider = ({ children }) => {
       };
 
       // Assuming your password change endpoint is /api/users/change-password
-      const response = await api.put("/api/users/updateEmail", data, config);
+      const response = await api.put("/api/users/change-email", data, config);
 
       dispatch({
         type: "UPDATE_EMAIL_SUCCESS",

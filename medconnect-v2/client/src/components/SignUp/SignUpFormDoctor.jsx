@@ -22,7 +22,7 @@ function SignUpFormDoctor() {
       setApiError("Parolele nu corespund!");
       return;
     }
-    const errorMessage = await register(data, "/doctor");
+    const errorMessage = await register(data, "doctor");
     if (!errorMessage) {
       navigate("/calendar");
     } else {

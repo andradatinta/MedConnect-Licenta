@@ -23,7 +23,7 @@ function SignUpFormCMR() {
       return;
     }
 
-    const errorMessage = await register(data, "/cmr");
+    const errorMessage = await register(data, "cmr");
     if (!errorMessage) {
       navigate("/calendar");
     } else {

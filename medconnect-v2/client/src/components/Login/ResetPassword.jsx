@@ -21,7 +21,7 @@ function ResetPassword() {
   const onSubmit = async ({ newPassword, confirmPassword }) => {
     try {
       const response = await axios.post(
-        `/api/users/resetPassword/${new URLSearchParams(location.search).get(
+        `/api/users/reset-password/${new URLSearchParams(location.search).get(
           "token"
         )}`,
         { newPassword, confirmPassword }

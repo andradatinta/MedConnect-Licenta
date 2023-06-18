@@ -60,7 +60,7 @@ function CalendarEventCard({
       // Make a POST request to the /user/event/signup endpoint
       // Include the eventId in the request body, and include the user's token in the Authorization header
       const response = await axios.post(
-        `${API_URL}/users/eventSignUp`,
+        `${API_URL}/users/signup-event`,
         { eventId: eventId },
         {
           headers: {
