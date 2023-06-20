@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 export const DashboardMenuButton = styled(({ isSelected, ...other }) => (
   <Button {...other} />
 ))(({ theme, isSelected }) => ({
-  // padding: "6px 20px",
   minWidth: "100%",
   maxWidth: "100%",
   justifyContent: "flex-start",
@@ -24,7 +23,6 @@ export const DashboardMenuButton = styled(({ isSelected, ...other }) => (
 export const ProgressSelectToggleButton = styled(({ isSelected, ...other }) => (
   <Button {...other} />
 ))(({ theme, isSelected }) => ({
-  // padding: "6px 20px",
   minWidth: "4rem",
   maxWidth: "80%",
   textTransform: "none",
@@ -53,6 +51,6 @@ export const DocumentsWideButton = styled(Button)(({ theme }) => ({
     cursor: "pointer",
   },
   "@media (max-width: 600px)": {
-    fontSize: "0.8rem", // Decrease the font size for smaller screens
+    fontSize: "0.8rem",
   },
 }));

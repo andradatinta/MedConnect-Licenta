@@ -48,17 +48,13 @@ function CalendarEventCard({
     setIsJoinEventOpen(false);
   };
   const handleOpenJoinEventModal = () => {
-    handleDetailsClose(); // Close EventDetailsModal
-    handleJoinEventOpen(); // Open JoinEventModal
+    handleDetailsClose();
+    handleJoinEventOpen();
   };
 
   const handleConfirmSignUp = async () => {
     try {
-      // Get the user's token from the AuthContext
       const token = user.token;
-
-      // Make a POST request to the /user/event/signup endpoint
-      // Include the eventId in the request body, and include the user's token in the Authorization header
       const response = await axios.post(
         `${API_URL}/users/signup-event`,
         { eventId: eventId },
@@ -69,14 +65,10 @@ function CalendarEventCard({
         }
       );
 
-      // If the request was successful, show a success message
       if (response.data.success) {
-        // alert("You have successfully signed up for the event!");
         setEventSignUpStatus("success");
       }
     } catch (error) {
-      // If the request failed (for example, because the user has already signed up for the event), show an error message
-      // alert("Could not sign up for the event: " + error.response.data.message);
       setEventSignUpStatus("failed");
     }
   };
@@ -93,10 +85,10 @@ function CalendarEventCard({
                     width: "50%",
                     height: "auto",
                     flex: 1,
-                    position: "relative", // add this
-                    display: "flex", // add this
-                    justifyContent: "center", // add this
-                    alignItems: "center", // add this
+                    position: "relative",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   {!isImageLoaded && (
@@ -106,12 +98,12 @@ function CalendarEventCard({
                   <img
                     src={imageUrl}
                     alt="Event Presentation"
-                    onLoad={() => setIsImageLoaded(true)} // add this
+                    onLoad={() => setIsImageLoaded(true)}
                     style={{
                       width: "100%",
                       height: "auto",
                       borderRadius: "30px",
-                      display: isImageLoaded ? "block" : "none", // add this
+                      display: isImageLoaded ? "block" : "none",
                     }}
                   />
                 </Box>

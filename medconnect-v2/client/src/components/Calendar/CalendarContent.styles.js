@@ -1,4 +1,3 @@
-// CalendarContent.styles.js
 import { styled } from "@mui/system";
 import {
   Button,
@@ -36,7 +35,6 @@ export const FilterControlLabelTypography = styled(Typography)({
     fontSize: "0.4rem !important",
   },
   textOverflow: "ellipsis",
-  // overflow: "hidden",
 });
 
 export const FilterControlLabel = (props) => (

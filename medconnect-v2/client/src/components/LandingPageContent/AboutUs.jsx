@@ -2,7 +2,6 @@ import React from "react";
 import AboutUsCard from "./AboutUsCard";
 import CMRMemberLandingPage from "./CMRMemberLandingPage";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
 import { Grid } from "@mui/material";
 
 function AboutUs() {
@@ -21,7 +20,6 @@ function AboutUs() {
           item
           xs={7}
           sm={3}
-          // xl={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
           <AboutUsCard
@@ -36,7 +34,6 @@ function AboutUs() {
           item
           xs={7}
           sm={3}
-          // xl={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
           <AboutUsCard
@@ -51,16 +48,13 @@ function AboutUs() {
           item
           xs={7}
           sm={3}
-          // lg={3}
-          // md={3}
-          // xl={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
           <AboutUsCard
             iconUrl="/graphics/cmr-about-us.svg"
             title="Acreditare eficientă"
             description="În calitate de membru CMR, validează mai rapid punctajele medicilor pentru
-            obținerea avizului anual de practică."
+            obținerea avizului lor de practică."
           />
         </Grid>
       </Grid>

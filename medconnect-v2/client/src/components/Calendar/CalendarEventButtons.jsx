@@ -11,7 +11,7 @@ function CalendarEventButtons(props) {
         onClick={() => handleEventTypeClick("national")}
         isSelected={selectedButton === "national"}
       >
-        Nationale
+        Naționale
       </CalendarSelectToggleButton>
       <CalendarSelectToggleButton
         onClick={() => handleEventTypeClick("local")}
@@ -23,7 +23,7 @@ function CalendarEventButtons(props) {
         onClick={() => handleEventTypeClick("international")}
         isSelected={selectedButton === "international"}
       >
-        Internationale
+        Internaționale
       </CalendarSelectToggleButton>
     </Box>
   );

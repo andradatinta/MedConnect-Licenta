@@ -35,7 +35,6 @@ function SettingsContent() {
   return (
     <>
       <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
-        {/* whole content box above */}
         <Box
           sx={{
             display: "flex",
@@ -49,18 +48,13 @@ function SettingsContent() {
           <Container
             maxWidth="md"
             sx={{
-              // backgroundColor: "red",
               minHeight: "78vh",
-              // marginTop: "2rem",
-              // display: "flex",
-              // alignItems: "center",
             }}
           >
             <Grid
               container
               spacing={3}
               sx={{
-                // backgroundColor: "blue",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -109,7 +103,6 @@ function SettingsContent() {
                 </Button>
               </Grid>
             </Grid>
-            {/* Here you should implement your Modal component, that gets displayed when 'openModal' is true and contains the logic for changing the email/password */}
             {openPasswordModal && (
               <ChangePasswordModal
                 open={openPasswordModal}

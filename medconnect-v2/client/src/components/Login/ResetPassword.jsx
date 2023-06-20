@@ -30,7 +30,7 @@ function ResetPassword() {
         navigate("/login");
       }
     } catch (error) {
-      setApiError("An error occurred while trying to reset your password.");
+      setApiError("A apărut o eroare la resetarea parolei!");
     }
   };
 

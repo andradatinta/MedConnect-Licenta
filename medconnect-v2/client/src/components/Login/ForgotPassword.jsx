@@ -16,11 +16,12 @@ function ForgotPassword() {
     try {
       const response = await axios.post("/api/users/forgot-password", data);
       if (response.status === 200) {
-        // navigate("/confirmation");
-        setApiError("A password reset link has been sent to your email.");
+        setApiError("Un link de resetare a parolei v-a fost trimis pe email!");
       }
     } catch (error) {
-      setApiError("An error occurred while trying to reset your password.");
+      setApiError(
+        "A apărut o eroare la trimiterea emailului de resetare a parolei!"
+      );
     }
   };
   return (

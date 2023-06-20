@@ -20,7 +20,6 @@ function JoinEventModal({
   eventSignUpStatus,
 }) {
   const { user } = useContext(AuthContext);
-  // Depending on signupStatus, render different content
   let modalContent;
   switch (eventSignUpStatus) {
     case "success":
@@ -32,9 +31,10 @@ function JoinEventModal({
             textTransform: "none",
             fontWeight: "500",
             marginBottom: "0.8rem",
+            marginTop: "1rem",
           }}
         >
-          You have successfully signed up for the event!
+          Te-ai înscris cu succes la eveniment!
         </Typography>
       );
       break;
@@ -68,7 +68,7 @@ function JoinEventModal({
         <DialogContent>
           <Box display="flex" justifyContent="flex-end">
             <CloseIcon
-              fontSize="large"
+              fontSize="medium"
               opacity="0.3"
               onClick={handleClose}
               sx={{ cursor: "pointer" }}
@@ -172,13 +172,6 @@ function JoinEventModal({
                   {new Date(dateTime).toLocaleString("en-GB")}
                 </Typography>
               </Grid>
-              {/* <Grid item xs={12}>
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ maxWidth: "40%" }}
-              ></Button>
-            </Grid> */}
             </Grid>
           ) : (
             modalContent
@@ -198,22 +191,6 @@ function JoinEventModal({
             </Grid>
           ) : null}
         </DialogContent>
-        {/* <DialogActions>
-          <Box
-            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
-          >
-            <Button
-              variant="contained"
-              color="secondary"
-              sx={{ maxWidth: "70%" }}
-            >
-              Confirma inscrierea
-            </Button>
-          </Box>
-          {/* <Button onClick={handleClose} color="primary">
-            Închide
-          </Button> */}
-        {/* </DialogActions> */}
       </Dialog>
     </>
   );

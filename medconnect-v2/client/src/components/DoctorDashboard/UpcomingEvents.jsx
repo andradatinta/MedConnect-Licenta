@@ -5,25 +5,10 @@ import CalendarEventCard from "../Calendar/CalendarEventCard";
 function UpcomingEvents({ showSignUpButton, allCalendarEvents }) {
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        columnGap="2.5rem"
-        marginTop="1rem"
-        // maxHeight="100vh"
-        // sx={{ height: "100%", overflowY: "scroll" }}
-      >
+      <Grid container spacing={2} columnGap="2.5rem" marginTop="1rem">
         {allCalendarEvents.map((event) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            key={event._id}
-            // sx={{ minHeight: "273px" }}
-          >
+          <Grid item xs={12} sm={6} md={3} key={event._id}>
             <CalendarEventCard
-              // de vazut cu imageUrl
               showSignUpButton={showSignUpButton}
               key={event._id}
               eventName={event.name}

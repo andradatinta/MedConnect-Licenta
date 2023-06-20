@@ -1,7 +1,6 @@
 import React from "react";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { CardContent, Card, Grid, Typography, Box } from "@mui/material";
-import { API_URL } from "../../utils/constants";
 
 function UploadedFileCard({
   fileName,
@@ -10,7 +9,6 @@ function UploadedFileCard({
   fileId,
   fileUrl,
 }) {
-  // const isFileValidated = false;
   const handleCardClick = () => {
     window.open(fileUrl, "_blank");
   };

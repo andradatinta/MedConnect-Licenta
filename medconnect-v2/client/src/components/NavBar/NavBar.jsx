@@ -20,9 +20,8 @@ function NavBar() {
     user && user.type ? (user.type === "doctor" ? "/doctor" : "/cmr") : "/";
 
   useEffect(() => {
-    // A no-op effect that depends on the location
-    console.log("NavBar loggedIn state changed:", loggedIn);
-  }, [loggedIn]);
+    // console.log("NavBar loggedIn state changed:", loggedIn);
+  }, [loggedIn, user]);
   const matches = useMediaQuery("(max-width:600px)");
 
   return (

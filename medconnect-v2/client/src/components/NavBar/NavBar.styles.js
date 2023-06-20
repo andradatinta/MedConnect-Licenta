@@ -9,13 +9,8 @@ export const NavigationLinks = styled(Box)(({ theme }) => ({
 }));
 
 export const NavigationAccount = styled(Box)(({ theme }) => {
-  // Obtain the current theme
   const currentTheme = useTheme();
-
-  // Determine if the screen size is less than medium
   const isScreenSmall = useMediaQuery(currentTheme.breakpoints.down("md"));
-
-  // Apply different styles based on the screen size
   return {
     display: "flex",
     gap: "20px",

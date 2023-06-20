@@ -103,9 +103,6 @@ function EventDetailsModal({
               Înscrie-te
             </Button>
           ) : null}
-          {/* <Button onClick={handleClose} color="primary">
-            Închide
-          </Button> */}
         </DialogActions>
       </Dialog>
     </>

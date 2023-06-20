@@ -20,18 +20,15 @@ function ChangeEmailModal({ open, handleClose }) {
   } = useForm();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { updateEmail, error: authError } = useContext(AuthContext); // You need to implement updatePassword
+  const { updateEmail, error: authError } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     const response = await updateEmail(data);
     if (response.error) {
-      // Handle error (maybe use a useState hook to display the error in the modal)
       setErrorMessage(response.message);
     } else {
-      // Handle success (maybe use a useState hook to display the success message in the modal)
       setSuccessMessage(response.message);
       setTimeout(handleClose, 3000);
-      // handleClose();
     }
   };
 

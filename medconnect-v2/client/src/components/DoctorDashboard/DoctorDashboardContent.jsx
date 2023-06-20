@@ -9,7 +9,6 @@ function DoctorDashboardContent() {
     <>
       <FullViewportContainer
         maxWidth="100%"
-        // sx={{ backgroundColor: "blueviolet", padding: "0 1rem" }}
       >
         <Grid container spacing={2}>
           <Grid item xs={12} md={2}>

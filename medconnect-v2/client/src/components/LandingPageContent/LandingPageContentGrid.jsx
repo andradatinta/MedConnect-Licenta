@@ -28,9 +28,6 @@ function LandingPageContent() {
               sx={{
                 width: "90%",
                 paddingTop: { xs: "4rem", md: "2rem" },
-                // display: isScreenSmall ? "flex" : "block",
-                // flexDirection: isScreenSmall ? "column" : "normal",
-                // justifyContent: isScreenSmall ? "center" : "normal",
               }}
             >
               {isScreenSmall ? (

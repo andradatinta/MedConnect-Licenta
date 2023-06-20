@@ -53,8 +53,8 @@ function DoctorDocumentsContent() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(null);
   const [page, setPage] = useState(1);
-  const [refresh, setRefresh] = useState(0); // new state variable for triggering a refresh
-  const [uploading, setUploading] = useState(false); // Add this line
+  const [refresh, setRefresh] = useState(0);
+  const [uploading, setUploading] = useState(false);
   const { user } = useContext(AuthContext);
   const { userFilesData, isLoading } = useGetUserFiles(user, page, refresh);
   console.log(userFilesData);
@@ -69,28 +69,24 @@ function DoctorDocumentsContent() {
   };
 
   const handleFileUpload = async (event) => {
-    // Prevent event bubbling if necessary
     event.stopPropagation();
 
-    // Implement the file upload logic here
     try {
       setUploading(true);
       const formData = new FormData();
       formData.append("file", selectedFile);
       const url = `${API_URL}/files/upload`;
-
-      // Send it to your server
       const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${user.token}`,
         },
       });
-
-      // Use the response data
       console.log("File uploaded successfully:", response.data);
       setUploadStatus("success");
-      setRefresh(refresh + 1); // Trigger a refresh
+      setSelectedFile(null);
+      fileInputRef.current.value = null;
+      setRefresh(refresh + 1);
     } catch (error) {
       console.log("Error during file upload:", error);
       setUploadStatus("error");
@@ -149,9 +145,25 @@ function DoctorDocumentsContent() {
                   {uploading ? (
                     <CircularProgress />
                   ) : uploadStatus === "success" ? (
-                    <Typography variant="p" color="primary" fontWeight="500">
-                      Fișierul a fost încărcat!
-                    </Typography>
+                    <>
+                      <Typography variant="p" color="primary" fontWeight="500">
+                        Fișierul a fost încărcat!
+                      </Typography>
+                      <Grid item xs={12}>
+                        <Typography
+                          variant="p"
+                          color="primary"
+                          fontWeight="400"
+                          onClick={() => {
+                            setUploadStatus(null); // Reset uploadStatus state
+                            setSelectedFile(null); // Reset selectedFile state
+                            fileInputRef.current.value = null; // Clear the file input value
+                          }}
+                        >
+                          Încarcă alt fișier
+                        </Typography>
+                      </Grid>
+                    </>
                   ) : selectedFile ? (
                     <Grid
                       item

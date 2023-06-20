@@ -26,9 +26,7 @@ function AboutUsCard({ iconUrl, title, description, breakLineTitle = null }) {
   }
   return (
     <Card sx={cardStyles}>
-      <CardContent
-      // sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
-      >
+      <CardContent>
         <AboutUsCardsContainer>
           <Box
             sx={{

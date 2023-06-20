@@ -7,10 +7,7 @@ import DashboardNavigationMenu from "../DoctorDashboard/DashboardNavigationMenu"
 function CMRDashboardContent() {
   return (
     <>
-      <FullViewportContainer
-        maxWidth="100%"
-        // sx={{ backgroundColor: "blueviolet", padding: "0 1rem" }}
-      >
+      <FullViewportContainer maxWidth="100%">
         <Grid container spacing={2}>
           <Grid item xs={12} md={2}>
             <DashboardNavigationMenu />

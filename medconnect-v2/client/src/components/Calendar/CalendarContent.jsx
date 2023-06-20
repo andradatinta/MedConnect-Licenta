@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { isEqual } from "lodash";
-
 import { Grid, Typography, Box } from "@mui/material";
 import { FullViewportContainer } from "../SignUp/SignUp.styles";
 import CalendarEventButtons from "./CalendarEventButtons";
@@ -42,7 +41,6 @@ export function useGetCalendarData(
 }
 
 function CalendarContent() {
-  // const [isSelected, setIsSelected] = useState(false);
   const [selectedButton, setSelectedButton] = useState("national");
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
   const [selectedMonths, setSelectedMonths] = useState([]);
@@ -62,34 +60,21 @@ function CalendarContent() {
   const handleEventTypeClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
-  // useGetCalendarEvents();
 
   const handleFilterChange = (newSpecializationFilters, newMonthFilters) => {
     setSelectedSpecializations(newSpecializationFilters);
     setSelectedMonths(newMonthFilters);
   };
 
-  useEffect(() => {
-    // If you need to run side effects based on selectedButton state
-    // this function will be called whenever selectedButton changes
-    console.log(`Button with id ${selectedButton} is selected.`);
-  }, [selectedButton]);
   return (
     <>
-      <FullViewportContainer
-        maxWidth="100%"
-        // sx={{ backgroundColor: "blueviolet", padding: "0 1rem" }}
-      >
+      <FullViewportContainer maxWidth="100%">
         <Grid container spacing={2}>
           <Grid item xs={12} md={2}>
             <FilterMenu2 onFilterChange={handleFilterChange} />
           </Grid>
-
-          {/* Right side main content */}
           <Grid item xs={12} md={10}>
-            {/* Add your Calendar or other content here */}
             <Box sx={{ marginLeft: "6rem", marginTop: "1rem" }}>
-              {/* whole content box above */}
               <Box
                 sx={{
                   display: "flex",
@@ -97,7 +82,6 @@ function CalendarContent() {
                   position: "relative",
                   minHeight: "85vh",
                   maxHeight: "85vh",
-                  // gap: "1.25rem",
                 }}
               >
                 <Typography
@@ -118,7 +102,6 @@ function CalendarContent() {
                     showSignUpButton={!isDoctor}
                   />
                 ) : null}
-                {/* de adaugat aici pagination container */}
                 <Box
                   sx={{ position: "absolute", bottom: "-15px", width: "100%" }}
                 >

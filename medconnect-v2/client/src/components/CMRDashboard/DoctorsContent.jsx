@@ -119,7 +119,6 @@ function DoctorsContent() {
     setSelectedDoctorId(null);
   };
 
-  // useGetSearchedUsers();
   return (
     <>
       <Box
@@ -130,7 +129,6 @@ function DoctorsContent() {
           position: "relative",
         }}
       >
-        {/* whole content box above */}
         <Box
           sx={{
             display: "flex",
@@ -152,7 +150,6 @@ function DoctorsContent() {
           container
           spacing={2}
           sx={{
-            // backgroundColor: "blue",
             marginTop: "1rem",
           }}
         >

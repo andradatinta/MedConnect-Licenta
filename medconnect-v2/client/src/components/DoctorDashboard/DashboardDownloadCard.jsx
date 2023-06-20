@@ -52,9 +52,8 @@ function DashboardDownloadCard() {
 
       const link = document.createElement("a");
       link.href = url;
-      link.download = "aviz-test.pdf";
+      link.download = "aviz.pdf";
       link.click();
-
       setTimeout(() => {
         URL.revokeObjectURL(url);
       }, 100);

@@ -12,7 +12,7 @@ function DrawerNavBar() {
   const accountTypeRoute =
     user && user.type ? (user.type === "doctor" ? "/doctor" : "/cmr") : "/";
 
-  const [drawerOpen, setDrawerOpen] = useState(false); // track whether drawer is open
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
@@ -34,7 +34,7 @@ function DrawerNavBar() {
             src="/graphics/medconnect-logo-blue-cropped.svg"
             alt="Logo"
             height="20"
-            style={{ alignSelf: "center", marginBottom: "2rem" }} // Center the logo
+            style={{ alignSelf: "center", marginBottom: "2rem" }}
           />
           <NavigationLinks sx={{ flexDirection: "column", gap: "20px" }}>
             <MuiLink component={RouterLink} to="/">

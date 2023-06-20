@@ -87,7 +87,7 @@ function SignUpFormCMR() {
                 required: "Email-ul trebuie completat!",
                 validate: (value) =>
                   value.endsWith("@cmr.ro") ||
-                  "Invalid email domain for a CMR member account",
+                  "Email invalid pentru un membru CMR",
               }}
               render={({ field }) => (
                 <TextField
@@ -102,7 +102,6 @@ function SignUpFormCMR() {
               )}
             />
           </Grid>
-          {/* Third Row */}
           <Grid item xs={12}>
             <Controller
               name="password"

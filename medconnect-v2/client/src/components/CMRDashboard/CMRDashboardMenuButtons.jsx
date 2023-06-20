@@ -7,15 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 function CMRDashboardMenuButtons({ selectedButton }) {
   const navigate = useNavigate();
-  // const location = useLocation();
-
   return (
     <>
       <Grid container display="flex" flexDirection="column" rowGap="1.2rem">
         <Grid item xs={12}>
           <DashboardMenuButton
             isSelected={selectedButton === "doctors"}
-            // onClick={() => handleSelectedMenuOptionClick("progres")}
             onClick={() => navigate("/cmr")}
           >
             <Box sx={{ display: "flex", gap: "0.6rem" }}>

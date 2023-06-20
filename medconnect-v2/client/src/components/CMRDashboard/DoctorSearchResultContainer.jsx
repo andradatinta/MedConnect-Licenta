@@ -23,7 +23,6 @@ function DoctorSearchResultContainer({
             specialization={doctor.specialization}
             cuim={doctor.cuim}
             onClickSeeDocuments={onClickSeeDocuments}
-            // de adaugat documentele lui
           />
         ))}
         {console.log("DoctorSearchResultContainer pagination props:", {

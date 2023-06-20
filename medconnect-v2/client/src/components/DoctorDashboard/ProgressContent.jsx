@@ -93,12 +93,10 @@ function ProgressContent() {
           container
           spacing={2}
           sx={{
-            // backgroundColor: "blue",
             marginTop: "1rem",
           }}
         >
           <Grid item xs={12} md={12}>
-            {/* {aici e ceva ciudatel rau cu spacing ul si column gap ul asta - aveam columngap 11 inainte} */}
             <Grid container spacing={1}>
               <Grid item xs={12} md={3}>
                 <Card sx={{ backgroundColor: "#F8F9FA", height: "100%" }}>
@@ -125,7 +123,6 @@ function ProgressContent() {
 
                       <Grid item xs={12} textAlign="center">
                         <DashboardCircularProgress
-                          // progressValue={progressValue}
                           userTotalCredits={userTotalCredits}
                           selectedButton={selectedButton}
                           loading={loading}

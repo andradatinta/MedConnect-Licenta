@@ -68,8 +68,8 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
                 marginTop="0.3rem"
                 justifySelf="flex-end"
                 sx={{
-                  position: "absolute", // Set position to absolute
-                  bottom: "5px", // Adjust this value as needed
+                  position: "absolute",
+                  bottom: "5px",
                   width: "100%",
                 }}
               >
@@ -83,7 +83,6 @@ function SelectedDoctorDocuments({ selectedDoctorData, selectedDoctorId }) {
                   }
                   setPage={(page) => setPage(page)}
                 />
-                {/* <PaginationContainer /> */}
               </Grid>
             </Grid>
           </CardContent>

@@ -24,18 +24,15 @@ function ChangePasswordModal({ open, handleClose }) {
   const password = useRef({});
   password.current = watch("newPassword", "");
 
-  const { updatePassword, error: authError } = useContext(AuthContext); // You need to implement updatePassword
+  const { updatePassword, error: authError } = useContext(AuthContext);
 
   const onSubmit = async ({ confirmPassword, ...data }) => {
     const response = await updatePassword(data);
     if (response.error) {
-      // Handle error (maybe use a useState hook to display the error in the modal)
       setErrorMessage(response.message);
     } else {
-      // Handle success (maybe use a useState hook to display the success message in the modal)
       setSuccessMessage(response.message);
       setTimeout(handleClose, 3000);
-      // handleClose();
     }
   };
 

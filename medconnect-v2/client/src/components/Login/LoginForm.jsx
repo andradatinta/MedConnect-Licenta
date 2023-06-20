@@ -49,7 +49,6 @@ function LoginForm() {
             alignItems: "center",
           }}
         >
-          {/* Display API error message */}
           {console.log(apiError)}
           {apiError && (
             <Grid item xs={12}>
@@ -99,7 +98,7 @@ function LoginForm() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                marginTop: "1rem", // Adjust the margin according to your layout
+                marginTop: "1rem",
               }}
             >
               <HelpCenterIcon color="primary" sx={{ marginRight: "0.5rem" }} />
@@ -121,7 +120,6 @@ function LoginForm() {
               label="Păstrează-mă conectat"
             />
           </Grid>
-          {/* Submit Button */}
           <Grid
             item
             xs={12}
@@ -134,7 +132,6 @@ function LoginForm() {
               variant="contained"
               color="primary"
               sx={{ marginTop: "1rem", maxWidth: "65%" }}
-              // fullWidth
             >
               Intră în cont
             </GridWideButton>

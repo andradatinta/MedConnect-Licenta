@@ -34,14 +34,12 @@ function SignUpFormDoctor() {
     <Container maxWidth="sm">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
-          {/* Display API error message */}
           {console.log(apiError)}
           {apiError && (
             <Grid item xs={12}>
               <p style={{ color: "red", textAlign: "center" }}>{apiError}</p>
             </Grid>
           )}
-          {/* First Row */}
           <Grid item xs={12} md={6}>
             <Controller
               name="lastName"
@@ -78,7 +76,6 @@ function SignUpFormDoctor() {
               )}
             />
           </Grid>
-          {/* Second Row */}
           <Grid item xs={12}>
             <Controller
               name="email"
@@ -100,7 +97,6 @@ function SignUpFormDoctor() {
               )}
             />
           </Grid>
-          {/* Third Row */}
           <Grid item xs={12}>
             <Controller
               name="password"
@@ -154,7 +150,6 @@ function SignUpFormDoctor() {
             />
           </Grid>
 
-          {/* Fourth Row */}
           <Grid item xs={12} md={6}>
             <Controller
               name="specialization"
@@ -173,7 +168,6 @@ function SignUpFormDoctor() {
               )}
             />
           </Grid>
-          {/* Fifth Row */}
           <Grid item xs={12} md={6}>
             <Controller
               name="cuim"
@@ -198,7 +192,6 @@ function SignUpFormDoctor() {
               )}
             />
           </Grid>
-          {/* Submit Button */}
           <Grid
             item
             xs={12}
