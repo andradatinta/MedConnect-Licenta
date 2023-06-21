@@ -9,7 +9,6 @@ const userCheckRole = require("../middleware/userRoleCheckMiddleware");
 router.post("/register-doctor", userController.registerUserDoctor);
 router.post("/register-cmr", userController.registerUserCMR);
 router.post("/login", userController.loginUser);
-// router.get("/loggedUser", routeProtect, userController.getLoggedInUser);
 router.get(
   "/search",
   routeProtect,

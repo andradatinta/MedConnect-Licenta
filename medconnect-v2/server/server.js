@@ -34,12 +34,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/files", fileRoutes);
 app.use(errorHandler);
 
-// app.listen(port);
-
 mongoose
-  .connect(
-    "mongodb+srv://andradatinta:25072001@cluster0.i0fvo4n.mongodb.net/medconnect?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGODB_KEY)
   .then((result) => {
     app.listen(port);
   })

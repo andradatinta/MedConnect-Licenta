@@ -157,7 +157,6 @@ exports.getLoggedInUser = asyncHandler(async (req, res) => {
     specialization,
     cuim,
   });
-  // res.json({ message: "Get current user's data" });
 });
 
 exports.getSearchedForUsers = asyncHandler(async (req, res) => {
@@ -200,30 +199,25 @@ exports.signUpForEvent = asyncHandler(async (req, res) => {
   const { eventId } = req.body;
   const userId = req.user.id;
 
-  // Check if the event exists
   const event = await Event.findById(eventId);
   if (!event) {
     res.status(404);
     throw new Error("Event not found");
   }
 
-  // Find the user
   const user = await User.findById(userId);
   if (!user) {
     res.status(404);
     throw new Error("User not found");
   }
 
-  // Check if the user has already signed up for the event
   if (user.signedUpEvents.includes(eventId)) {
     res.status(400);
     throw new Error("User has already signed up for this event");
   }
 
-  // Add the event to the user's signedUpEvents
   user.signedUpEvents.push(eventId);
 
-  // Save the user
   await user.save();
 
   res.json({ success: true });
@@ -278,18 +272,15 @@ exports.changePassword = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  // Compare provided password with the stored one
   const passwordMatch = await bcrypt.compare(oldPassword, user.password);
   if (!passwordMatch) {
     res.status(401);
     throw new Error("Parola curentă introdusă este greșită!");
   }
 
-  // Hash new password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-  // Update user password
   user.password = hashedPassword;
   await user.save();
 
@@ -305,14 +296,12 @@ exports.changeEmail = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  // Check if the new email is already in use
   const userWithNewEmail = await User.findOne({ email: newEmail });
   if (userWithNewEmail) {
     res.status(400);
     throw new Error("Adresa de email este deja folosită!");
   }
 
-  // Update user email
   user.email = newEmail;
   const updatedUser = await user.save();
 
@@ -327,7 +316,6 @@ exports.changeEmail = asyncHandler(async (req, res) => {
       specialization: updatedUser.specialization,
       cuim: updatedUser.cuim,
       token: generateToken(updatedUser._id),
-      // include any other user fields you want here
     },
   });
 });

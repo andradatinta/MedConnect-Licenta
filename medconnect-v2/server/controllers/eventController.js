@@ -68,23 +68,20 @@ exports.getCalendarEvents = asyncHandler(async (req, res) => {
 exports.getRecentEvents = asyncHandler(async (req, res) => {
   const userId = req.user.id;
 
-  // Find the user
   const user = await User.findById(userId);
   if (!user) {
     res.status(404);
     throw new Error("User not found");
   }
 
-  // Get the current date
   const currentDate = new Date();
 
-  // Find the events that the user signed up for and that have already occurred
   const events = await Event.find({
     _id: { $in: user.signedUpEvents },
     dateTime: { $lt: currentDate },
   })
-    .sort({ dateTime: -1 }) // sort in descending order to get the most recent events
-    .limit(4); // get only the 5 most recent events for example
+    .sort({ dateTime: -1 })
+    .limit(4);
 
   res.status(200).json(events);
 });
@@ -125,6 +122,4 @@ exports.getUpcomingEvents = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("No upcoming events found");
   }
-
-  // res.status(200).json(upcomingEvents);
 });

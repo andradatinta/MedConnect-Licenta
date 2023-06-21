@@ -59,7 +59,6 @@ exports.uploadFile = asyncHandler(async (req, res) => {
         }
       }
 
-      // If no credits found or file is not a pdf, try OCR
       if (!numCredits || req.file.mimetype !== "application/pdf") {
         // Fetch the image and convert the response data into a Buffer
         const response = await axios.get(downloadURL[0], {

@@ -10,7 +10,6 @@ router.post(
   upload.single("file"),
   fileController.uploadFile
 );
-// 'file' is the name of the field in my upload form - formData logic in the handleFileUpload fe function
 router.get("/file/:id", fileController.getFile);
 router.get("/getUserFiles/:userId", fileController.getUserFiles);
 router.put("/:id", routeProtect, fileController.updateFileValidation);
