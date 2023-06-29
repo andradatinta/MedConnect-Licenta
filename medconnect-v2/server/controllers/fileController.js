@@ -15,7 +15,6 @@ function analyzePdfText(text) {
 }
 
 exports.uploadFile = asyncHandler(async (req, res) => {
-  // Upload the file to Firebase Storage
   const bucket = firebaseAdmin.storage().bucket();
   const fileBlob = bucket.file(`${req.user._id}/` + req.file.originalname);
 
@@ -35,15 +34,12 @@ exports.uploadFile = asyncHandler(async (req, res) => {
       let numCredits = 0;
 
       if (req.file.mimetype === "application/pdf") {
-        // Try to parse the text with pdf-parse
         let data;
         try {
           data = await pdfParse(req.file.buffer);
-          console.log("PDF parsed successfully");
           text = data.text;
         } catch (error) {
           console.log("Error parsing the PDF", error);
-          // Handle the error or try OCR as a fallback
         }
 
         if (text) {
@@ -60,13 +56,11 @@ exports.uploadFile = asyncHandler(async (req, res) => {
       }
 
       if (!numCredits || req.file.mimetype !== "application/pdf") {
-        // Fetch the image and convert the response data into a Buffer
         const response = await axios.get(downloadURL[0], {
           responseType: "arraybuffer",
         });
         const imageBuffer = Buffer.from(response.data, "binary");
 
-        // Create Tesseract worker with Romanian language data
         const worker = await createWorker({
           logger: (m) => console.log(m),
           langPath:
@@ -79,7 +73,6 @@ exports.uploadFile = asyncHandler(async (req, res) => {
         const {
           data: { text },
         } = await worker.recognize(imageBuffer);
-        console.log(text);
 
         const creditsRegex = /(\d+)\scredite\sEMC/;
         const match = text.match(creditsRegex);
@@ -99,13 +92,8 @@ exports.uploadFile = asyncHandler(async (req, res) => {
       });
       await file.save();
 
-      console.log("File uploaded successfully!");
-      console.log("Download URL:", downloadURL[0]);
-      console.log("Number of credits:", numCredits);
-
       res.json({ success: true, downloadURL: downloadURL[0] });
     } catch (err) {
-      console.error(err);
       res
         .status(500)
         .json({ success: false, message: "Error processing file" });
