@@ -1,4 +1,3 @@
-# MedConnect-Licenta
 # MedConnect - Simplifying CME Credit Management
 
 ## Introduction
