@@ -1,5 +1,7 @@
 # MedConnect - Simplifying CME Credit Management
 
+Link to a video demo of the app: https://www.youtube.com/watch?v=4tkDCj-mrN0
+
 ## Introduction
 MedConnect is a web application designed to streamline and simplify the management of Continuous Medical Education (CME) credits for medical professionals in Romania. It addresses the administrative challenges faced by doctors and members of the Romanian College of Physicians (CMR) in tracking CME events and validating credits required for maintaining professional licenses.
 
